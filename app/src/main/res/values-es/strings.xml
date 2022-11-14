@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--LoginScreen-->
+    <string name="label_welcome_back">Bienvenido de nuevo</string>
+    <string name="label_lets_log_ing">Vamos a iniciar sesión</string>
+    <string name="label_user">Ingresa tu usuario</string>
+    <string name="label_password">Ingresa tu contraseña</string>
+    <string name="label_remember_user">Recordar usuario</string>
+    <string name="label_log_in">Iniciar sesión</string>
+
+</resources>

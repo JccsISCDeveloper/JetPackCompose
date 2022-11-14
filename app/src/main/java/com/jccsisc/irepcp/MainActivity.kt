@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.jccsisc.irepcp.login.ui.LoginScreen
 import com.jccsisc.irepcp.ui.theme.IREPCPTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-
+                    LoginScreen()
                 }
             }
         }
@@ -32,6 +33,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     IREPCPTheme {
-
+        LoginScreen()
     }
 }

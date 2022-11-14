@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">IREPCP</string>
+    <string name="app_name" translatable="false">IREPCP</string>
+    
+    <!--LoginScreen-->
+    <string name="label_welcome_back">Weltome back</string>
+    <string name="label_lets_log_ing">Let\'s log in</string>
+    <string name="label_user">Enter your username</string>
+    <string name="label_password">Enter your password</string>
+    <string name="label_remember_user">Remember user</string>
+    <string name="label_log_in">Log In</string>
+    
 </resources>

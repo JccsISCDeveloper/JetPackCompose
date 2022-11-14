@@ -6,3 +6,11 @@ val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
+val Gray300 = Color(0xFFe0e0e0)
+val Gray50 = Color(0xFFeceff1)
+
+
+//Colores distribucion screen
+val ColorHearder = Color(0xFF90a4ae)
+val ColorBody = Color(0xFFb0bec5)
+val ColorFooter = Color(0xFFcfd8dc)
