@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jccsisc.irepcp.Constans.SPACER_10
 import com.jccsisc.irepcp.Constans.SPACER_20
 import com.jccsisc.irepcp.Constans.SPACER_50
@@ -38,6 +39,11 @@ import com.jccsisc.irepcp.utils.SpacerIrep
  */
 @Composable
 fun LoginScreen() {
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons = MaterialTheme.colors.isLight
+    SideEffect {
+        systemUiController.setSystemBarsColor(color = Color.White, darkIcons = useDarkIcons)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
