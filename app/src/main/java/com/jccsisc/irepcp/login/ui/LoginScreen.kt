@@ -30,6 +30,8 @@ import com.jccsisc.irepcp.core.IREPApp
 import com.jccsisc.irepcp.ui.theme.Gray300
 import com.jccsisc.irepcp.ui.theme.Gray50
 import com.jccsisc.irepcp.ui.theme.Purple700
+import com.jccsisc.irepcp.utils.GlobalData
+import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.SpacerIrep
 
 /**
@@ -39,11 +41,9 @@ import com.jccsisc.irepcp.utils.SpacerIrep
  */
 @Composable
 fun LoginScreen() {
-    val systemUiController = rememberSystemUiController()
-    val useDarkIcons = MaterialTheme.colors.isLight
-    SideEffect {
-        systemUiController.setSystemBarsColor(color = Color.White, darkIcons = useDarkIcons)
-    }
+//    GlobalData.transparentNavBar(false)
+    SetNavbarColor(color = Color.White)
+
     Column(
         modifier = Modifier
             .fillMaxSize()

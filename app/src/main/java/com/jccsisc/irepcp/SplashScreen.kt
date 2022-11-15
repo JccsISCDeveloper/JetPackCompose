@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,8 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jccsisc.irepcp.navigation.AppScreens
+import com.jccsisc.irepcp.utils.GlobalData
+import com.jccsisc.irepcp.utils.SetNavbarColor
 import kotlinx.coroutines.delay
 
 /**
@@ -30,9 +30,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavController) {
     LaunchedEffect(key1 = true) {
-        delay(2000)
+        delay(1000)
         navController.popBackStack()
-//        navController.navigate(AppScreens.LoginScreen.route)
         navController.navigate(AppScreens.LoginScreen.route)
     }
     Splash()
@@ -40,11 +39,8 @@ fun SplashScreen(navController: NavController) {
 
 @Composable
 fun Splash() {
-    val systemUiController = rememberSystemUiController()
-    SideEffect {
-        systemUiController.setSystemBarsColor(color = Color.White, darkIcons = false)
-    }
-
+//    GlobalData.transparentNavBar(true)
+    SetNavbarColor(color = Color.White, false)
     Column(
         modifier = Modifier
             .fillMaxSize()
