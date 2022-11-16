@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.login.ui
+package com.jccsisc.irepcp.ui.features.login.ui
 
 import android.util.Log
 import android.util.Patterns
@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jccsisc.irepcp.core.MyResult
-import com.jccsisc.irepcp.login.data.remote.model.request.LoginRequest
-import com.jccsisc.irepcp.login.data.remote.model.response.LoginResponse
-import com.jccsisc.irepcp.login.domain.LoginUseCase
+import com.jccsisc.irepcp.ui.features.login.data.remote.model.request.LoginRequest
+import com.jccsisc.irepcp.ui.features.login.data.remote.model.response.LoginResponse
+import com.jccsisc.irepcp.ui.features.login.domain.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

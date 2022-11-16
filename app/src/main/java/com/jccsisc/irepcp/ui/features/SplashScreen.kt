@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp
+package com.jccsisc.irepcp.ui.features
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.jccsisc.irepcp.navigation.AppScreens
-import com.jccsisc.irepcp.utils.GlobalData
+import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.ui.features.navigation.AppScreens
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import kotlinx.coroutines.delay
 

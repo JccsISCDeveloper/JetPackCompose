@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.core
+package com.jccsisc.irepcp
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

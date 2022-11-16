@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.login.ui
+package com.jccsisc.irepcp.ui.features.login.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -23,14 +23,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jccsisc.irepcp.Constans.SPACER_10
-import com.jccsisc.irepcp.Constans.SPACER_20
-import com.jccsisc.irepcp.Constans.SPACER_50
+import com.jccsisc.irepcp.utils.Constans.SPACER_10
+import com.jccsisc.irepcp.utils.Constans.SPACER_20
+import com.jccsisc.irepcp.utils.Constans.SPACER_50
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.core.IREPApp
+import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.core.MyResult
 import com.jccsisc.irepcp.core.enums.StatusEnum
-import com.jccsisc.irepcp.login.data.remote.model.request.LoginRequest
+import com.jccsisc.irepcp.ui.features.login.data.remote.model.request.LoginRequest
 import com.jccsisc.irepcp.ui.theme.Gray300
 import com.jccsisc.irepcp.ui.theme.Gray50
 import com.jccsisc.irepcp.ui.theme.Purple200
@@ -38,7 +38,6 @@ import com.jccsisc.irepcp.ui.theme.Purple700
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.SpacerIrep
 import com.jccsisc.irepcp.utils.components.MySimpleCustomDialog
-import kotlinx.coroutines.launch
 
 /**
  * Project: IREPCP

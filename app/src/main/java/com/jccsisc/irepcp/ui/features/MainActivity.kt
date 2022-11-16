@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp
+package com.jccsisc.irepcp.ui.features
 
 import android.os.Bundle
 import android.view.Window
@@ -11,8 +11,8 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.jccsisc.irepcp.login.ui.LoginViewModel
-import com.jccsisc.irepcp.navigation.AppNavigation
+import com.jccsisc.irepcp.ui.features.login.ui.LoginViewModel
+import com.jccsisc.irepcp.ui.features.navigation.AppNavigation
 import com.jccsisc.irepcp.ui.theme.IREPCPTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp
+package com.jccsisc.irepcp.utils
 
 /**
  * Project: MyInstagram

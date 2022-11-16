@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.login.data.remote.model.request
+package com.jccsisc.irepcp.ui.features.login.data.remote.model.request
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.navigation
+package com.jccsisc.irepcp.ui.features.navigation
 
 /**
  * Project: IREPCP

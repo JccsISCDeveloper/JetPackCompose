@@ -1,6 +1,6 @@
 package com.jccsisc.irepcp.core.di
 
-import com.jccsisc.irepcp.login.data.remote.LoginClient
+import com.jccsisc.irepcp.ui.features.login.data.remote.LoginClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
