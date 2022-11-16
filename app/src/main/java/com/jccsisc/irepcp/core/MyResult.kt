@@ -13,7 +13,14 @@ class MyResult<out T>(val status: StatusEnum, val data: T?, val message: String?
 
         fun <T> success(data: T?): MyResult<T> = MyResult(StatusEnum.SUCCESS, data, null)
 
-        fun <T> error(data: T?, message: String?,): MyResult<T> =
-            MyResult(StatusEnum.ERROR, data, message)
+        fun <T> error(data: T?, msg: String?,): MyResult<T> = MyResult(StatusEnum.ERROR, data, msg)
     }
 }
+/*
+sealed class MyResult<out T> {
+    class Loading<out T>: MyResult<T>()
+    data class Success<out T>(val data: T): MyResult<T>()
+    data class Failure(val exception: Exception): MyResult<Nothing>()
+}
+*/
+

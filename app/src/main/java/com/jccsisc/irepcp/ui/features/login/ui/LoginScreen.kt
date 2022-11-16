@@ -226,11 +226,10 @@ fun GoToDashboard(loginViewModel: LoginViewModel) {
             MySimpleCustomDialog(true) {}
         }
         StatusEnum.SUCCESS -> {
-            MySimpleCustomDialog(false) {}
+            //todo ir a la siguiente vista
 
         }
         StatusEnum.ERROR -> {
-            MySimpleCustomDialog(false) {}
            Toast.makeText(IREPApp.INSTANCE.applicationContext, "${resultLogin.message}", Toast.LENGTH_SHORT).show()
         }
         else -> {
