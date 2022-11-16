@@ -2,20 +2,25 @@ package com.jccsisc.irepcp
 
 import android.os.Bundle
 import android.view.Window
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.jccsisc.irepcp.login.ui.LoginViewModel
 import com.jccsisc.irepcp.navigation.AppNavigation
 import com.jccsisc.irepcp.ui.theme.IREPCPTheme
-import com.jccsisc.irepcp.utils.GlobalData.transparentNavBar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val loginViewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -41,7 +46,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     //LoginScreen()
-                    AppNavigation()
+                    AppNavigation(loginViewModel)
                 }
             }
         }
@@ -54,6 +59,6 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
     IREPCPTheme {
         //LoginScreen()
-        AppNavigation()
+        //AppNavigation()
     }
 }

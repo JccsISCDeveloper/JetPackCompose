@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.SplashScreen
 import com.jccsisc.irepcp.login.ui.LoginScreen
+import com.jccsisc.irepcp.login.ui.LoginViewModel
 
 /**
  * Project: IREPCP
@@ -13,7 +14,7 @@ import com.jccsisc.irepcp.login.ui.LoginScreen
  * Created by Julio Cesar Camacho Silva on 14/11/22
  */
 @Composable
-fun AppNavigation() {
+fun AppNavigation(loginViewModel: LoginViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -22,7 +23,7 @@ fun AppNavigation() {
             SplashScreen(navController)
         }
         composable(AppScreens.LoginScreen.route) {
-            LoginScreen()
+            LoginScreen(loginViewModel)
         }
     }
 }
