@@ -1,7 +1,11 @@
 package com.jccsisc.irepcp.ui.features.login.ui
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,28 +19,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jccsisc.irepcp.utils.Constans.SPACER_10
-import com.jccsisc.irepcp.utils.Constans.SPACER_20
-import com.jccsisc.irepcp.utils.Constans.SPACER_50
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.core.MyResult
 import com.jccsisc.irepcp.core.enums.StatusEnum
 import com.jccsisc.irepcp.ui.features.login.data.remote.model.request.LoginRequest
-import com.jccsisc.irepcp.ui.theme.Gray300
-import com.jccsisc.irepcp.ui.theme.Gray50
-import com.jccsisc.irepcp.ui.theme.Purple200
-import com.jccsisc.irepcp.ui.theme.Purple700
+import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.utils.Constans.SPACER_20
 import com.jccsisc.irepcp.utils.SetNavbarColor
-import com.jccsisc.irepcp.utils.SpacerIrep
+import com.jccsisc.irepcp.utils.SpacerApp
 import com.jccsisc.irepcp.utils.components.MySimpleCustomDialog
 
 /**
@@ -45,17 +45,27 @@ import com.jccsisc.irepcp.utils.components.MySimpleCustomDialog
  * Created by Julio Cesar Camacho Silva on 14/11/22
  */
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel) {
+fun LoginScreen(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> Unit) {
 //    GlobalData.transparentNavBar(false)
     SetNavbarColor(color = Color.White)
-
     Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
-            HeaderLogin(Modifier.weight(0.3f))
-            BodyLogin(Modifier.fillMaxWidth().weight(0.6f), loginViewModel)
-            FooterLogin(Modifier.fillMaxWidth().weight(0.1f))
-        }
-        GoToDashboard(loginViewModel)
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(dimensionResource(id = R.dimen.padding_8))) {
+            HeaderLogin(
+                Modifier
+                    .fillMaxWidth()
+                    .background(ColorHearder)
+                    .weight(0.3f))
+            BodyLogin(loginViewModel, onNavigationToDashboard,
+                Modifier
+                    .background(ColorBody)
+                    .weight(0.6f))
+            FooterLogin(
+                Modifier
+                    .fillMaxWidth()
+                    .weight(0.1f)) }
+//        GoToDashboard(loginViewModel, onNavigationToDashboard)
     }
 }
 
@@ -63,36 +73,34 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
  * Header Login
  * */
 @Composable
-fun HeaderLogin(modifier: Modifier) {
+fun HeaderLogin(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier
-            .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_colombia),
             contentDescription = "ic Colombia",
             modifier = Modifier
                 .clip(CircleShape)
-                .size(28.dp)
+                .size(dimensionResource(id = R.dimen.padding_28))
                 .align(Alignment.Start),
             contentScale = ContentScale.Crop
         )
-        Box(contentAlignment = Alignment.Center) {
+        Box(modifier = modifier, contentAlignment = Alignment.BottomCenter) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                SpacerIrep(size = SPACER_50)
                 Icon(
                     painter = painterResource(id = R.drawable.ic_login_logo),
                     contentDescription = ""
                 )
-                SpacerIrep(size = SPACER_20)
+                SpacerApp(size = SPACER_20)
                 Text(
-                    text = IREPApp.INSTANCE.getString(R.string.label_welcome_back),
+                    text = stringResource(id = R.string.label_welcome_back),
                     fontSize = 20.sp,
                     color = Color.Blue,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = IREPApp.INSTANCE.getString(R.string.label_lets_log_ing),
+                    text = stringResource(id = R.string.label_lets_log_ing),
                     fontSize = 16.sp,
                     color = Color.Gray
                 )
@@ -105,28 +113,36 @@ fun HeaderLogin(modifier: Modifier) {
  * Body Login
  * */
 @Composable
-fun BodyLogin(modifier: Modifier, loginViewModel: LoginViewModel) {
+fun BodyLogin(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> Unit, modifier: Modifier = Modifier) {
     val email: String by loginViewModel.email.observeAsState(initial = "")
     val password: String by loginViewModel.password.observeAsState(initial = "")
     val isButtonEnabled: Boolean by loginViewModel.isButtonEmablled.observeAsState(initial = false)
 
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+    Box(modifier = modifier) {
         Column(
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_16))
         ) {
-            SpacerIrep(size = SPACER_50)
+            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
             Email(email) {
                 loginViewModel.onLoginChanged(email = it, password = password)
             }
-            SpacerIrep(size = SPACER_10)
+            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
             Password(password) {
                 loginViewModel.onLoginChanged(email = email, password = it)
             }
-            SpacerIrep(size = SPACER_10)
-            RememberUser(title = IREPApp.INSTANCE.getString(R.string.label_remember_user))
+            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+            RememberUser(title = stringResource(id = R.string.label_remember_user))
             val request = LoginRequest(email, password)
-            SpacerIrep(size = 40)
-            LoginginButton(isButtonEnabled, loginViewModel, request)
+            Spacer(modifier = Modifier.fillMaxHeight(0.3f))
+            LoginginButton(true, loginViewModel, request, onNavigationToDashboard )
+/*            PressIconButton(
+                onClick = {},
+                icon = {
+                    Icon(painter = painterResource(id = R.drawable.ic_pws_visibility_off), contentDescription = "")
+                },
+                text = { Text(text = "Add to cart") },
+                modifier = modifier
+            )*/
         }
     }
 }
@@ -137,7 +153,7 @@ fun Email(email: String, onTextChanged: (String) -> Unit) {
         value = email,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = IREPApp.INSTANCE.getString(R.string.label_user)) },
+        label = { Text(text = stringResource(id = R.string.label_user)) },
         singleLine = true,
         maxLines = 1,
         shape = RoundedCornerShape(18),
@@ -157,7 +173,7 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
         value = password,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = IREPApp.INSTANCE.getString(R.string.label_password)) },
+        label = { Text(text = stringResource(id = R.string.label_password)) },
         singleLine = true,
         maxLines = 1,
         shape = RoundedCornerShape(18),
@@ -177,7 +193,7 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
                 Icon(
                     painter = painterResource(id = image),
                     contentDescription = "",
-                    modifier = Modifier.size(25.dp)
+                    modifier = Modifier.size(dimensionResource(id = R.dimen.padding_25))
                 )
             }
         },
@@ -193,14 +209,18 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
 fun LoginginButton(
     isButtonEnabled: Boolean,
     loginViewModel: LoginViewModel,
-    request: LoginRequest
+    request: LoginRequest,
+    onNavigationToDashboard: () -> Unit
 ) {
     Button(
-        onClick = { loginViewModel.doLogin(request) },
+        onClick = {
+            //loginViewModel.doLogin(request)
+                  onNavigationToDashboard()
+                  },
         enabled = isButtonEnabled,
         modifier = Modifier
             .fillMaxWidth(),
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.padding_10)),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Purple700,
             disabledBackgroundColor = Purple200,
@@ -209,16 +229,40 @@ fun LoginginButton(
         )
     ) {
         Text(
-            text = IREPApp.INSTANCE.getString(R.string.label_log_in),
+            text = stringResource(id = R.string.label_log_in),
             fontSize = 16.sp,
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_10)),
             textAlign = TextAlign.Center
         )
     }
 }
 
 @Composable
-fun GoToDashboard(loginViewModel: LoginViewModel) {
+fun PressIconButton(
+    onClick: () -> Unit,
+    icon: @Composable () -> Unit,
+    text: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    interactionSource: MutableInteractionSource =
+        remember { MutableInteractionSource() },
+) {
+    val isPressed by interactionSource.collectIsPressedAsState()
+    Button(onClick = onClick, modifier = modifier,
+        interactionSource = interactionSource) {
+        AnimatedVisibility(visible = isPressed) {
+            if (isPressed) {
+                Row {
+                    icon()
+                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                }
+            }
+        }
+        text()
+    }
+}
+
+@Composable
+fun GoToDashboard(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> Unit) {
     val resultLogin by loginViewModel.resultLogin.observeAsState(initial = MyResult(StatusEnum.NONE, null, null))
 
     when(resultLogin.status) {
@@ -230,7 +274,8 @@ fun GoToDashboard(loginViewModel: LoginViewModel) {
 
         }
         StatusEnum.ERROR -> {
-           Toast.makeText(IREPApp.INSTANCE.applicationContext, "${resultLogin.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(LocalContext.current, "${resultLogin.message}", Toast.LENGTH_SHORT).show()
+            onNavigationToDashboard()
         }
         else -> {
 
@@ -253,7 +298,7 @@ fun RememberUser(title: String) {
                 checkedColor = Color.White
             )
         )
-        Text(text = title, Modifier.padding(top = 12.dp), color = Color.Gray)
+        Text(text = title, Modifier.padding(top = dimensionResource(id = R.dimen.padding_12)), color = Color.Gray)
     }
 }
 

@@ -2,7 +2,6 @@ package com.jccsisc.irepcp.utils
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
@@ -22,7 +21,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
  * --------------------Componentes Composable
  * */
 @Composable
-fun SpacerIrep(size: Int) {
+fun SpacerApp(size: Int) {
     Spacer(modifier = Modifier.size(size.dp))
 }
 /**
