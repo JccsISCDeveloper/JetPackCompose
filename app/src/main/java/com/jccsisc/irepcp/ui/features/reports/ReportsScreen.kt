@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Device
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
@@ -26,6 +27,7 @@ fun ReportsScreen() {
         val greenBox = createRefFor("greenBox")
         val redBox = createRefFor("redBox")
         val blueBox = createRefFor("blueBox")
+        val guideLine = createGuidelineFromStart(0.5f)
 
         constrain(greenBox) {
             top.linkTo(parent.top)
@@ -35,18 +37,22 @@ fun ReportsScreen() {
         }
 
         constrain(redBox) {
-            top.linkTo(greenBox.top, margin = 50.dp)
-            start.linkTo(greenBox.start, margin = 50.dp)
+            top.linkTo(greenBox.bottom)
+            start.linkTo(guideLine)
             width = Dimension.value(100.dp)
             height = Dimension.value(100.dp)
         }
 
         constrain(blueBox) {
-            top.linkTo(redBox.top, margin = 50.dp)
-            start.linkTo(redBox.start, margin = 50.dp)
+            top.linkTo(redBox.bottom)
+            start.linkTo(redBox.start)
+            bottom.linkTo(parent.bottom)
             width = Dimension.value(100.dp)
             height = Dimension.value(100.dp)
         }
+
+        //creando cadenas
+//        createVerticalChain(greenBox, redBox, blueBox, chainStyle = ChainStyle.SpreadInside)
     }
 
     ConstraintLayout(constrains, modifier = Modifier.fillMaxSize()) {
