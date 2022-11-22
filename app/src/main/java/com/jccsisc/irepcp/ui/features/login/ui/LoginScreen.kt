@@ -34,7 +34,7 @@ import com.jccsisc.irepcp.core.MyResult
 import com.jccsisc.irepcp.core.enums.StatusEnum
 import com.jccsisc.irepcp.ui.features.login.data.remote.model.request.LoginRequest
 import com.jccsisc.irepcp.ui.theme.*
-import com.jccsisc.irepcp.utils.Constans.SPACER_20
+import com.jccsisc.irepcp.common.Constans.SPACER_20
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.SpacerApp
 import com.jccsisc.irepcp.utils.components.MySimpleCustomDialog
@@ -49,22 +49,15 @@ fun LoginScreen(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> U
 //    GlobalData.transparentNavBar(false)
     SetNavbarColor(color = Color.White)
     Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.padding_8))) {
-            HeaderLogin(
-                Modifier
-                    .fillMaxWidth()
-                    .background(ColorHearder)
-                    .weight(0.3f))
-            BodyLogin(loginViewModel, onNavigationToDashboard,
-                Modifier
-                    .background(ColorBody)
-                    .weight(0.6f))
-            FooterLogin(
-                Modifier
-                    .fillMaxWidth()
-                    .weight(0.1f)) }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(dimensionResource(id = R.dimen.padding_8))
+        ) {
+            HeaderLogin(Modifier.fillMaxWidth().weight(0.3f))
+            BodyLogin(loginViewModel, onNavigationToDashboard, Modifier.weight(0.6f))
+            FooterLogin(Modifier.fillMaxWidth().weight(0.1f))
+        }
 //        GoToDashboard(loginViewModel, onNavigationToDashboard)
     }
 }
@@ -113,7 +106,11 @@ fun HeaderLogin(modifier: Modifier = Modifier) {
  * Body Login
  * */
 @Composable
-fun BodyLogin(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> Unit, modifier: Modifier = Modifier) {
+fun BodyLogin(
+    loginViewModel: LoginViewModel,
+    onNavigationToDashboard: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val email: String by loginViewModel.email.observeAsState(initial = "")
     val password: String by loginViewModel.password.observeAsState(initial = "")
     val isButtonEnabled: Boolean by loginViewModel.isButtonEmablled.observeAsState(initial = false)
@@ -134,7 +131,7 @@ fun BodyLogin(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> Uni
             RememberUser(title = stringResource(id = R.string.label_remember_user))
             val request = LoginRequest(email, password)
             Spacer(modifier = Modifier.fillMaxHeight(0.3f))
-            LoginginButton(true, loginViewModel, request, onNavigationToDashboard )
+            LoginginButton(true, loginViewModel, request, onNavigationToDashboard)
 /*            PressIconButton(
                 onClick = {},
                 icon = {
@@ -215,11 +212,10 @@ fun LoginginButton(
     Button(
         onClick = {
             //loginViewModel.doLogin(request)
-                  onNavigationToDashboard()
-                  },
+            onNavigationToDashboard()
+        },
         enabled = isButtonEnabled,
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.padding_10)),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Purple700,
@@ -247,8 +243,10 @@ fun PressIconButton(
         remember { MutableInteractionSource() },
 ) {
     val isPressed by interactionSource.collectIsPressedAsState()
-    Button(onClick = onClick, modifier = modifier,
-        interactionSource = interactionSource) {
+    Button(
+        onClick = onClick, modifier = modifier,
+        interactionSource = interactionSource
+    ) {
         AnimatedVisibility(visible = isPressed) {
             if (isPressed) {
                 Row {
@@ -263,18 +261,20 @@ fun PressIconButton(
 
 @Composable
 fun GoToDashboard(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> Unit) {
-    val resultLogin by loginViewModel.resultLogin.observeAsState(initial = MyResult(StatusEnum.NONE, null, null))
+    val resultLogin by loginViewModel.resultLogin.observeAsState(
+        initial = MyResult(StatusEnum.NONE, null, null))
 
-    when(resultLogin.status) {
+    when (resultLogin.status) {
         StatusEnum.LOADING -> {
             MySimpleCustomDialog(true) {}
         }
         StatusEnum.SUCCESS -> {
             //todo ir a la siguiente vista
-
+            onNavigationToDashboard()
         }
         StatusEnum.ERROR -> {
-            Toast.makeText(LocalContext.current, "${resultLogin.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(LocalContext.current, "${resultLogin.message}", Toast.LENGTH_SHORT)
+                .show()
             onNavigationToDashboard()
         }
         else -> {
@@ -298,7 +298,11 @@ fun RememberUser(title: String) {
                 checkedColor = Color.White
             )
         )
-        Text(text = title, Modifier.padding(top = dimensionResource(id = R.dimen.padding_12)), color = Color.Gray)
+        Text(
+            text = title,
+            Modifier.padding(top = dimensionResource(id = R.dimen.padding_12)),
+            color = Color.Gray
+        )
     }
 }
 

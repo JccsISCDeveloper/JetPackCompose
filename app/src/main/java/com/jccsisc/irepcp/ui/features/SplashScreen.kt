@@ -16,9 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.ui.features.navigation.AppScreens
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import kotlinx.coroutines.delay
 
@@ -28,11 +26,10 @@ import kotlinx.coroutines.delay
  * Created by Julio Cesar Camacho Silva on 14/11/22
  */
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(onNavigationToLogin: () -> Unit) {
     LaunchedEffect(key1 = true) {
         delay(1000)
-        navController.popBackStack()
-        navController.navigate(AppScreens.LoginScreen.route)
+       onNavigationToLogin()
     }
     Splash()
 }

@@ -3,7 +3,6 @@ package com.jccsisc.irepcp.ui.features.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.ui.features.SplashScreen
 import com.jccsisc.irepcp.ui.features.dashboard.ui.DashboardScreen
@@ -20,22 +19,26 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreens.SplashScreen.route
+        startDestination = Screens.DashboardScreen.route
     ) {
-        composable(AppScreens.SplashScreen.route) { SplashScreen(navController) }
-        composable(AppScreens.LoginScreen.route) {
+        //todo eliminar este splash, hacerlo con activity
+        composable(Screens.SplashScreen.route) {
+            SplashScreen(onNavigationToLogin = {
+                navController.popBackStack()
+                navController.navigate(Screens.LoginScreen.route)
+            })
+        }
+        composable(Screens.LoginScreen.route) {
             LoginScreen(
                 loginViewModel,
                 onNavigationToDashboard = {
-                    navController.navigate(AppScreens.DashboardScreen.route)
-                })
+                    navController.popBackStack()
+                    navController.navigate(Screens.DashboardScreen.route)
+                }
+            )
         }
-        composable(AppScreens.DashboardScreen.route) { DashboardScreen() }
-/*        navigation(
-            startDestination = AppScreens.DashboardScreen.route,
-            route = AppScreens.DashboardScreen.route
-        ) {
-            composable(AppScreens.DashboardScreen.route) { DashboardScreen() }
-        }*/
+        composable(Screens.DashboardScreen.route) {
+            DashboardScreen()
+        }
     }
 }

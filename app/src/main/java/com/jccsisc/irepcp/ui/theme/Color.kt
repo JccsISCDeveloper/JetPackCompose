@@ -8,6 +8,14 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 val Gray300 = Color(0xFFe0e0e0)
 val Gray50 = Color(0xFFeceff1)
+val GrayBg = Color(0xFFFBFDFF)
+
+
+val GoldAbi = Color(0xFFe0c538)
+val BlackAbi = Color(0xFF130c0c)
+val GrayDarkAbi = Color(0xFF393836)
+val GrayLitekAbi = Color(0xFF848482)
+
 
 
 //Colores distribucion screen

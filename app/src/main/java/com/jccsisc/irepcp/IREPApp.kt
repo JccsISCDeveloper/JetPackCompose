@@ -17,8 +17,6 @@ class IREPApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         INSTANCE = this
     }
-
 }
