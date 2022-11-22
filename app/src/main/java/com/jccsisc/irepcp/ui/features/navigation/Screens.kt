@@ -8,5 +8,6 @@ package com.jccsisc.irepcp.ui.features.navigation
 sealed class Screens(val route: String) {
     object SplashScreen: Screens("splash_screen")
     object LoginScreen: Screens("login_screen")
-    object DashboardScreen: Screens("dashboard")
+    object DashboardScreen: Screens("dashboard_screen")
+    object ReportsScreen: Screens("reports_screen")
 }
