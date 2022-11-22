@@ -55,7 +55,9 @@ fun LoginScreen(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> U
                 .padding(dimensionResource(id = R.dimen.padding_8))
         ) {
             HeaderLogin(Modifier.fillMaxWidth().weight(0.3f))
-            BodyLogin(loginViewModel, onNavigationToDashboard, Modifier.weight(0.6f))
+            BodyLogin(loginViewModel,
+                onNavigationToDashboard = {onNavigationToDashboard()},
+                Modifier.weight(0.6f))
             FooterLogin(Modifier.fillMaxWidth().weight(0.1f))
         }
 //        GoToDashboard(loginViewModel, onNavigationToDashboard)
@@ -131,7 +133,7 @@ fun BodyLogin(
             RememberUser(title = stringResource(id = R.string.label_remember_user))
             val request = LoginRequest(email, password)
             Spacer(modifier = Modifier.fillMaxHeight(0.3f))
-            LoginginButton(true, loginViewModel, request, onNavigationToDashboard)
+            LoginginButton(true, loginViewModel, request, onNavigationToDashboard = { onNavigationToDashboard() })
 /*            PressIconButton(
                 onClick = {},
                 icon = {

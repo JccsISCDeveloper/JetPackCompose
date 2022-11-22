@@ -20,7 +20,7 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Screens.DashboardScreen.route
+        startDestination = Screens.SplashScreen.route
     ) {
         //todo eliminar este splash, hacerlo con activity
         composable(Screens.SplashScreen.route) {
