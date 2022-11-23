@@ -11,7 +11,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.jccsisc.irepcp.ui.features.login.ui.LoginViewModel
+import com.jccsisc.irepcp.ui.features.logingraph.login.ui.LoginViewModel
 import com.jccsisc.irepcp.ui.features.navigation.AppNavigation
 import com.jccsisc.irepcp.ui.theme.IREPCPTheme
 import dagger.hilt.android.AndroidEntryPoint

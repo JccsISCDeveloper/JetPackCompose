@@ -4,11 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.jccsisc.irepcp.ui.features.SplashScreen
-import com.jccsisc.irepcp.ui.features.dashboard.ui.DashboardScreen
-import com.jccsisc.irepcp.ui.features.login.ui.LoginScreen
-import com.jccsisc.irepcp.ui.features.login.ui.LoginViewModel
+import com.jccsisc.irepcp.ui.features.dashboardgraph.dashboard.ui.DashboardScreen
+import com.jccsisc.irepcp.ui.features.logingraph.login.ui.LoginScreen
+import com.jccsisc.irepcp.ui.features.logingraph.login.ui.LoginViewModel
 import com.jccsisc.irepcp.ui.features.reports.ReportsScreen
+import com.jccsisc.irepcp.ui.features.routestartgraph.detailsrout.DetailsRouteScreen
+import com.jccsisc.irepcp.ui.features.routestartgraph.routestart.RouteStartScreen
 
 /**
  * Project: IREPCP
@@ -20,7 +23,7 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Screens.ReportsScreen.route
+        startDestination = Screens.DashboardScreen.route
     ) {
         //todo eliminar este splash, hacerlo con activity
         composable(Screens.SplashScreen.route) {
@@ -42,7 +45,7 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
             DashboardScreen(onClickOption = {
                 when(it.id) {
                     NAV_HOME -> {  }
-                    NAV_ROUTE_START -> {  }
+                    NAV_ROUTE_START -> { navController.navigate(Screens.RouteStartScreen.route) }
                     NAV_CLIENT_LIST -> {  }
                     NAV_HOW_AM_I_DOING -> {  }
                     NAV_REPORTS -> {  navController.navigate(Screens.ReportsScreen.route) }
@@ -54,6 +57,19 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
         }
         composable(Screens.ReportsScreen.route) {
             ReportsScreen()
+        }
+        composable(Screens.RouteStartScreen.route) {
+            RouteStartScreen(onNavigationToDetailsRoute = {newText ->
+                navController.navigate(Screens.DetailsRouteScreen.createRoute(newText))
+            })
+        }
+        composable(
+            Screens.DetailsRouteScreen.route,
+            arguments = listOf(navArgument(NEW_TEXT) { defaultValue = "Pantalla Details" })
+        ) { navBackStackEntry ->
+            val newText = navBackStackEntry.arguments?.getString(NEW_TEXT)
+            requireNotNull(newText)
+            DetailsRouteScreen(newText)
         }
     }
 }

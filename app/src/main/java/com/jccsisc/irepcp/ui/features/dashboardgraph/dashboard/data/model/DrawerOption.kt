@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.features.dashboard.data.model
+package com.jccsisc.irepcp.ui.features.dashboardgraph.dashboard.data.model
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*

@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.features.login.ui
+package com.jccsisc.irepcp.ui.features.logingraph.login.ui
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.MyResult
 import com.jccsisc.irepcp.core.enums.StatusEnum
-import com.jccsisc.irepcp.ui.features.login.data.remote.model.request.LoginRequest
+import com.jccsisc.irepcp.ui.features.logingraph.login.data.remote.model.request.LoginRequest
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.common.Constans.SPACER_20
 import com.jccsisc.irepcp.utils.SetNavbarColor

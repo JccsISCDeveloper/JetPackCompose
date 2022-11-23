@@ -1,6 +1,6 @@
-package com.jccsisc.irepcp.ui.features.login.data.remote
+package com.jccsisc.irepcp.ui.features.logingraph.login.data.remote
 
-import com.jccsisc.irepcp.ui.features.login.data.remote.model.request.LoginRequest
+import com.jccsisc.irepcp.ui.features.logingraph.login.data.remote.model.request.LoginRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

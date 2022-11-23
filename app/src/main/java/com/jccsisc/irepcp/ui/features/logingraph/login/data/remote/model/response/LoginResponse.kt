@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.features.login.data.remote.model.response
+package com.jccsisc.irepcp.ui.features.logingraph.login.data.remote.model.response
 
 /**
  * Project: IREPCP

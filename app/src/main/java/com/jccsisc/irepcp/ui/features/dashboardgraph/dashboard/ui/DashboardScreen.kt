@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.features.dashboard.ui
+package com.jccsisc.irepcp.ui.features.dashboardgraph.dashboard.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -23,8 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.ui.features.dashboard.data.model.DrawerOption
-import com.jccsisc.irepcp.ui.features.dashboard.data.model.listOptions
+import com.jccsisc.irepcp.ui.features.dashboardgraph.dashboard.data.model.DrawerOption
+import com.jccsisc.irepcp.ui.features.dashboardgraph.dashboard.data.model.listOptions
 import com.jccsisc.irepcp.ui.theme.BlackAbi
 import com.jccsisc.irepcp.ui.theme.ColorHearder
 import com.jccsisc.irepcp.ui.theme.Gray50

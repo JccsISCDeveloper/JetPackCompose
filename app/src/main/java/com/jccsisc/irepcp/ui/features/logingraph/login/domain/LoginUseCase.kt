@@ -1,8 +1,8 @@
-package com.jccsisc.irepcp.ui.features.login.domain
+package com.jccsisc.irepcp.ui.features.logingraph.login.domain
 
-import com.jccsisc.irepcp.ui.features.login.data.LoginRepository
-import com.jccsisc.irepcp.ui.features.login.data.remote.model.request.LoginRequest
-import com.jccsisc.irepcp.ui.features.login.data.remote.model.response.LoginResponse
+import com.jccsisc.irepcp.ui.features.logingraph.login.data.LoginRepository
+import com.jccsisc.irepcp.ui.features.logingraph.login.data.remote.model.request.LoginRequest
+import com.jccsisc.irepcp.ui.features.logingraph.login.data.remote.model.response.LoginResponse
 import retrofit2.Response
 import javax.inject.Inject
 

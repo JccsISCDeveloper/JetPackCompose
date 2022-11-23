@@ -1,6 +1,6 @@
-package com.jccsisc.irepcp.ui.features.login.data.remote
+package com.jccsisc.irepcp.ui.features.logingraph.login.data.remote
 
-import com.jccsisc.irepcp.ui.features.login.data.remote.model.response.LoginResponse
+import com.jccsisc.irepcp.ui.features.logingraph.login.data.remote.model.response.LoginResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
