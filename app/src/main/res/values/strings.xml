@@ -2,6 +2,7 @@
     <string name="app_name" translatable="false">IREPCP</string>
     
     <!--LoginScreen-->
+    <string name="label_welcome">Welcome</string>
     <string name="label_welcome_back">Weltome back</string>
     <string name="label_lets_log_ing">Let\'s log in</string>
     <string name="label_user">Enter your username</string>

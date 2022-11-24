@@ -2,6 +2,7 @@
 <resources>
 
     <!--LoginScreen-->
+    <string name="label_welcome">Bienvenido</string>
     <string name="label_welcome_back">Bienvenido de nuevo</string>
     <string name="label_lets_log_ing">Vamos a iniciar sesión</string>
     <string name="label_user">Ingresa tu usuario</string>
