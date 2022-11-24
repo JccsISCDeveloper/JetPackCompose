@@ -31,7 +31,6 @@ fun MyDrawerLayout(
     optionList: List<DrawerOption>,
     modifier: Modifier = Modifier
 ) {
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -65,7 +64,6 @@ fun MyDrawerLayout(
         }
     }
 }
-
 
 @Composable
 fun CircleFigure(modifier: Modifier = Modifier) {

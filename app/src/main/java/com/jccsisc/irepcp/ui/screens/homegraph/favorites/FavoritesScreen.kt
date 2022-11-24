@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.reports
+package com.jccsisc.irepcp.ui.screens.homegraph.favorites
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -30,7 +30,7 @@ import com.jccsisc.irepcp.ui.theme.GrayBg
  * Created by Julio Cesar Camacho Silva on 22/11/22
  */
 @Composable
-fun ReportsScreen() {
+fun FavoritesScreen() {
     LazyColumn(
         contentPadding = PaddingValues(vertical = 10.dp, horizontal = 15.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
@@ -137,5 +137,5 @@ fun CardPublicidad(publicidad: Publicidad) {
 @Preview(showBackground = true, showSystemUi = true, device = Devices.NEXUS_5)
 @Composable
 private fun DefaultPreview() {
-    ReportsScreen()
+    FavoritesScreen()
 }

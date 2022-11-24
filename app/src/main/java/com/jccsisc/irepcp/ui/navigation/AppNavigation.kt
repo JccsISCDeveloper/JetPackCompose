@@ -5,7 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.ui.screens.SplashScreen
-import com.jccsisc.irepcp.ui.screens.homegraph.ScreensDashboard
+import com.jccsisc.irepcp.ui.screens.homegraph.ScreensHome
 import com.jccsisc.irepcp.ui.screens.homegraph.dashboardGraph
 import com.jccsisc.irepcp.ui.screens.logingraph.login.ui.LoginScreen
 import com.jccsisc.irepcp.ui.screens.logingraph.login.ui.LoginViewModel
@@ -34,7 +34,7 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
                 loginViewModel,
                 onNavigationToDashboard = {
                     navController.popBackStack()
-                    navController.navigate(ScreensDashboard.DashboardScreen.route)
+                    navController.navigate(ScreensHome.ContentScreens.route)
                 }
             )
         }

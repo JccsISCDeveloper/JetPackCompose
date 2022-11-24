@@ -6,7 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.jccsisc.irepcp.ui.screens.homegraph.home.ui.HomeScreen
-import com.jccsisc.irepcp.ui.screens.reports.ReportsScreen
+import com.jccsisc.irepcp.ui.screens.homegraph.favorites.FavoritesScreen
+import com.jccsisc.irepcp.ui.screens.homegraph.gallery.GalleryScreen
 import com.jccsisc.irepcp.ui.screens.routestartgraph.detailsrout.DetailsRouteScreen
 import com.jccsisc.irepcp.ui.screens.routestartgraph.routestart.RouteStartScreen
 
@@ -17,47 +18,50 @@ import com.jccsisc.irepcp.ui.screens.routestartgraph.routestart.RouteStartScreen
  */
 fun NavGraphBuilder.dashboardGraph(navController: NavHostController) {
     navigation(
-        startDestination = ScreensDashboard.DashboardScreen.route,
+        startDestination = ScreensHome.ContentScreens.route,
         route = DASHBOARD_GRAPH
     ) {
-        composable(ScreensDashboard.DashboardScreen.route) {
-            HomeScreen(onClickOption = {
+        composable(ScreensHome.ContentScreens.route) {
+            ContentScreens(onClickOption = {
                 when(it.id) {
                     NAV_HOME -> {  }
-                    NAV_ROUTE_START -> { navController.navigate(ScreensDashboard.RouteStartScreen.route) }
+                    NAV_ROUTE_START -> { navController.navigate(ScreensHome.GalleryScreen.route) }
                     NAV_CLIENT_LIST -> {  }
                     NAV_HOW_AM_I_DOING -> {  }
-                    NAV_REPORTS -> {  navController.navigate(ScreensDashboard.ReportsScreen.route) }
+                    NAV_REPORTS -> {  navController.navigate(ScreensHome.FavoritesScreen.route) }
                     NAV_UNSCHEDULE_ROUTE -> {  }
                     NAV_END_OF_ROUTE -> {  }
                     NAV_SIGN_OFF -> {  }
                 }
             })
         }
-        composable(ScreensDashboard.ReportsScreen.route) {
-            ReportsScreen()
+        composable(ScreensHome.FavoritesScreen.route) {
+            FavoritesScreen()
         }
-        composable(ScreensDashboard.RouteStartScreen.route) {
+        composable(ScreensHome.GalleryScreen.route) {
+            GalleryScreen()
+        }
+/*        composable(ScreensHome.GalleryScreen.route) {
             RouteStartScreen(onNavigationToDetailsRoute = {newText ->
-                navController.navigate(ScreensDashboard.DetailsRouteScreen.createRoute(newText))
+                navController.navigate(ScreensHome.DetailsRouteScreen.createRoute(newText))
             })
         }
         composable(
-            ScreensDashboard.DetailsRouteScreen.route,
+            ScreensHome.DetailsRouteScreen.route,
             arguments = listOf(navArgument(NEW_TEXT) { defaultValue = "Pantalla Details" })
         ) { navBackStackEntry ->
             val newText = navBackStackEntry.arguments?.getString(NEW_TEXT)
             requireNotNull(newText)
             DetailsRouteScreen(newText)
-        }
+        }*/
     }
 }
 
-const val NAV_HOME = 0
-const val NAV_ROUTE_START = 1
-const val NAV_CLIENT_LIST = 2
-const val NAV_HOW_AM_I_DOING = 3
-const val NAV_REPORTS = 4
-const val NAV_UNSCHEDULE_ROUTE = 5
-const val NAV_END_OF_ROUTE = 6
-const val NAV_SIGN_OFF = 7
+private const val NAV_HOME = 0
+private const val NAV_ROUTE_START = 1
+private const val NAV_CLIENT_LIST = 2
+private const val NAV_HOW_AM_I_DOING = 3
+private const val NAV_REPORTS = 4
+private const val NAV_UNSCHEDULE_ROUTE = 5
+private const val NAV_END_OF_ROUTE = 6
+private const val NAV_SIGN_OFF = 7
