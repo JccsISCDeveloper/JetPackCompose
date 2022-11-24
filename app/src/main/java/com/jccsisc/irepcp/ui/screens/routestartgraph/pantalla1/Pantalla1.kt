@@ -12,7 +12,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.jccsisc.irepcp.ui.theme.BlackAbi
+import com.jccsisc.irepcp.ui.theme.PrimaryColor
 import com.jccsisc.irepcp.ui.theme.GrayBg
 
 /**
@@ -31,7 +31,7 @@ fun Pantalla1() {
     ) {
         Text(
             text = "Pantalla 1",
-            style = TextStyle(color = BlackAbi, fontSize = 27.sp, fontWeight = FontWeight.ExtraBold)
+            style = TextStyle(color = PrimaryColor, fontSize = 27.sp, fontWeight = FontWeight.ExtraBold)
         )
     }
 }

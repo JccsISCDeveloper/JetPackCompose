@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import com.jccsisc.irepcp.ui.theme.BlackAbi
+import com.jccsisc.irepcp.ui.theme.GrayBg
+import com.jccsisc.irepcp.ui.theme.PrimaryColor
 
 /**
  * Project: IREPCP
@@ -15,7 +15,7 @@ import com.jccsisc.irepcp.ui.theme.BlackAbi
  */
 @Composable
 fun HomeScreen() {
-    Box(modifier = Modifier.fillMaxSize().background(BlackAbi)) {
+    Box(modifier = Modifier.fillMaxSize().background(GrayBg)) {
 
     }
 }

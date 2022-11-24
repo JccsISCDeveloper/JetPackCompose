@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jccsisc.irepcp.ui.theme.BlackAbi
+import com.jccsisc.irepcp.ui.theme.PrimaryColor
 import com.jccsisc.irepcp.ui.theme.GrayBg
 
 /**
@@ -39,7 +39,7 @@ fun FavoritesScreen() {
         item {
             Text(
                 text = "Productos de Super Mercado",
-                style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlackAbi)
+                style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold, color = PrimaryColor)
             )
         }
 

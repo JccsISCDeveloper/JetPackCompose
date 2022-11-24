@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.jccsisc.irepcp.ui.theme.BlackAbi
+import com.jccsisc.irepcp.ui.theme.PrimaryColor
 import com.jccsisc.irepcp.ui.theme.GrayBg
 
 /**
@@ -36,7 +36,7 @@ fun RouteStartScreen(onNavigationToDetailsRoute: (String) -> Unit) {
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Pantalla 1", style = TextStyle(color = BlackAbi, fontSize = 25.sp))
+        Text(text = "Pantalla 1", style = TextStyle(color = PrimaryColor, fontSize = 25.sp))
         TextField(
             value = textValue,
             onValueChange = { textValue = it },

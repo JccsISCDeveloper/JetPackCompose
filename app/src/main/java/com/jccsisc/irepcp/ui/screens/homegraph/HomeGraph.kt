@@ -3,13 +3,10 @@ package com.jccsisc.irepcp.ui.screens.homegraph
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.jccsisc.irepcp.ui.screens.homegraph.home.ui.HomeScreen
 import com.jccsisc.irepcp.ui.screens.homegraph.favorites.FavoritesScreen
 import com.jccsisc.irepcp.ui.screens.homegraph.gallery.GalleryScreen
-import com.jccsisc.irepcp.ui.screens.routestartgraph.detailsrout.DetailsRouteScreen
-import com.jccsisc.irepcp.ui.screens.routestartgraph.routestart.RouteStartScreen
+import com.jccsisc.irepcp.ui.screens.homegraph.home.ui.HomeScreen
 
 /**
  * Project: IREPCP
@@ -17,12 +14,13 @@ import com.jccsisc.irepcp.ui.screens.routestartgraph.routestart.RouteStartScreen
  * Created by Julio Cesar Camacho Silva on 23/11/22
  */
 fun NavGraphBuilder.dashboardGraph(navController: NavHostController) {
+
     navigation(
         startDestination = ScreensHome.ContentScreens.route,
         route = DASHBOARD_GRAPH
     ) {
         composable(ScreensHome.ContentScreens.route) {
-            ContentScreens(onClickOption = {
+            ContentScreens( navController, onClickOption = {
                 when(it.id) {
                     NAV_HOME -> {  }
                     NAV_ROUTE_START -> { navController.navigate(ScreensHome.GalleryScreen.route) }
@@ -34,6 +32,9 @@ fun NavGraphBuilder.dashboardGraph(navController: NavHostController) {
                     NAV_SIGN_OFF -> {  }
                 }
             })
+        }
+        composable(ScreensHome.HomeScreen.route) {
+            HomeScreen()
         }
         composable(ScreensHome.FavoritesScreen.route) {
             FavoritesScreen()

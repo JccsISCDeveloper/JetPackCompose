@@ -169,7 +169,7 @@ fun Email(email: String, onTextChanged: (String) -> Unit) {
         shape = RoundedCornerShape(18),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = BlackAbi,
+            focusedBorderColor = PrimaryColor,
             unfocusedBorderColor = Gray50,
             backgroundColor = Color.White,
         )
@@ -189,7 +189,7 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
         shape = RoundedCornerShape(18),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = BlackAbi,
+            focusedBorderColor = PrimaryColor,
             unfocusedBorderColor = Gray50,
             backgroundColor = Color.White,
         ),
@@ -231,8 +231,8 @@ fun LoginginButton(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.padding_10)),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = BlackAbi,
-            disabledBackgroundColor = GrayDarkAbi,
+            backgroundColor = PrimaryColor,
+            disabledBackgroundColor = PrimaryDarkColor,
             contentColor = Color.White,
             disabledContentColor = Gray300
         )

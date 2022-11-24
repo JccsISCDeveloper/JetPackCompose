@@ -8,10 +8,9 @@ val Gray50 = Color(0xFFeceff1)
 val GrayBg = Color(0xFFFBFDFF)
 
 
-val GoldAbi = Color(0xFFe0c538)
-val BlackAbi = Color(0xFF130c0c)
-val GrayDarkAbi = Color(0xFF393836)
-val GrayLitekAbi = Color(0xFF848482)
+val PrimaryColor = Color(0xFF03a9f4)
+val PrimaryDarkColor = Color(0xFF007ac1)
+val PrimaryLight = Color(0xFF67daff)
 
 
 

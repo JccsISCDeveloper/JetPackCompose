@@ -15,7 +15,7 @@ import com.jccsisc.irepcp.R
  * NOTA: Como las opciones del BottomNavigationView no tienen navegacion a otras screen
  *       Se colocaron en el paquete Home
  */
-sealed class ScreensHome(val route: String, val title: String, icon: ImageVector?) {
+sealed class ScreensHome(val route: String, val title: String, val icon: ImageVector) {
     object ContentScreens: ScreensHome("content_screens", "Content", Icons.Sharp.Home)
     object HomeScreen: ScreensHome("home_screen", "Home", Icons.Sharp.Home)
     object FavoritesScreen: ScreensHome("favorite_screen", "Favoritos", Icons.Sharp.Favorite)

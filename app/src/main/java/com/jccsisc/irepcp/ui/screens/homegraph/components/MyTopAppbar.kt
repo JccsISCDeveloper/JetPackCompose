@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.homegraph.home.ui.components
+package com.jccsisc.irepcp.ui.screens.homegraph.components
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 
 /**
  * Project: IREPCP
@@ -33,6 +34,7 @@ fun MyTopAppbar(onClickDrawer: () -> Unit, onInfoClick: () -> Unit, onUpdateClic
             IconButton(onClick = { onUpdateClick() }) {
                 Icon(imageVector = Icons.Default.Refresh, contentDescription = "ic refresh")
             }
-        }
+        },
+        backgroundColor = PrimaryDarkColor
     )
 }
