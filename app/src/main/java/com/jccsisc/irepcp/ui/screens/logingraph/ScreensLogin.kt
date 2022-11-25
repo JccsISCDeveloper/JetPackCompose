@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.navigation
+package com.jccsisc.irepcp.ui.screens.logingraph
 
 /**
  * Project: IREPCP

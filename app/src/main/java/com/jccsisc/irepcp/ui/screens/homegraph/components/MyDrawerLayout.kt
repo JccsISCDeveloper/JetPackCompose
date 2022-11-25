@@ -49,7 +49,7 @@ fun MyDrawerLayout(
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(
-                            PrimaryDarkColor, PrimaryColor, PrimaryLight
+                            PrimaryLight, PrimaryColor, PrimaryDarkColor
                         )
                     )
                 )

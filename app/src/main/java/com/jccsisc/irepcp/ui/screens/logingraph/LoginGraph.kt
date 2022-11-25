@@ -4,8 +4,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.jccsisc.irepcp.ui.navigation.LOGIN_GRAPH
-import com.jccsisc.irepcp.ui.navigation.ScreensLogin
 import com.jccsisc.irepcp.ui.screens.SplashScreen
 import com.jccsisc.irepcp.ui.screens.homegraph.DASHBOARD_CONTENT_GRAPH
 import com.jccsisc.irepcp.ui.screens.logingraph.login.ui.LoginScreen
