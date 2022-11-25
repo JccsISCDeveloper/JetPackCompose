@@ -15,10 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.ui.theme.RubikDistressed
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import kotlinx.coroutines.delay
 
@@ -57,8 +59,11 @@ fun Splash() {
         )
         Text(
             text = stringResource(id = R.string.label_welcome),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.ExtraBold
+            style = TextStyle(
+                fontSize = 35.sp,
+                fontWeight = FontWeight.Normal,
+                fontFamily = RubikDistressed
+            )
         )
     }
 }

@@ -5,10 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -105,7 +102,7 @@ private fun DrawerItem(item: ScreensDashboard, selected: Boolean, onItemClick: (
         Spacer(modifier = Modifier.size(12.dp))
         Text(
             text = item.title,
-            style = TextStyle(fontSize = 18.sp),
+            style = MaterialTheme.typography.button,
             color = if (selected) PrimaryDarkColor else Color.Black
         )
     }

@@ -1,9 +1,6 @@
 package com.jccsisc.irepcp.ui.screens.dashboard.components
 
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
@@ -21,7 +18,7 @@ import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 @Composable
 fun MyTopAppbar(onClickDrawer: () -> Unit, onInfoClick: () -> Unit, displaySnackBarClick: () -> Unit) {
     TopAppBar(
-        title = { Text(text = stringResource(id = R.string.app_name)) },
+        title = { Text(text = stringResource(id = R.string.app_name), style = MaterialTheme.typography.h5) },
         navigationIcon = {
             IconButton(onClick = { onClickDrawer() }) {
                 Icon(imageVector = Icons.Default.Menu, contentDescription = "ic menu")

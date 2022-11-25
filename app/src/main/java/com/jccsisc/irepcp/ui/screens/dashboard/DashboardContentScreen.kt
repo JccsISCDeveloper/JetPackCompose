@@ -6,7 +6,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.ui.screens.dashboard.components.MyBottomBar
@@ -16,7 +15,6 @@ import com.jccsisc.irepcp.ui.screens.dashboard.navigation.NavigationDashboard
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
-import com.jccsisc.irepcp.utils.components.MySimpleCustomDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

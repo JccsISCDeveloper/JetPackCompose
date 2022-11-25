@@ -1,10 +1,7 @@
 package com.jccsisc.irepcp.ui.screens.logingraph.login.ui
 
 import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,7 +19,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -97,13 +93,12 @@ private fun HeaderLogin(modifier: Modifier = Modifier) {
                 SpacerApp(size = SPACER_20)
                 Text(
                     text = stringResource(id = R.string.label_welcome_back),
-                    fontSize = 20.sp,
-                    color = Color.Blue,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.h6,
+                    color = Color.Blue
                 )
                 Text(
                     text = stringResource(id = R.string.label_lets_log_ing),
-                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.subtitle2,
                     color = Color.Gray
                 )
             }
@@ -135,7 +130,9 @@ private fun BodyLogin(
             Password(password) {
                 loginViewModel.onLoginChanged(email = email, password = it)
             }
-            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(id = R.dimen.padding_6)))
             RememberUser(title = stringResource(id = R.string.label_remember_user))
             val request = LoginRequest("email", "password")
             Spacer(modifier = Modifier.fillMaxHeight(0.3f))
@@ -162,7 +159,7 @@ fun Email(email: String, onTextChanged: (String) -> Unit) {
         value = email,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = stringResource(id = R.string.label_user)) },
+        label = { Text(text = stringResource(id = R.string.label_user), style = MaterialTheme.typography.body1) },
         singleLine = true,
         maxLines = 1,
         shape = RoundedCornerShape(18),
@@ -182,7 +179,7 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
         value = password,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = stringResource(id = R.string.label_password)) },
+        label = { Text(text = stringResource(id = R.string.label_password), style = MaterialTheme.typography.body1) },
         singleLine = true,
         maxLines = 1,
         shape = RoundedCornerShape(18),
@@ -202,7 +199,7 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
                 Icon(
                     painter = painterResource(id = image),
                     contentDescription = "",
-                    modifier = Modifier.size(dimensionResource(id = R.dimen.padding_25))
+                    modifier = Modifier.size(dimensionResource(id = R.dimen.padding_26))
                 )
             }
         },
@@ -238,8 +235,8 @@ fun LoginginButton(
     ) {
         Text(
             text = stringResource(id = R.string.label_log_in),
-            fontSize = 16.sp,
             modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_10)),
+            style = MaterialTheme.typography.button,
             textAlign = TextAlign.Center
         )
     }
@@ -306,14 +303,15 @@ fun RememberUser(title: String) {
             checked = status,
             onCheckedChange = { status = !status },
             colors = CheckboxDefaults.colors(
-                checkmarkColor = Purple700,
+                checkmarkColor = Color.White,
                 uncheckedColor = Gray300,
-                checkedColor = Color.White
+                checkedColor = PrimaryColor
             )
         )
         Text(
             text = title,
-            Modifier.padding(top = dimensionResource(id = R.dimen.padding_12)),
+            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_14)),
+            style = MaterialTheme.typography.body2,
             color = Color.Gray
         )
     }
