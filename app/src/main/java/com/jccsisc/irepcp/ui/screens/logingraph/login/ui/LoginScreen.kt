@@ -123,7 +123,6 @@ private fun BodyLogin(
     val email: String by loginViewModel.email.observeAsState(initial = "")
     val password: String by loginViewModel.password.observeAsState(initial = "")
     val isButtonEnabled: Boolean by loginViewModel.isButtonEmablled.observeAsState(initial = false)
-
     Box(modifier = modifier) {
         Column(
             modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_16))
@@ -138,7 +137,7 @@ private fun BodyLogin(
             }
             Spacer(modifier = Modifier.fillMaxHeight(0.1f))
             RememberUser(title = stringResource(id = R.string.label_remember_user))
-            val request = LoginRequest(email, password)
+            val request = LoginRequest("email", "password")
             Spacer(modifier = Modifier.fillMaxHeight(0.3f))
             LoginginButton(
                 true,
@@ -224,7 +223,7 @@ fun LoginginButton(
 ) {
     Button(
         onClick = {
-            //loginViewModel.doLogin(request)
+            loginViewModel.doLogin(request)
             onNavigationToDashboard()
         },
         enabled = isButtonEnabled,
@@ -246,7 +245,7 @@ fun LoginginButton(
     }
 }
 
-@Composable
+/*@Composable
 fun PressIconButton(
     onClick: () -> Unit,
     icon: @Composable () -> Unit,
@@ -270,7 +269,7 @@ fun PressIconButton(
         }
         text()
     }
-}
+}*/
 
 @Composable
 fun GoToDashboard(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> Unit) {

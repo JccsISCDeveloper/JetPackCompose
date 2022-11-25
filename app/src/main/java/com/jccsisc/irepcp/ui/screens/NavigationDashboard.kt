@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jccsisc.irepcp.ui.screens.homegraph.ScreensHome
+import com.jccsisc.irepcp.ui.screens.homegraph.ScreensBottomBar
 import com.jccsisc.irepcp.ui.screens.homegraph.favorites.FavoritesScreen
 import com.jccsisc.irepcp.ui.screens.homegraph.gallery.GalleryScreen
 import com.jccsisc.irepcp.ui.screens.homegraph.home.ui.HomeScreen
@@ -18,18 +18,17 @@ import com.jccsisc.irepcp.ui.screens.homegraph.home.ui.HomeScreen
  */
 @Composable
 fun NavigationDashboard(
-    modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ScreensHome.HomeScreen.route
+    startDestination: String = ScreensBottomBar.HomeScreen.route
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
 
         /**
          * BorromBar
          * */
-        composable(ScreensHome.HomeScreen.route) { HomeScreen() }
-        composable(ScreensHome.FavoritesScreen.route) { FavoritesScreen() }
-        composable(ScreensHome.GalleryScreen.route) { GalleryScreen() }
+        composable(ScreensBottomBar.HomeScreen.route) { HomeScreen() }
+        composable(ScreensBottomBar.FavoritesScreen.route) { FavoritesScreen() }
+        composable(ScreensBottomBar.GalleryScreen.route) { GalleryScreen() }
 
 
     }
