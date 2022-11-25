@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.homegraph.components
+package com.jccsisc.irepcp.ui.screens.dashboard.components
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.jccsisc.irepcp.ui.navigation.CurrentRoute
-import com.jccsisc.irepcp.ui.screens.homegraph.ScreensBottomBar
+import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
 
 /**
@@ -17,7 +17,7 @@ import com.jccsisc.irepcp.ui.theme.PrimaryColor
  * Created by Julio Cesar Camacho Silva on 23/11/22
  */
 @Composable
-fun MyBottomBar(navController: NavHostController, navItems: List<ScreensBottomBar>) {
+fun MyBottomBar(navController: NavHostController, navItems: List<ScreensDashboard>) {
     val currenRoute = CurrentRoute(navController)
 
     BottomNavigation(backgroundColor = PrimaryColor) {

@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.homegraph.favorites
+package com.jccsisc.irepcp.ui.screens.dashboard.favorites
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

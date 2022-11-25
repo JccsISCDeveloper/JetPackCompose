@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.homegraph.components
+package com.jccsisc.irepcp.ui.screens.dashboard.components
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton

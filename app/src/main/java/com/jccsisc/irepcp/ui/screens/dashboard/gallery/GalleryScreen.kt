@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.homegraph.gallery
+package com.jccsisc.irepcp.ui.screens.dashboard.gallery
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

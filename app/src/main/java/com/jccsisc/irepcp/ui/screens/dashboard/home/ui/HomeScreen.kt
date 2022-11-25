@@ -1,12 +1,15 @@
-package com.jccsisc.irepcp.ui.screens.homegraph.home.ui
+package com.jccsisc.irepcp.ui.screens.dashboard.home.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.jccsisc.irepcp.ui.theme.GrayBg
-import com.jccsisc.irepcp.ui.theme.PrimaryColor
 
 /**
  * Project: IREPCP
@@ -15,7 +18,10 @@ import com.jccsisc.irepcp.ui.theme.PrimaryColor
  */
 @Composable
 fun HomeScreen() {
-    Box(modifier = Modifier.fillMaxSize().background(GrayBg)) {
-
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(GrayBg), contentAlignment = Alignment.Center
+    ) {
+        Text(text = "Home", fontSize = 26.sp, fontWeight = FontWeight.ExtraBold)
     }
 }

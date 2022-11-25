@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.homegraph.components
+package com.jccsisc.irepcp.ui.screens.dashboard.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.navigation.CurrentRoute
-import com.jccsisc.irepcp.ui.screens.homegraph.ScreensBottomBar
+import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.ui.theme.PrimaryLight
@@ -39,7 +39,7 @@ fun MyDrawerLayout(
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
     navController: NavHostController,
-    itemsDrawer: List<ScreensBottomBar>
+    itemsDrawer: List<ScreensDashboard>
 ) {
     Column {
         ConstraintLayout(
@@ -80,7 +80,7 @@ fun MyDrawerLayout(
 }
 
 @Composable
-private fun DrawerItem(item: ScreensBottomBar, selected: Boolean, onItemClick: () -> Unit) {
+private fun DrawerItem(item: ScreensDashboard, selected: Boolean, onItemClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

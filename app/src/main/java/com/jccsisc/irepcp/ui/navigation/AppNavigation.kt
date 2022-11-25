@@ -3,7 +3,7 @@ package com.jccsisc.irepcp.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.jccsisc.irepcp.ui.screens.homegraph.dashboardContentGraph
+import com.jccsisc.irepcp.ui.screens.dashboard.dashboardContentGraph
 import com.jccsisc.irepcp.ui.screens.logingraph.LOGIN_GRAPH
 import com.jccsisc.irepcp.ui.screens.logingraph.ROOT_GRAPH
 import com.jccsisc.irepcp.ui.screens.logingraph.login.ui.LoginViewModel
