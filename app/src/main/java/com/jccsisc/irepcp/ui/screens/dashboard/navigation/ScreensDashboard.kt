@@ -1,9 +1,7 @@
 package com.jccsisc.irepcp.ui.screens.dashboard.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.BrowseGallery
-import androidx.compose.material.icons.sharp.Favorite
-import androidx.compose.material.icons.sharp.Home
+import androidx.compose.material.icons.sharp.*
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
@@ -16,8 +14,21 @@ import androidx.compose.ui.graphics.vector.ImageVector
 const val DASHBOARD_CONTENT_GRAPH = "DASHBOARD_CONTENT_GRAPH"
 const val HOME_GRAPH = "HOME_GRAPH"
 sealed class ScreensDashboard(val route: String, val title: String, val icon: ImageVector) {
+
     object DashboardContentScreen: ScreensDashboard("dashboard_content_screen", "Home", Icons.Sharp.Home)
+
+    /**
+     * BottomBar
+     * */
     object HomeScreen: ScreensDashboard("home_screen", "Home", Icons.Sharp.Home)
     object FavoritesScreen: ScreensDashboard("favorite_screen", "Favoritos", Icons.Sharp.Favorite)
     object GalleryScreen: ScreensDashboard("gallery_screen", "Gallery", Icons.Sharp.BrowseGallery)
+
+    /**
+     * Drawer
+     * */
+    object Pantalla1Screen: ScreensDashboard("pantalla1_screen", "Pantalla 1", Icons.Sharp.AccountBalance)
+    object Pantalla2Screen: ScreensDashboard("pantalla2_screen", "Pantalla 2", Icons.Sharp.Dashboard)
+    object Pantalla3Screen: ScreensDashboard("pantalla3_screen", "Pantalla 3", Icons.Sharp.AddReaction)
+
 }

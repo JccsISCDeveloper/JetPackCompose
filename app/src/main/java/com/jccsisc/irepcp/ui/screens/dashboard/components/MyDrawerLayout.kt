@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.navigation.CurrentRoute
@@ -66,9 +68,11 @@ fun MyDrawerLayout(
                 .height(15.dp)
         )
         val currentRoute = CurrentRoute(navController)
-        itemsDrawer.forEach {
-            DrawerItem(item = it, selected = currentRoute == it.route) {
-                navController.navigate(it.route) {
+        itemsDrawer.forEachIndexed { index, item ->
+            if (index % 3 == 0 && index != 0) Divider()
+            DrawerItem(item = item, selected = currentRoute == item.route) {
+                navController.navigate(item.route) {
+                    popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                     launchSingleTop = true
                 }
                 scope.launch {

@@ -36,6 +36,13 @@ fun DashboardContentScreen() {
         ScreensDashboard.FavoritesScreen,
         ScreensDashboard.GalleryScreen
     )
+    val itemsDrawer = listOf(
+        ScreensDashboard.HomeScreen,
+        ScreensDashboard.FavoritesScreen,
+        ScreensDashboard.Pantalla1Screen,
+        ScreensDashboard.Pantalla2Screen,
+        ScreensDashboard.Pantalla3Screen
+    )
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -54,7 +61,7 @@ fun DashboardContentScreen() {
         isFloatingActionButtonDocked = false,
         floatingActionButtonPosition = FabPosition.End,
         drawerContent = {
-            MyDrawerLayout(scope, scaffoldState, dashboardNavController, itemsbottomBar)
+            MyDrawerLayout(scope, scaffoldState, dashboardNavController, itemsDrawer)
         },
         drawerGesturesEnabled = true
     ) { padding ->

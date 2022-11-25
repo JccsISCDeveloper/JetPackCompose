@@ -8,6 +8,9 @@ import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.ui.screens.dashboard.favorites.FavoritesScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.gallery.GalleryScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.home.ui.HomeScreen
+import com.jccsisc.irepcp.ui.screens.dashboard.pantalla1.Pantalla1Screen
+import com.jccsisc.irepcp.ui.screens.dashboard.pantalla2.Pantalla2Screen
+import com.jccsisc.irepcp.ui.screens.dashboard.pantalla3.Pantalla3Screen
 
 /**
  * Project: IREPCP
@@ -31,8 +34,8 @@ fun NavigationDashboard(
         /**
          * Drawer
          * */
-        composable(ScreensDashboard.HomeScreen.route) { HomeScreen() }
-        composable(ScreensDashboard.FavoritesScreen.route) { FavoritesScreen() }
-        composable(ScreensDashboard.GalleryScreen.route) { GalleryScreen() }
+        composable(ScreensDashboard.Pantalla1Screen.route) { Pantalla1Screen() }
+        composable(ScreensDashboard.Pantalla2Screen.route) { Pantalla2Screen() }
+        composable(ScreensDashboard.Pantalla3Screen.route) { Pantalla3Screen() }
     }
 }
