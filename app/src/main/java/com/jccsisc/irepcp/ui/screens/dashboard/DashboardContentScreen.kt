@@ -41,7 +41,8 @@ fun DashboardContentScreen() {
         ScreensDashboard.FavoritesScreen,
         ScreensDashboard.Pantalla1Screen,
         ScreensDashboard.Pantalla2Screen,
-        ScreensDashboard.ConsumoApisScreen
+        ScreensDashboard.ConsumoApisScreen,
+        ScreensDashboard.CanvasScreen
     )
 
     Scaffold(

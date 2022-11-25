@@ -2,10 +2,10 @@ package com.jccsisc.irepcp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple700 = Color(0xFF3700B3)
 val Gray300 = Color(0xFFe0e0e0)
 val Gray50 = Color(0xFFeceff1)
 val GrayBg = Color(0xFFFBFDFF)
+val AndroidColor = Color(0xFF46E68D)
 
 
 val PrimaryColor = Color(0xFF03a9f4)
