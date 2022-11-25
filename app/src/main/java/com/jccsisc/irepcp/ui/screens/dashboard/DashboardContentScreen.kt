@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.ui.screens.dashboard.components.MyBottomBar
@@ -15,6 +16,7 @@ import com.jccsisc.irepcp.ui.screens.dashboard.navigation.NavigationDashboard
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
+import com.jccsisc.irepcp.utils.components.MySimpleCustomDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -41,7 +43,7 @@ fun DashboardContentScreen() {
         ScreensDashboard.FavoritesScreen,
         ScreensDashboard.Pantalla1Screen,
         ScreensDashboard.Pantalla2Screen,
-        ScreensDashboard.Pantalla3Screen
+        ScreensDashboard.ConsumoApisScreen
     )
 
     Scaffold(
@@ -84,8 +86,23 @@ private fun HeaderContentScreens(
         }, onInfoClick = {
             Toast.makeText(IREPApp.INSTANCE.baseContext, "Click en info", Toast.LENGTH_SHORT)
                 .show()
-        }, onUpdateClick = {
+        }, displaySnackBarClick = {
+            coroutineScope.launch {
+                val result = scaffoldState.snackbarHostState.showSnackbar(
+                    message = "Este es un snackbar",
+                    actionLabel = "Da click",
+                    duration = SnackbarDuration.Indefinite,
+                )
 
+                when(result) {
+                    SnackbarResult.ActionPerformed -> {
+                        Toast.makeText(IREPApp.INSTANCE, "Logica de codigo", Toast.LENGTH_SHORT).show()
+                    }
+                    SnackbarResult.Dismissed -> {
+                        Toast.makeText(IREPApp.INSTANCE, "Dismiss", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     )
 }

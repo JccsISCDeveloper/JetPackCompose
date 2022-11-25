@@ -19,7 +19,7 @@ import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
  * Created by Julio Cesar Camacho Silva on 23/11/22
  */
 @Composable
-fun MyTopAppbar(onClickDrawer: () -> Unit, onInfoClick: () -> Unit, onUpdateClick: () -> Unit) {
+fun MyTopAppbar(onClickDrawer: () -> Unit, onInfoClick: () -> Unit, displaySnackBarClick: () -> Unit) {
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.app_name)) },
         navigationIcon = {
@@ -31,7 +31,7 @@ fun MyTopAppbar(onClickDrawer: () -> Unit, onInfoClick: () -> Unit, onUpdateClic
             IconButton(onClick = { onInfoClick() }) {
                 Icon(imageVector = Icons.Default.Info, contentDescription = "ic info")
             }
-            IconButton(onClick = { onUpdateClick() }) {
+            IconButton(onClick = { displaySnackBarClick() }) {
                 Icon(imageVector = Icons.Default.Refresh, contentDescription = "ic refresh")
             }
         },

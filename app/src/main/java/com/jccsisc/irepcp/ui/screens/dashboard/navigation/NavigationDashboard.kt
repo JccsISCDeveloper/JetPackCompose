@@ -10,7 +10,7 @@ import com.jccsisc.irepcp.ui.screens.dashboard.gallery.GalleryScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.home.ui.HomeScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.pantalla1.Pantalla1Screen
 import com.jccsisc.irepcp.ui.screens.dashboard.pantalla2.Pantalla2Screen
-import com.jccsisc.irepcp.ui.screens.dashboard.pantalla3.Pantalla3Screen
+import com.jccsisc.irepcp.ui.screens.dashboard.consumoapis.ConsumoApisScreen
 
 /**
  * Project: IREPCP
@@ -36,6 +36,6 @@ fun NavigationDashboard(
          * */
         composable(ScreensDashboard.Pantalla1Screen.route) { Pantalla1Screen() }
         composable(ScreensDashboard.Pantalla2Screen.route) { Pantalla2Screen() }
-        composable(ScreensDashboard.Pantalla3Screen.route) { Pantalla3Screen() }
+        composable(ScreensDashboard.ConsumoApisScreen.route) { ConsumoApisScreen() }
     }
 }

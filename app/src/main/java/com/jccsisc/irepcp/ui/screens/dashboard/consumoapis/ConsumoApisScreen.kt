@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.dashboard.pantalla3
+package com.jccsisc.irepcp.ui.screens.dashboard.consumoapis
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,10 +15,10 @@ import com.jccsisc.irepcp.ui.theme.Gray300
  * Created by Julio Cesar Camacho Silva on 25/11/22
  */
 @Composable
-fun Pantalla3Screen() {
+fun ConsumoApisScreen() {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Gray300), contentAlignment = Alignment.Center) {
-        Text(text = "Pantalla 3")
+        Text(text = "Consumo apis")
     }
 }
