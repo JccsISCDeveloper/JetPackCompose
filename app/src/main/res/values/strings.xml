@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">IREPCP</string>
-    
+    <string name="title_activity_lista" translatable="false">ListaActivity</string>
+
     <!--LoginScreen-->
     <string name="label_welcome">Welcome</string>
     <string name="label_welcome_back">Weltome back</string>
@@ -9,5 +10,5 @@
     <string name="label_password">Enter your password</string>
     <string name="label_remember_user">Remember user</string>
     <string name="label_log_in">Log In</string>
-    
+
 </resources>

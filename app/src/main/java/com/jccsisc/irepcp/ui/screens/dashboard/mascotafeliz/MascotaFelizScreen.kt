@@ -1,5 +1,6 @@
 package com.jccsisc.irepcp.ui.screens.dashboard.mascotafeliz
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -19,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.ui.screens.ListaActivity
 import com.jccsisc.irepcp.ui.theme.Gray300
 
 /**
@@ -28,6 +31,8 @@ import com.jccsisc.irepcp.ui.theme.Gray300
  */
 @Composable
 fun MascotaFelizScreen() {
+    val mContext = LocalContext.current
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -52,7 +57,14 @@ fun MascotaFelizScreen() {
             style = MaterialTheme.typography.body2
         )
         Row {
-            OutlinedButton(onClick = { /*TODO*/ }) {
+            OutlinedButton(onClick = {
+                mContext.startActivity(
+                    Intent(
+                        mContext,
+                        ListaActivity::class.java
+                    )
+                )
+            }) {
                 Text(text = "Tu mascota")
             }
             Spacer(modifier = Modifier.width(10.dp))
