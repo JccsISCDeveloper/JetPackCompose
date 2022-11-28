@@ -58,6 +58,12 @@ fun MascotaFelizScreen() {
         )
         Row {
             OutlinedButton(onClick = {
+
+            }) {
+                Text(text = "Tu mascota")
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            OutlinedButton(onClick = {
                 mContext.startActivity(
                     Intent(
                         mContext,
@@ -65,10 +71,6 @@ fun MascotaFelizScreen() {
                     )
                 )
             }) {
-                Text(text = "Tu mascota")
-            }
-            Spacer(modifier = Modifier.width(10.dp))
-            OutlinedButton(onClick = { /*TODO*/ }) {
                 Text(text = "Contenidos")
             }
         }
