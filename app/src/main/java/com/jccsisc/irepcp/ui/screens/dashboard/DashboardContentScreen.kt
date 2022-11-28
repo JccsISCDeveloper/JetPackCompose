@@ -15,6 +15,7 @@ import com.jccsisc.irepcp.ui.screens.dashboard.navigation.NavigationDashboard
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
+import com.jccsisc.irepcp.utils.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -53,12 +54,13 @@ fun DashboardContentScreen() {
                 scaffoldState = scaffoldState
             )
         },
-        bottomBar = { MyBottomBar(navController = dashboardNavController, navItems = itemsbottomBar) },
-        floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = "Fab icon")
-            }
+        bottomBar = {
+            MyBottomBar(
+                navController = dashboardNavController,
+                navItems = itemsbottomBar
+            )
         },
+        floatingActionButton = { FloatActionBttn() },
         isFloatingActionButtonDocked = false,
         floatingActionButtonPosition = FabPosition.End,
         drawerContent = {
@@ -83,8 +85,7 @@ private fun HeaderContentScreens(
         onClickDrawer = {
             coroutineScope.launch { scaffoldState.drawerState.open() }
         }, onInfoClick = {
-            Toast.makeText(IREPApp.INSTANCE.baseContext, "Click en info", Toast.LENGTH_SHORT)
-                .show()
+            showToast("Click en info")
         }, displaySnackBarClick = {
             coroutineScope.launch {
                 val result = scaffoldState.snackbarHostState.showSnackbar(
@@ -93,15 +94,22 @@ private fun HeaderContentScreens(
                     duration = SnackbarDuration.Indefinite,
                 )
 
-                when(result) {
+                when (result) {
                     SnackbarResult.ActionPerformed -> {
-                        Toast.makeText(IREPApp.INSTANCE, "Logica de codigo", Toast.LENGTH_SHORT).show()
+                        showToast("Logica de codigo")
                     }
                     SnackbarResult.Dismissed -> {
-                        Toast.makeText(IREPApp.INSTANCE, "Dismiss", Toast.LENGTH_SHORT).show()
+                        showToast("Dismiss")
                     }
                 }
             }
         }
     )
+}
+
+@Composable
+fun FloatActionBttn() {
+    FloatingActionButton(onClick = { showToast("Click en FAB") }) {
+        Icon(imageVector = Icons.Filled.Add, contentDescription = "Fab icon")
+    }
 }
