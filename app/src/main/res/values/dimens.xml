@@ -3,6 +3,7 @@
 
     <dimen name="width_150">150dp</dimen>
 
+    <!--Paddings-->
     <dimen name="padding_6">6dp</dimen>
     <dimen name="padding_8">8dp</dimen>
     <dimen name="padding_10">10dp</dimen>
@@ -11,5 +12,8 @@
     <dimen name="padding_16">16dp</dimen>
     <dimen name="padding_26">26dp</dimen>
     <dimen name="padding_28">28dp</dimen>
+
+    <!--Borders-->
+    <dimen name="border_2">2dp</dimen>
 
 </resources>

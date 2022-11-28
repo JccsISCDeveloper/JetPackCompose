@@ -8,15 +8,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = PrimaryColor,
-    primaryVariant = PrimaryDarkColor,
-    secondary = PrimaryLight
+    primary = SecondaryDarkColor,
+    primaryVariant = SecondaryColor,
+    secondary = SecondaryDarkColor,
+    secondaryVariant = Gray50
 )
 
 private val LightColorPalette = lightColors(
     primary = PrimaryColor,
     primaryVariant = PrimaryDarkColor,
-    secondary = PrimaryLight
+    secondary = PrimaryDarkColor,
+    secondaryVariant = PrimaryLight
 
     /* Other default colors to override
     background = Color.White,
@@ -39,7 +41,7 @@ fun IREPCPTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable
     MaterialTheme(
         colors = colors,
         typography = Typography,
-        shapes = Shapes,
+        shapes = MyShapes,
         content = content
     )
 }

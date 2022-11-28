@@ -12,6 +12,10 @@ val PrimaryColor = Color(0xFF03a9f4)
 val PrimaryDarkColor = Color(0xFF007ac1)
 val PrimaryLight = Color(0xFF67daff)
 
+val SecondaryColor = Color(0xFF263238)
+val SecondaryDarkColor = Color(0xFF000a12)
+val SecondaryLight = Color(0xFF4f5b62)
+
 
 
 //Colores distribucion screen
