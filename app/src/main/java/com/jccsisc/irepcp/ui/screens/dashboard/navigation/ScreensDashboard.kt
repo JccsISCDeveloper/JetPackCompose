@@ -27,7 +27,7 @@ sealed class ScreensDashboard(val route: String, val title: String, val icon: Im
     /**
      * Drawer
      * */
-    object Pantalla1Screen: ScreensDashboard("pantalla1_screen", "Pantalla 1", Icons.Sharp.AccountBalance)
+    object MascotaFelizScreen: ScreensDashboard("mascota_feliz_screen", "Mascota Feliz", Icons.Sharp.FormatShapes )
     object Pantalla2Screen: ScreensDashboard("pantalla2_screen", "Pantalla 2", Icons.Sharp.Dashboard)
     object ConsumoApisScreen: ScreensDashboard("consumo_apis_screen", "Apis", Icons.Sharp.AddReaction)
     object CanvasScreen: ScreensDashboard("canvas_screen", "Canvas", Icons.Sharp.Airplay)

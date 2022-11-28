@@ -9,7 +9,7 @@ import com.jccsisc.irepcp.ui.screens.dashboard.canvas.CanvasScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.favorites.FavoritesScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.gallery.GalleryScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.home.ui.HomeScreen
-import com.jccsisc.irepcp.ui.screens.dashboard.pantalla1.Pantalla1Screen
+import com.jccsisc.irepcp.ui.screens.dashboard.mascotafeliz.MascotaFelizScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.pantalla2.Pantalla2Screen
 import com.jccsisc.irepcp.ui.screens.dashboard.consumoapis.ConsumoApisScreen
 
@@ -35,7 +35,7 @@ fun NavigationDashboard(
         /**
          * Drawer
          * */
-        composable(ScreensDashboard.Pantalla1Screen.route) { Pantalla1Screen() }
+        composable(ScreensDashboard.MascotaFelizScreen.route) { MascotaFelizScreen() }
         composable(ScreensDashboard.Pantalla2Screen.route) { Pantalla2Screen() }
         composable(ScreensDashboard.ConsumoApisScreen.route) { ConsumoApisScreen() }
         composable(ScreensDashboard.CanvasScreen.route) { CanvasScreen() }

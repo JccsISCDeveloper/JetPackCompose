@@ -39,7 +39,7 @@ fun DashboardContentScreen() {
     val itemsDrawer = listOf(
         ScreensDashboard.HomeScreen,
         ScreensDashboard.FavoritesScreen,
-        ScreensDashboard.Pantalla1Screen,
+        ScreensDashboard.MascotaFelizScreen,
         ScreensDashboard.Pantalla2Screen,
         ScreensDashboard.ConsumoApisScreen,
         ScreensDashboard.CanvasScreen
