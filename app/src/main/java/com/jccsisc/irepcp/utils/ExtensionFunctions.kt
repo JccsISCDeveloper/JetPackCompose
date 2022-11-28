@@ -1,5 +1,6 @@
 package com.jccsisc.irepcp.utils
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.jccsisc.irepcp.IREPApp
 
 /**
  * Project: IREPCP
@@ -33,6 +35,14 @@ fun SetNavbarColor(color: Color, useDarkIcons: Boolean = true) {
     SideEffect {
         systemUiController.setSystemBarsColor(color = color, darkIcons = useDarkIcons)
     }
+}
+
+
+/**
+ * Funciones Kotlin Globales
+ * */
+fun showToast(msg: String, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(IREPApp.INSTANCE.baseContext, msg, duration).show()
 }
 
 /**
