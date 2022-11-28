@@ -31,7 +31,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.screens.ListaActivity"
+            android:name=".ui.screens.listaactivity.ListaActivity"
             android:exported="false"
             android:label="@string/title_activity_lista"
             android:theme="@style/Theme.IREPCP">
