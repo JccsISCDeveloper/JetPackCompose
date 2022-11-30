@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.jccsisc.irepcp.ui.navigation.CurrentRoute
+import com.jccsisc.irepcp.ui.navigation.navigateToAnyRoute
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
 
@@ -26,10 +26,10 @@ fun MyBottomBar(navController: NavHostController, navItems: List<ScreensDashboar
             BottomNavigationItem(
                 selected = currenRoute == screen.drawerItem.route,
                 onClick = {
-                    navController.navigate(screen.drawerItem.route) {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                        launchSingleTop = true
-                    }
+                    navigateToAnyRoute(
+                        navController = navController,
+                        route = screen.drawerItem.route,
+                        action = {})
                 },
                 icon = {
                     Icon(

@@ -26,10 +26,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.navigation.CurrentRoute
+import com.jccsisc.irepcp.ui.navigation.navigateToAnyRoute
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.model.DrawerChildItem
 import com.jccsisc.irepcp.ui.theme.Monserrat
@@ -80,26 +80,29 @@ fun MyDrawerLayout(
             if (index % 3 == 0 && index != 0) Divider()
             DrawerItem(
                 item = item,
+                navController,
                 selected = currentRoute == item.drawerItem.route,
                 onItemClick = { isHeaderItem ->
                     if (isHeaderItem) {
-                        navController.navigate(item.drawerItem.route) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                            launchSingleTop = true
-                        }
-                        scope.launch {
-                            scaffoldState.drawerState.close()
+                        navigateToAnyRoute(
+                            navController = navController,
+                            route = item.drawerItem.route
+                        ) {
+                            scope.launch {
+                                scaffoldState.drawerState.close()
+                            }
                         }
                     }
                 },
                 onItemChileClick = { childItemSelected ->
                     if (childItemSelected.isNotEmpty()) {
-                        navController.navigate(childItemSelected) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                            launchSingleTop = true
-                        }
-                        scope.launch {
-                            scaffoldState.drawerState.close()
+                        navigateToAnyRoute(
+                            navController = navController,
+                            route = childItemSelected
+                        ) {
+                            scope.launch {
+                                scaffoldState.drawerState.close()
+                            }
                         }
                     }
                 }
@@ -111,12 +114,13 @@ fun MyDrawerLayout(
 @Composable
 private fun DrawerItem(
     item: ScreensDashboard,
+    navController: NavHostController,
     selected: Boolean,
     onItemClick: (isHeaderItem: Boolean) -> Unit,
     onItemChileClick: (childItemSelected: String) -> Unit
 ) {
     var masInformacion by remember { mutableStateOf(false) }
-
+    val currentRoute = CurrentRoute(navController)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -152,7 +156,10 @@ private fun DrawerItem(
             )
             if (masInformacion)
                 item.drawerItem.expandableOptions?.forEach {
-                    DrawerItemChild(it.drawerChildItem) { chilRouteSelected ->
+                    DrawerItemChild(
+                        it.drawerChildItem,
+                        currentRoute == it.drawerChildItem.route
+                    ) { chilRouteSelected ->
                         onItemChileClick(chilRouteSelected)
                     }
                 }
@@ -170,17 +177,19 @@ private fun DrawerItem(
 }
 
 @Composable
-private fun DrawerItemChild(item: DrawerChildItem, onItemChildClick: (chilRouteSelected: String) -> Unit) {
-    var chilRouteSelected by remember { mutableStateOf("") }
+private fun DrawerItemChild(
+    item: DrawerChildItem,
+    selected: Boolean,
+    onItemChildClick: (chilRouteSelected: String) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(dimensionResource(id = R.dimen.padding_3))
             .clip(RoundedCornerShape(10))
-            .background(if (chilRouteSelected.isNotEmpty()) PrimaryColor.copy(alpha = 0.25f) else Color.Transparent)
+            .background(if (selected) PrimaryColor.copy(alpha = 0.25f) else Color.Transparent)
             .clickable {
-                chilRouteSelected = item.route
-                onItemChildClick(chilRouteSelected)
+                onItemChildClick(item.route)
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
