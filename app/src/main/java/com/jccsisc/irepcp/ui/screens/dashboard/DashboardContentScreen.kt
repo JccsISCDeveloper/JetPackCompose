@@ -64,7 +64,7 @@ fun DashboardContentScreen() {
             )
         },
         floatingActionButton = { FloatActionBttn() },
-        isFloatingActionButtonDocked = false,
+        isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.End,
         drawerContent = {
             MyDrawerLayout(scope, scaffoldState, dashboardNavController, itemsDrawer)
