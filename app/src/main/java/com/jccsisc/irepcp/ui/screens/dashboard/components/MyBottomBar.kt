@@ -1,7 +1,11 @@
 package com.jccsisc.irepcp.ui.screens.dashboard.components
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.jccsisc.irepcp.ui.navigation.CurrentRoute
@@ -20,16 +24,28 @@ fun MyBottomBar(navController: NavHostController, navItems: List<ScreensDashboar
     BottomNavigation(backgroundColor = PrimaryColor) {
         navItems.forEach { screen ->
             BottomNavigationItem(
-                selected = currenRoute == screen.route,
+                selected = currenRoute == screen.drawerItem.route,
                 onClick = {
-                    navController.navigate(screen.route) {
+                    navController.navigate(screen.drawerItem.route) {
                         popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                         launchSingleTop = true
                     }
                 },
-                icon = { Icon(imageVector = screen.icon, contentDescription = "") },
-                label = { Text(text = screen.title, style = MaterialTheme.typography.button) },
+                icon = {
+                    Icon(
+                        painter = painterResource(id = screen.drawerItem.icon),
+                        contentDescription = "",
+                        modifier = Modifier.size(25.dp)
+                    )
+                },
+                label = {
+                    Text(
+                        text = screen.drawerItem.title,
+                        style = MaterialTheme.typography.button
+                    )
+                },
                 alwaysShowLabel = false
+
             )
         }
     }

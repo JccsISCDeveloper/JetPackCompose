@@ -11,6 +11,7 @@ val AndroidColor = Color(0xFF46E68D)
 val PrimaryColor = Color(0xFF03a9f4)
 val PrimaryDarkColor = Color(0xFF007ac1)
 val PrimaryLight = Color(0xFF67daff)
+val PrimaryLight2 = Color(0xFF62D7FD)
 
 val SecondaryColor = Color(0xFF263238)
 val SecondaryDarkColor = Color(0xFF000a12)

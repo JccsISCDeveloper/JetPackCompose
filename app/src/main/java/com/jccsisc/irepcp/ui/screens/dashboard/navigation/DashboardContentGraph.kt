@@ -1,10 +1,10 @@
-package com.jccsisc.irepcp.ui.screens.dashboard
+package com.jccsisc.irepcp.ui.screens.dashboard.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.jccsisc.irepcp.ui.screens.dashboard.navigation.DASHBOARD_CONTENT_GRAPH
-import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
+import com.jccsisc.irepcp.ui.screens.dashboard.DashboardContentScreen
+import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard.*
 
 /**
  * Project: IREPCP
@@ -13,10 +13,10 @@ import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
  */
 fun NavGraphBuilder.dashboardContentGraph() {
     navigation(
-        startDestination = ScreensDashboard.DashboardContentScreen.route,
+        startDestination = DashboardContentScreen.drawerItem.route,
         route = DASHBOARD_CONTENT_GRAPH
     ) {
-        composable(ScreensDashboard.DashboardContentScreen.route) {
+        composable(DashboardContentScreen.drawerItem.route) {
             DashboardContentScreen()
         }
     }
