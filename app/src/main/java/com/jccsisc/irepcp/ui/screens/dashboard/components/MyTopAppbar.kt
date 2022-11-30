@@ -2,11 +2,10 @@ package com.jccsisc.irepcp.ui.screens.dashboard.components
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 
@@ -17,6 +16,7 @@ import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
  */
 @Composable
 fun MyTopAppbar(onClickDrawer: () -> Unit, onInfoClick: () -> Unit, displaySnackBarClick: () -> Unit) {
+    var showMenu by remember { mutableStateOf(false) }
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.app_name), style = MaterialTheme.typography.h5) },
         navigationIcon = {
@@ -30,6 +30,19 @@ fun MyTopAppbar(onClickDrawer: () -> Unit, onInfoClick: () -> Unit, displaySnack
             }
             IconButton(onClick = { displaySnackBarClick() }) {
                 Icon(imageVector = Icons.Default.Refresh, contentDescription = "ic refresh")
+            }
+            IconButton(onClick = { showMenu = !showMenu }) {
+                Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "ic morevert")
+            }
+            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    Icon(imageVector = Icons.Filled.Person, contentDescription = "ic person")
+                    Text(text = "Idiomas", style = MaterialTheme.typography.overline, fontSize = 16.sp)
+                }
+                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    Icon(imageVector = Icons.Filled.Share, contentDescription = "ic share")
+                    Text(text = "Compartir", style = MaterialTheme.typography.overline, fontSize = 16.sp)
+                }
             }
         },
         backgroundColor = PrimaryDarkColor
