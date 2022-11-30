@@ -44,11 +44,13 @@ fun MyBottomBar(navController: NavHostController, navItems: List<ScreensDashboar
                             action = {})
                     },
                     icon = {
-                        Icon(
-                            painter = painterResource(id = screen.drawerItem.icon),
-                            contentDescription = "",
-                            modifier = Modifier.size(25.dp)
-                        )
+                        screen.drawerItem.icon?.let { painterResource(id = it) }?.let {
+                            Icon(
+                                painter = it,
+                                contentDescription = "",
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
                     },
                     label = {
                         Text(

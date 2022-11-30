@@ -1,6 +1,7 @@
 package com.jccsisc.irepcp.ui.screens.dashboard.favorites
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -21,6 +22,9 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
 import com.jccsisc.irepcp.ui.theme.GrayBg
 
@@ -30,7 +34,7 @@ import com.jccsisc.irepcp.ui.theme.GrayBg
  * Created by Julio Cesar Camacho Silva on 22/11/22
  */
 @Composable
-fun FavoritesScreen() {
+fun FavoritesScreen(navController: NavHostController) {
     LazyColumn(
         contentPadding = PaddingValues(vertical = 10.dp, horizontal = 15.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
@@ -39,7 +43,11 @@ fun FavoritesScreen() {
         item {
             Text(
                 text = "Productos de Super Mercado",
-                style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold, color = PrimaryColor)
+                style = TextStyle(
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = PrimaryColor
+                )
             )
         }
 
@@ -54,7 +62,7 @@ fun FavoritesScreen() {
                     }
                 }
             } else {
-                CardProducto(producto = producto)
+                CardProducto(producto = producto, navController)
             }
         }
     }
@@ -87,11 +95,14 @@ private val listaPublicidad = listOf(
 )
 
 @Composable
-fun CardProducto(producto: Producto) {
+fun CardProducto(producto: Producto, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(70.dp),
+            .height(70.dp)
+            .clickable {
+                navController.navigate(ScreensDashboard.DetailsFavoritesScreen.drawerItem.route)
+            },
         shape = RoundedCornerShape(14.dp),
         elevation = 3.dp
     ) {
@@ -137,5 +148,5 @@ fun CardPublicidad(publicidad: Publicidad) {
 @Preview(showBackground = true, showSystemUi = true, device = Devices.NEXUS_5)
 @Composable
 private fun DefaultPreview() {
-    FavoritesScreen()
+    FavoritesScreen(navController = rememberNavController())
 }

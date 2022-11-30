@@ -14,7 +14,8 @@ import com.jccsisc.irepcp.ui.screens.dashboard.home.ui.HomeScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.mascotafeliz.MascotaFelizScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.pantalla2.Pantalla2Screen
 import com.jccsisc.irepcp.ui.screens.dashboard.consumoapis.ConsumoApisScreen
-import com.jccsisc.irepcp.ui.screens.dashboard.eventos.EventosScreen
+import com.jccsisc.irepcp.ui.screens.dashboard.detailsfavorites.DetailsFavoritesScreen
+import com.jccsisc.irepcp.ui.screens.dashboard.events.EventsScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard.*
 import com.jccsisc.irepcp.ui.screens.dashboard.premium.PremiumScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.tumascota.TuMascotaScreen
@@ -35,7 +36,8 @@ fun NavigationDashboard(
          * BorromBar
          * */
         composable(HomeScreen.drawerItem.route) { HomeScreen() }
-        composable(FavoritesScreen.drawerItem.route) { FavoritesScreen() }
+        composable(FavoritesScreen.drawerItem.route) { FavoritesScreen(navController) }
+        composable(DetailsFavoritesScreen.drawerItem.route) { DetailsFavoritesScreen() }
         composable(GalleryScreen.drawerItem.route) { GalleryScreen() }
 
         /**
@@ -59,7 +61,7 @@ fun NavGraphBuilder.itemChildDrawerGraph(navController: NavHostController) {
             TuMascotaScreen()
         }
         composable(ScreenChildItemDrawer.EventosScreen.drawerChildItem.route) {
-            EventosScreen()
+            EventsScreen()
         }
         composable(ScreenChildItemDrawer.PremiumScreen.drawerChildItem.route) {
             PremiumScreen()

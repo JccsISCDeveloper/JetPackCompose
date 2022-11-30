@@ -11,6 +11,6 @@ import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreenChildItemDrawer
 data class DrawerItem(
     val route: String,
     val title: String,
-    @DrawableRes val icon: Int,
+    @DrawableRes val icon: Int? = -1,
     val expandableOptions: List<ScreenChildItemDrawer>? = listOf()
 )

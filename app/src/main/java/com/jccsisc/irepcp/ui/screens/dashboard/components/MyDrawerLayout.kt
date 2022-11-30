@@ -133,11 +133,13 @@ private fun DrawerItem(
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = item.drawerItem.icon),
-            contentDescription = item.drawerItem.title,
-            modifier = Modifier.size(32.dp)
-        )
+        item.drawerItem.icon?.let { painterResource(id = it) }?.let {
+            Image(
+                painter = it,
+                contentDescription = item.drawerItem.title,
+                modifier = Modifier.size(32.dp)
+            )
+        }
         Spacer(modifier = Modifier.size(12.dp))
         Column(
             modifier = Modifier

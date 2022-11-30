@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.dashboard.eventos
+package com.jccsisc.irepcp.ui.screens.dashboard.events
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,7 +15,7 @@ import com.jccsisc.irepcp.ui.theme.GrayBg
  * Created by Julio Cesar Camacho Silva on 29/11/22
  */
 @Composable
-fun EventosScreen() {
+fun EventsScreen() {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(GrayBg), contentAlignment = Alignment.Center) {

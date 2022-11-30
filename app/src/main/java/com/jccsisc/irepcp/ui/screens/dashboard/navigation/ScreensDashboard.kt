@@ -33,6 +33,8 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
     object ConsumoApisScreen: ScreensDashboard(DrawerItem("consumo_apis_screen", "Apis", R.drawable.ic_apis))
     object CanvasScreen: ScreensDashboard(DrawerItem("canvas_screen", "Canvas", R.drawable.ic_canvas))
 
+
+    object DetailsFavoritesScreen: ScreensDashboard(DrawerItem("details_favorites_screen", "Detalles"))
 }
 
 val listMascotaOptions = listOf(
