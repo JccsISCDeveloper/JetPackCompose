@@ -101,7 +101,7 @@ fun CardProducto(producto: Producto, navController: NavHostController) {
             .fillMaxWidth()
             .height(70.dp)
             .clickable {
-                navController.navigate(ScreensDashboard.DetailsFavoritesScreen.drawerItem.route)
+                navController.navigate("${ScreensDashboard.DetailsFavoritesScreen.drawerItem.route}/${producto.nombre}")
             },
         shape = RoundedCornerShape(14.dp),
         elevation = 3.dp

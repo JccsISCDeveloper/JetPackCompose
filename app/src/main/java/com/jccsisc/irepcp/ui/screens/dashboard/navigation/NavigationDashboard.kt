@@ -37,7 +37,12 @@ fun NavigationDashboard(
          * */
         composable(HomeScreen.drawerItem.route) { HomeScreen() }
         composable(FavoritesScreen.drawerItem.route) { FavoritesScreen(navController) }
-        composable(DetailsFavoritesScreen.drawerItem.route) { DetailsFavoritesScreen() }
+        composable("${DetailsFavoritesScreen.drawerItem.route}/{producto}") {
+            backStackEntry ->
+            val producto = backStackEntry.arguments?.getString("producto")
+            requireNotNull(producto)
+            DetailsFavoritesScreen(producto)
+        }
         composable(GalleryScreen.drawerItem.route) { GalleryScreen() }
 
         /**

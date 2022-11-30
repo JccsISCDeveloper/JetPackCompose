@@ -17,11 +17,11 @@ import com.jccsisc.irepcp.ui.theme.GrayBg
  * Created by Julio Cesar Camacho Silva on 30/11/22
  */
 @Composable
-fun DetailsFavoritesScreen() {
+fun DetailsFavoritesScreen(producto: String) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(GrayBg), contentAlignment = Alignment.Center
     ) {
-        Text(text = "Details", fontSize = 26.sp, fontWeight = FontWeight.ExtraBold)
+        Text(text = producto, fontSize = 26.sp, fontWeight = FontWeight.ExtraBold)
     }
 }
