@@ -8,11 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.ui.screens.dashboard.components.MyBottomBar
 import com.jccsisc.irepcp.ui.screens.dashboard.components.MyDrawerLayout
 import com.jccsisc.irepcp.ui.screens.dashboard.components.MyTopAppbar
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.NavigationDashboard
+import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard.*
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
@@ -48,6 +50,9 @@ fun DashboardContentScreen() {
         scaffoldState = scaffoldState,
         topBar = {
             HeaderContentScreens(
+                itemsDrawer,
+                itemsbottomBar,
+                dashboardNavController,
                 coroutineScope = scope,
                 scaffoldState = scaffoldState
             )
@@ -78,10 +83,16 @@ fun DashboardContentScreen() {
  * */
 @Composable
 private fun HeaderContentScreens(
+    itemsDrawer: List<ScreensDashboard>,
+    itemsbottomBar: List<ScreensDashboard>,
+    dashboardNavController: NavHostController,
     coroutineScope: CoroutineScope,
     scaffoldState: ScaffoldState,
 ) {
     MyTopAppbar(
+        itemsDrawer = itemsDrawer,
+        itemsbottomBar = itemsbottomBar,
+        dashboardNavController = dashboardNavController,
         onClickDrawer = {
             coroutineScope.launch { scaffoldState.drawerState.open() }
         }, onInfoClick = {
