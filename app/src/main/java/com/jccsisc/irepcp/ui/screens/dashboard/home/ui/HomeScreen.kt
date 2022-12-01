@@ -2,7 +2,6 @@
 
 package com.jccsisc.irepcp.ui.screens.dashboard.home.ui
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,11 +19,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.theme.GrayBg
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
-import com.jccsisc.irepcp.utils.showToast
 import kotlinx.coroutines.launch
 
 /**
@@ -169,6 +166,7 @@ fun BottomSheet() {
                 .fillMaxSize()
                 .padding(24.dp)
         ) {
+
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(text = "Recibir ofertas especiales", modifier = Modifier.weight(1f))
                 Switch(
