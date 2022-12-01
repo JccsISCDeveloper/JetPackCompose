@@ -43,9 +43,9 @@ fun DashboardContentScreen() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    val itemsbottomBar = listOf(HomeScreen, FavoritesScreen, GalleryScreen)
+    val itemsbottomBar = listOf(MascotasScreen, FavoritesScreen, GalleryScreen)
     val itemsDrawer = listOf(
-        HomeScreen,
+        MascotasScreen,
         FavoritesScreen,
         MascotaFelizScreen,
         Pantalla2Screen,

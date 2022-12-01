@@ -7,6 +7,8 @@ package com.jccsisc.irepcp.core.constants
  */
 object Constants {
 
+    const val NO_VALUE = ""
+
     /**
      * Routes Login
      * */

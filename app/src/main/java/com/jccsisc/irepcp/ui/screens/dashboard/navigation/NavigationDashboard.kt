@@ -29,14 +29,14 @@ import com.jccsisc.irepcp.ui.screens.mascotas.tumascota.TuMascotaScreen
 @Composable
 fun NavigationDashboard(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = HomeScreen.drawerItem.route
+    startDestination: String = MascotasScreen.drawerItem.route
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
 
         /**
          * BorromBar
          * */
-        composable(HomeScreen.drawerItem.route) { MascotasScreen() }
+        composable(MascotasScreen.drawerItem.route) { MascotasScreen() }
         composable(FavoritesScreen.drawerItem.route) { FavoritesScreen(navController) }
         composable("${DetailsFavoritesScreen.drawerItem.route}/{producto}") {
             backStackEntry ->
