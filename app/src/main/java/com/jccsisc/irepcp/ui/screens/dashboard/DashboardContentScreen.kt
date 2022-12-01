@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
  * FROM: com.jccsisc.irepcp.ui.screens.homegraph
  * Created by Julio Cesar Camacho Silva on 24/11/22
  */
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DashboardContentScreen() {
     SetNavbarColor(color = PrimaryDarkColor, useDarkIcons = false)
