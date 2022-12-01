@@ -1,12 +1,17 @@
 package com.jccsisc.irepcp.ui.screens.dashboard
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -120,7 +125,63 @@ private fun HeaderContentScreens(
 
 @Composable
 fun FloatActionBttn() {
-    FloatingActionButton(onClick = { showToast("Click en FAB") }) {
+    var showDialogData by remember { mutableStateOf(false) }
+    var nombre by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var aceptar by remember { mutableStateOf(false) }
+
+    if (showDialogData) {
+        AlertDialog(
+            onDismissRequest = {},
+            confirmButton = {
+                TextButton(onClick = {}) {
+                    Text(text = "Solicitar")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialogData = false }) {
+                    Text(text = "Cancelar")
+                }
+            },
+            title = { Text(text = "Recompensas") },
+            text = {
+                Column {
+                    Text(text = "Registre sus datos")
+                    TextField(
+                        value = nombre,
+                        onValueChange = { nombre = it },
+                        placeholder = { Text(text = "Nombre") },
+                        singleLine = true,
+                        colors = TextFieldDefaults.textFieldColors(
+                            textColor = Color(0xFFB2B2B2),
+                            backgroundColor = Color(0xFFFAFAFA),
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
+                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    TextField(
+                        value = email,
+                        onValueChange = { email = it },
+                        placeholder = { Text(text = "Correo") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        singleLine = true,
+                        colors = TextFieldDefaults.textFieldColors(
+                            textColor = Color(0xFFB2B2B2),
+                            backgroundColor = Color(0xFFFAFAFA),
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
+                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(checked = aceptar, onCheckedChange = { aceptar = it })
+                        Text(text = "Acepto los términos y condiciones")
+                    }
+                }
+            })
+    }
+
+    FloatingActionButton(onClick = { showDialogData = true }) {
         Icon(imageVector = Icons.Filled.Add, contentDescription = "Fab icon")
     }
 }

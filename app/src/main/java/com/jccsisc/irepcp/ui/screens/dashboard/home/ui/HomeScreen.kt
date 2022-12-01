@@ -9,15 +9,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.theme.GrayBg
 
@@ -28,6 +25,26 @@ import com.jccsisc.irepcp.ui.theme.GrayBg
  */
 @Composable
 fun HomeScreen() {
+    var showDialogDogs by remember { mutableStateOf(false) }
+    if (showDialogDogs) {
+        AlertDialog(
+            onDismissRequest = { /*TODO*/ },
+            confirmButton = {
+                TextButton(onClick = {  }) {
+                    Text(text = "Actualizar")
+                }
+            },
+            dismissButton = {
+                 TextButton(onClick = { showDialogDogs = false }) {
+                     Text(text = "Cancelar")
+                 }
+            },
+            title = { Text(text = "Confirmar") },
+            text = { Text(text = "¿Está seguro de querer actuaizar la información?") })
+    }
+
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,13 +78,16 @@ fun HomeScreen() {
                     text = "En este artículo veremos los cuidados que requieren tus cachorros en los primeros meses de vida.",
                     style = MaterialTheme.typography.subtitle1
                 )
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Box {
                         Row() {
-                            TextButton(onClick = { /*TODO*/ }) {
+                            TextButton(onClick = { showDialogDogs = true }) {
                                 Text(text = "PERROS")
                             }
-                            TextButton(onClick = { /*TODO*/ }) {
+                            TextButton(onClick = { }) {
                                 Text(text = "RAZAS")
                             }
                         }
