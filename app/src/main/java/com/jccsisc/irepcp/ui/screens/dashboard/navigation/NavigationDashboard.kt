@@ -7,18 +7,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_GRAPH
 import com.jccsisc.irepcp.ui.screens.dashboard.canvas.CanvasScreen
-import com.jccsisc.irepcp.ui.screens.dashboard.favorites.FavoritesScreen
-import com.jccsisc.irepcp.ui.screens.dashboard.gallery.GalleryScreen
-import com.jccsisc.irepcp.ui.screens.dashboard.home.ui.HomeScreen
-import com.jccsisc.irepcp.ui.screens.dashboard.mascotafeliz.MascotaFelizScreen
-import com.jccsisc.irepcp.ui.screens.dashboard.pantalla2.Pantalla2Screen
 import com.jccsisc.irepcp.ui.screens.dashboard.consumoapis.ConsumoApisScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.detailsfavorites.DetailsFavoritesScreen
-import com.jccsisc.irepcp.ui.screens.dashboard.events.EventsScreen
+import com.jccsisc.irepcp.ui.screens.dashboard.favorites.FavoritesScreen
+import com.jccsisc.irepcp.ui.screens.dashboard.gallery.GalleryScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard.*
-import com.jccsisc.irepcp.ui.screens.dashboard.premium.PremiumScreen
-import com.jccsisc.irepcp.ui.screens.dashboard.tumascota.TuMascotaScreen
+import com.jccsisc.irepcp.ui.screens.dashboard.pantalla2.Pantalla2Screen
+import com.jccsisc.irepcp.ui.screens.mascotas.events.EventsScreen
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotafeliz.MascotaFelizScreen
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui.MascotasScreen
+import com.jccsisc.irepcp.ui.screens.mascotas.premium.PremiumScreen
+import com.jccsisc.irepcp.ui.screens.mascotas.tumascota.TuMascotaScreen
 
 /**
  * Project: IREPCP
@@ -35,7 +36,7 @@ fun NavigationDashboard(
         /**
          * BorromBar
          * */
-        composable(HomeScreen.drawerItem.route) { HomeScreen() }
+        composable(HomeScreen.drawerItem.route) { MascotasScreen() }
         composable(FavoritesScreen.drawerItem.route) { FavoritesScreen(navController) }
         composable("${DetailsFavoritesScreen.drawerItem.route}/{producto}") {
             backStackEntry ->

@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.core
+package com.jccsisc.irepcp.core.constants
 
 /**
  * Project: IREPCP

@@ -2,12 +2,11 @@ package com.jccsisc.irepcp.core.di
 
 import android.content.Context
 import androidx.room.Room
-import com.jccsisc.irepcp.core.ConstantsRoom.DB_MASCOTAS
-import com.jccsisc.irepcp.core.ConstantsRoom.TBL_MASCOTA
-import com.jccsisc.irepcp.ui.screens.dashboard.home.data.local.MascotaDB
-import com.jccsisc.irepcp.ui.screens.dashboard.home.data.local.MascotaDao
-import com.jccsisc.irepcp.ui.screens.dashboard.home.data.local.MascotaRepositoryImpl
-import com.jccsisc.irepcp.ui.screens.dashboard.home.domain.repository.MascotaRepository
+import com.jccsisc.irepcp.core.constants.ConstantsRoom.DB_MASCOTAS
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local.MascotaDB
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local.MascotaDao
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local.MascotaRepositoryImpl
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.repository.MascotaRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,9 +1,20 @@
 package com.jccsisc.irepcp.ui.screens.dashboard.navigation
 
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.core.constants.Constants.CANVAS_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.CONSUMO_APIS_HEADER
+import com.jccsisc.irepcp.core.constants.Constants.CONTENT_DASHBOARD_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.DETAILS_FAVORITES_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.EVENTS_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.FAVORITES_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.GALLERY_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.MASCOTAS_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_HEADER
+import com.jccsisc.irepcp.core.constants.Constants.PANTALLA2_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.PREMIUM_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.TU_MASCOTA_SCREEN
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.model.DrawerChildItem
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.model.DrawerItem
-import com.jccsisc.irepcp.ui.screens.dashboard.tumascota.TuMascotaScreen
 
 /**
  * Project: IREPCP
@@ -12,29 +23,50 @@ import com.jccsisc.irepcp.ui.screens.dashboard.tumascota.TuMascotaScreen
  * NOTA: Como las opciones del BottomNavigationView no tienen navegacion a otras screen
  *       Se colocaron en el paquete Home
  */
-const val DASHBOARD_CONTENT_GRAPH = "DASHBOARD_CONTENT_GRAPH"
-const val HOME_GRAPH = "HOME_GRAPH"
 sealed class ScreensDashboard(val drawerItem: DrawerItem) {
 
-    object DashboardContentScreen: ScreensDashboard(DrawerItem("content_dashboard", "Content Dashboard", R.drawable.ic_home))
+    object DashboardContentScreen : ScreensDashboard(
+        DrawerItem(
+            CONTENT_DASHBOARD_SCREEN,
+            "Content Dashboard",
+            R.drawable.ic_home
+        )
+    )
 
     /**
      * BottomBar
      * */
-    object HomeScreen: ScreensDashboard(DrawerItem("home_screen", "Home", R.drawable.ic_home))
-    object FavoritesScreen: ScreensDashboard(DrawerItem("favorite_screen", "Favoritos", R.drawable.ic_favorites))
-    object GalleryScreen: ScreensDashboard(DrawerItem("gallery_screen", "Gallery", R.drawable.ic_gallery))
+    object HomeScreen : ScreensDashboard(DrawerItem(MASCOTAS_SCREEN, "Home", R.drawable.ic_home))
+    object FavoritesScreen :
+        ScreensDashboard(DrawerItem(FAVORITES_SCREEN, "Favoritos", R.drawable.ic_favorites))
+
+    object GalleryScreen :
+        ScreensDashboard(DrawerItem(GALLERY_SCREEN, "Gallery", R.drawable.ic_gallery))
 
     /**
      * Drawer
      * */
-    object MascotaFelizScreen: ScreensDashboard(DrawerItem("mascota", "Mascota", R.drawable.ic_pets, listMascotaOptions))
-    object Pantalla2Screen: ScreensDashboard(DrawerItem("pantalla2_screen", "Pantalla 2", R.drawable.ic_search))
-    object ConsumoApisScreen: ScreensDashboard(DrawerItem("consumo_apis_screen", "Apis", R.drawable.ic_apis))
-    object CanvasScreen: ScreensDashboard(DrawerItem("canvas_screen", "Canvas", R.drawable.ic_canvas))
+    object MascotaFelizScreen : ScreensDashboard(
+        DrawerItem(
+            MASCOTA_HEADER,
+            "Mascota",
+            R.drawable.ic_pets,
+            listMascotaOptions
+        )
+    ) //todo esta clase ya no se visualiza, se tomó como padre pero en qué momoento se mostrará? RESOLVER
+
+    object Pantalla2Screen :
+        ScreensDashboard(DrawerItem(PANTALLA2_SCREEN, "Pantalla 2", R.drawable.ic_search))
+
+    object ConsumoApisScreen :
+        ScreensDashboard(DrawerItem(CONSUMO_APIS_HEADER, "Apis", R.drawable.ic_apis))
+
+    object CanvasScreen :
+        ScreensDashboard(DrawerItem(CANVAS_SCREEN, "Canvas", R.drawable.ic_canvas))
 
 
-    object DetailsFavoritesScreen: ScreensDashboard(DrawerItem("details_favorites_screen", "Detalles"))
+    object DetailsFavoritesScreen :
+        ScreensDashboard(DrawerItem(DETAILS_FAVORITES_SCREEN, "Detalles"))
 }
 
 val listMascotaOptions = listOf(
@@ -43,10 +75,18 @@ val listMascotaOptions = listOf(
     ScreenChildItemDrawer.PremiumScreen
 )
 
-const val ITEM_MASCOTAS_GRAPH = "ITEM_MASCOTAS_GRAPH"
-const val MASCOTA_GRAPH = "MASCOTA_GRAPH"
-sealed class  ScreenChildItemDrawer(val drawerChildItem: DrawerChildItem) {
-    object TuMascotaScreen: ScreenChildItemDrawer(DrawerChildItem("tu_mascota_screen", "Tu mascota", R.drawable.ic_tu_mascota))
-    object EventosScreen: ScreenChildItemDrawer(DrawerChildItem("eventos_screen", "Eventos", R.drawable.ic_cat_2))
-    object PremiumScreen: ScreenChildItemDrawer(DrawerChildItem("premium_screen", "Premium", R.drawable.ic_premium))
+sealed class ScreenChildItemDrawer(val drawerChildItem: DrawerChildItem) {
+    object TuMascotaScreen : ScreenChildItemDrawer(
+        DrawerChildItem(
+            TU_MASCOTA_SCREEN,
+            "Tu mascota",
+            R.drawable.ic_tu_mascota
+        )
+    )
+
+    object EventosScreen :
+        ScreenChildItemDrawer(DrawerChildItem(EVENTS_SCREEN, "Eventos", R.drawable.ic_cat_2))
+
+    object PremiumScreen :
+        ScreenChildItemDrawer(DrawerChildItem(PREMIUM_SCREEN, "Premium", R.drawable.ic_premium))
 }
