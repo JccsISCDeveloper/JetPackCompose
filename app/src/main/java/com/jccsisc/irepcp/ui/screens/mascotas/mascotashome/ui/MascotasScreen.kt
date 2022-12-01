@@ -2,245 +2,137 @@
 
 package com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.model.Mascota
 import com.jccsisc.irepcp.ui.theme.GrayBg
-import com.jccsisc.irepcp.ui.theme.PrimaryColor
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.job
 
 /**
  * Project: IREPCP
  * FROM: com.jccsisc.irepcp.ui.features.dashboard.ui
  * Created by Julio Cesar Camacho Silva on 16/11/22
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MascotasScreen() {
+fun MascotasScreen(viewModel: MascotasViewModel = hiltViewModel()) {
 
-    val scope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
-    val bsScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
-    )
+    val mascotas by viewModel.mascotas.collectAsState(initial = emptyList())
 
-    var showDialogDogs by remember { mutableStateOf(false) }
-    if (showDialogDogs) {
-        AlertDialog(
-            onDismissRequest = { /*TODO*/ },
-            confirmButton = {
-                TextButton(onClick = { }) {
-                    Text(text = "Actualizar")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDialogDogs = false }) {
-                    Text(text = "Cancelar")
-                }
-            },
-            title = { Text(text = "Confirmar") },
-            text = { Text(text = "¿Está seguro de querer actuaizar la información?") })
-    }
-
-    BottomSheetScaffold(
-        scaffoldState = bsScaffoldState,
-        sheetContent = { BottomSheet() },
-        sheetPeekHeight = 0.dp,
-        sheetShape = RoundedCornerShape(16.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(GrayBg), contentAlignment = Alignment.Center
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(GrayBg)
-                .padding(dimensionResource(id = R.dimen.padding_6))
-        ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(dimensionResource(id = R.dimen.padding_6))
-                    .clickable { },
-                elevation = 6.dp,
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(dimensionResource(id = R.dimen.padding_16))
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.dog),
-                        contentDescription = "dog",
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Text(
-                        text = "Cuidados de cachorros en los primeros meses",
-                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_10)),
-                        style = MaterialTheme.typography.h6
-                    )
-                    Text(
-                        text = "En este artículo veremos los cuidados que requieren tus cachorros en los primeros meses de vida.",
-                        style = MaterialTheme.typography.subtitle1
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Box {
-                            Row() {
-                                TextButton(onClick = { showDialogDogs = true }) {
-                                    Text(text = "PERROS")
-                                }
-                                TextButton(onClick = {
-                                    scope.launch {
-                                        if (bsScaffoldState.bottomSheetState.isCollapsed) {
-                                            bsScaffoldState.bottomSheetState.expand()
-                                        } else {
-                                            bsScaffoldState.bottomSheetState.collapse()
-                                        }
-                                    }
-                                }) {
-                                    Text(text = "RAZAS")
-                                }
-                            }
-                        }
-                        Box {
-                            Row() {
-                                IconButton(onClick = { /*TODO*/ }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Favorite,
-                                        contentDescription = "ic favorites"
-                                    )
-                                }
-                                IconButton(onClick = { /*TODO*/ }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Share,
-                                        contentDescription = "ic share"
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+
+        BodyMascotas(mascotas = mascotas)
+        AddMascotaAlertDialog(
+            opendDialog = viewModel.openDialog,
+            closeDialog = { viewModel.closeDialog() },
+            addMascota = { mascota ->
+                viewModel.addMascota(mascota)
             }
+        )
+        Button(onClick = { viewModel.openDialog() }, modifier = Modifier.align(Alignment.TopEnd)) {
+            Text(text = "Agregar mascota")
         }
     }
 
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BottomSheet() {
-    var swOfertas by remember { mutableStateOf(false) }
-    var swInternet by remember { mutableStateOf(false) }
-    Column(
+fun AddMascotaAlertDialog(opendDialog: Boolean, closeDialog: () -> Unit, addMascota: (mascota: Mascota) -> Unit) {
+    if (opendDialog) {
+        var animal by remember { mutableStateOf(NO_VALUE) }
+        var raza by remember { mutableStateOf(NO_VALUE) }
+        val focusRequester = FocusRequester()
+
+        AlertDialog(
+            onDismissRequest = { closeDialog() },
+            title = { Text(text = "Agregar mascota") },
+            text = {
+                Column {
+                    TextField(
+                        value = animal,
+                        onValueChange = { animal = it },
+                        modifier = Modifier.focusRequester(focusRequester),
+                        placeholder = { Text(text = "Animal") })
+                    LaunchedEffect(Unit) {
+                        coroutineContext.job.invokeOnCompletion {
+                            focusRequester.requestFocus()
+                        }
+                    }
+                    Spacer(modifier = Modifier.size(16.dp))
+                    TextField(value = raza, onValueChange = { raza = it }, placeholder = { "Raza" })
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    closeDialog()
+                    val mascota = Mascota(0, animal, raza)
+                    addMascota(mascota)
+                }) {
+                    Text(text = "Agregar")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = closeDialog) {
+                    Text(text = "Cerrar")
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun BodyMascotas(mascotas: List<Mascota>) {
+    LazyColumn(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(400.dp)
+            .fillMaxSize()
+            .padding(dimensionResource(id = R.dimen.padding_10))
+    ) {
+        items(mascotas) { mascota ->
+            MascotaCard(mascota)
+        }
+    }
+}
+
+@Composable
+fun MascotaCard(mascota: Mascota) {
+    Card(
+        modifier = Modifier
+            .padding(
+                top = dimensionResource(id = R.dimen.padding_3),
+                start = dimensionResource(id = R.dimen.padding_8),
+                end = dimensionResource(id = R.dimen.padding_8),
+                bottom = dimensionResource(id = R.dimen.padding_3)
+            )
+            .fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
+        elevation = 4.dp
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
-                .background(PrimaryColor),
-            horizontalArrangement = Arrangement.Center
+                .padding(dimensionResource(id = R.dimen.padding_10)),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Configuración", style = MaterialTheme.typography.subtitle1)
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp)
-        ) {
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Recibir ofertas especiales", modifier = Modifier.weight(1f))
-                Switch(
-                    checked = swOfertas,
-                    onCheckedChange = { swOfertas = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = PrimaryColor
-                    )
-                )
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Modo sin internet", modifier = Modifier.weight(1f))
-                Switch(
-                    checked = swInternet,
-                    onCheckedChange = { swInternet = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = PrimaryColor
-                    )
-                )
-            }
-            Row(
-                modifier = Modifier.padding(vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Condiciones de uso", modifier = Modifier.weight(1f))
-                CompositionLocalProvider(
-                    LocalMinimumTouchTargetEnforcement provides false
-                ) {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Filled.KeyboardArrowRight,
-                            contentDescription = "Condiciones de uso"
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier.padding(vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Política de privacidad", modifier = Modifier.weight(1f))
-                CompositionLocalProvider(
-                    LocalMinimumTouchTargetEnforcement provides false
-                ) {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Filled.KeyboardArrowRight,
-                            contentDescription = "Política de privacidad"
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier.padding(vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Contrato de licencia", modifier = Modifier.weight(1f))
-                CompositionLocalProvider(
-                    LocalMinimumTouchTargetEnforcement provides false
-                ) {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Filled.KeyboardArrowRight,
-                            contentDescription = "Contrato de licencia"
-                        )
-                    }
-                }
+            Column {
+                Text(mascota.animal)
+                Text(mascota.raza)
             }
         }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun PreviewHome() {
-    MascotasScreen()
 }
