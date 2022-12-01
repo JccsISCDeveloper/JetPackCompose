@@ -1,8 +1,8 @@
-package com.jccsisc.irepcp.ui.screens.dashboard.home.data.local
+package com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local
 
-import com.jccsisc.irepcp.ui.screens.dashboard.home.domain.model.Mascota
-import com.jccsisc.irepcp.ui.screens.dashboard.home.domain.repository.MascotaRepository
-import com.jccsisc.irepcp.ui.screens.dashboard.home.domain.repository.Mascotas
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.model.Mascota
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.repository.MascotaRepository
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.repository.Mascotas
 import kotlinx.coroutines.flow.Flow
 
 /**

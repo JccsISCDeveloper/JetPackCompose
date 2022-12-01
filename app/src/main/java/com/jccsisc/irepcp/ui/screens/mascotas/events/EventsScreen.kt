@@ -1,6 +1,4 @@
-@file:Suppress("UNUSED_EXPRESSION")
-
-package com.jccsisc.irepcp.ui.screens.dashboard.home.ui
+package com.jccsisc.irepcp.ui.screens.mascotas.events
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,13 +24,12 @@ import kotlinx.coroutines.launch
 
 /**
  * Project: IREPCP
- * FROM: com.jccsisc.irepcp.ui.features.dashboard.ui
- * Created by Julio Cesar Camacho Silva on 16/11/22
+ * FROM: com.jccsisc.irepcp.ui.screens.dashboard.eventos
+ * Created by Julio Cesar Camacho Silva on 29/11/22
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeScreen() {
-
+fun EventsScreen() {
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
     val bsScaffoldState = rememberBottomSheetScaffoldState(
@@ -139,7 +136,12 @@ fun HomeScreen() {
             }
         }
     }
+}
 
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun PreviewEvents() {
+    EventsScreen()
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -237,10 +239,4 @@ fun BottomSheet() {
             }
         }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun PreviewHome() {
-    HomeScreen()
 }

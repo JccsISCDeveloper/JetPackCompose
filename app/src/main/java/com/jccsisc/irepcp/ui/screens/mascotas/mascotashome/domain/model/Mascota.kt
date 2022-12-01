@@ -1,8 +1,8 @@
-package com.jccsisc.irepcp.ui.screens.dashboard.home.domain.model
+package com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.jccsisc.irepcp.core.ConstantsRoom.TBL_MASCOTA
+import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_MASCOTA
 
 /**
  * Project: IREPCP

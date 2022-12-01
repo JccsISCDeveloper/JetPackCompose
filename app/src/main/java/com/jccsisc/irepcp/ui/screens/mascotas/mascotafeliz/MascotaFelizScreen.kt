@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.dashboard.mascotafeliz
+package com.jccsisc.irepcp.ui.screens.mascotas.mascotafeliz
 
 import android.content.Intent
 import androidx.compose.foundation.Image

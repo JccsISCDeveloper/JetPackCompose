@@ -1,12 +1,12 @@
-package com.jccsisc.irepcp.ui.screens.dashboard.home.data.local
+package com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
-import com.jccsisc.irepcp.core.ConstantsRoom.TBL_MASCOTA
-import com.jccsisc.irepcp.ui.screens.dashboard.home.domain.model.Mascota
-import com.jccsisc.irepcp.ui.screens.dashboard.home.domain.repository.Mascotas
+import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_MASCOTA
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.model.Mascota
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.repository.Mascotas
 import kotlinx.coroutines.flow.Flow
 
 /**

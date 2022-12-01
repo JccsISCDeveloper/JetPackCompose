@@ -1,8 +1,8 @@
-package com.jccsisc.irepcp.ui.screens.dashboard.home.data.local
+package com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.jccsisc.irepcp.ui.screens.dashboard.home.domain.model.Mascota
+import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.model.Mascota
 
 /**
  * Project: IREPCP

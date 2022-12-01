@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.dashboard.premium
+package com.jccsisc.irepcp.ui.screens.mascotas.premium
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

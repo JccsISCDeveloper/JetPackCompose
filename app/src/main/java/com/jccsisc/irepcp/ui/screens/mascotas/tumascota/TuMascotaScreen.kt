@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.screens.dashboard.events
+package com.jccsisc.irepcp.ui.screens.mascotas.tumascota
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,14 +11,14 @@ import com.jccsisc.irepcp.ui.theme.GrayBg
 
 /**
  * Project: IREPCP
- * FROM: com.jccsisc.irepcp.ui.screens.dashboard.eventos
+ * FROM: com.jccsisc.irepcp.ui.screens.dashboard.tumascota
  * Created by Julio Cesar Camacho Silva on 29/11/22
  */
 @Composable
-fun EventsScreen() {
+fun TuMascotaScreen() {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(GrayBg), contentAlignment = Alignment.Center) {
-        Text(text = "Eventos")
+        Text(text = "Tu mascota")
     }
 }
