@@ -13,6 +13,6 @@ import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_MASCOTA
 data class Mascota(
     @PrimaryKey(autoGenerate = true)
     val id: Int = -1,
-    val animal: String? = "",
-    val raza: String? = ""
+    val animal: String = "",
+    val raza: String = ""
 )
