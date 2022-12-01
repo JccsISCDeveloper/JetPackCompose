@@ -1,7 +1,9 @@
 package com.jccsisc.irepcp.ui.screens.dashboard
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -32,7 +34,6 @@ import kotlinx.coroutines.launch
  * FROM: com.jccsisc.irepcp.ui.screens.homegraph
  * Created by Julio Cesar Camacho Silva on 24/11/22
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DashboardContentScreen() {
     SetNavbarColor(color = PrimaryDarkColor, useDarkIcons = false)
