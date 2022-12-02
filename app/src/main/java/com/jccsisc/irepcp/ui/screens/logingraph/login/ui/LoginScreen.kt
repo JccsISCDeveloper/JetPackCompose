@@ -26,10 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.MyResult
+import com.jccsisc.irepcp.core.constants.Constants.SPACER_20
 import com.jccsisc.irepcp.core.enums.StatusEnum
 import com.jccsisc.irepcp.ui.screens.logingraph.login.data.remote.model.request.LoginRequest
 import com.jccsisc.irepcp.ui.theme.*
-import com.jccsisc.irepcp.common.Constans.SPACER_20
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.SpacerApp
 import com.jccsisc.irepcp.utils.components.MySimpleCustomDialog
