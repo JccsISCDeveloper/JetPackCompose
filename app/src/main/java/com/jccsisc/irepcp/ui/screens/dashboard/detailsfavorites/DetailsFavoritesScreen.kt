@@ -2,7 +2,6 @@ package com.jccsisc.irepcp.ui.screens.dashboard.detailsfavorites
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -30,7 +29,7 @@ fun DetailsFavoritesScreen(producto: String) {
 
     Column() {
         Tabs(tabs, pagerState)
-        TabsContent(tabs, pagerState)
+        TabsContent(tabs, pagerState, producto)
     }
 }
 
@@ -68,8 +67,10 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
+fun TabsContent(tabs: List<TabItem>, pagerState: PagerState, producto: String) {
     HorizontalPager(state = pagerState, count = tabs.size) { page ->
+        var title = tabs[page].title
+        Text(text = "Información sobre $producto de $title")
         tabs[page].screen()
     }
 }

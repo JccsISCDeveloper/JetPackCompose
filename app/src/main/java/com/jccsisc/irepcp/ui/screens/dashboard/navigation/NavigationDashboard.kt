@@ -15,7 +15,6 @@ import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard.*
 import com.jccsisc.irepcp.ui.screens.dashboard.pantalla2.Pantalla2Screen
 import com.jccsisc.irepcp.ui.screens.mascotas.detail.DetailMascotaScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.events.EventsScreen
-import com.jccsisc.irepcp.ui.screens.mascotas.mascotafeliz.MascotaFelizScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui.MASCOTA_ID
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui.MascotasScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.premium.PremiumScreen
@@ -67,7 +66,6 @@ fun NavigationDashboard(
         /**
          * Drawer
          * */
-        composable(MascotaFelizScreen.drawerItem.route) { MascotaFelizScreen() }
         composable(Pantalla2Screen.drawerItem.route) { Pantalla2Screen() }
         composable(ConsumoApisScreen.drawerItem.route) { ConsumoApisScreen() }
         composable(CanvasScreen.drawerItem.route) { CanvasScreen() }
