@@ -11,8 +11,8 @@ import com.jccsisc.irepcp.core.constants.Constants.FAVORITES_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.GALLERY_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.MASCOTAS_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_HEADER
-import com.jccsisc.irepcp.core.constants.Constants.PANTALLA2_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.PREMIUM_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.TASKS_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.TU_MASCOTA_SCREEN
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.model.DrawerChildItem
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.model.DrawerItem
@@ -57,8 +57,8 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
         )
     ) //todo esta clase ya no se visualiza, se tomó como padre pero en qué momoento se mostrará? RESOLVER
 
-    object Pantalla2Screen :
-        ScreensDashboard(DrawerItem(PANTALLA2_SCREEN, "Pantalla 2", R.drawable.ic_search))
+    object TasksScreen :
+        ScreensDashboard(DrawerItem(TASKS_SCREEN, "Tareas", R.drawable.ic_tasks))
 
     object ConsumoApisScreen :
         ScreensDashboard(DrawerItem(CONSUMO_APIS_HEADER, "Apis", R.drawable.ic_apis))

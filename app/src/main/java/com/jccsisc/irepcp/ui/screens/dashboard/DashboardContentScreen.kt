@@ -48,7 +48,7 @@ fun DashboardContentScreen() {
         MascotasScreen,
         FavoritesScreen,
         MascotaFelizScreen,
-        Pantalla2Screen,
+        TasksScreen,
         ConsumoApisScreen,
         CanvasScreen
     )

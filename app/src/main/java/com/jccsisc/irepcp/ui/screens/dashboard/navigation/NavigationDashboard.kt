@@ -12,13 +12,13 @@ import com.jccsisc.irepcp.ui.screens.dashboard.detailsfavorites.DetailsFavorites
 import com.jccsisc.irepcp.ui.screens.dashboard.favorites.FavoritesScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.gallery.GalleryScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard.*
-import com.jccsisc.irepcp.ui.screens.dashboard.pantalla2.Pantalla2Screen
 import com.jccsisc.irepcp.ui.screens.mascotas.detail.DetailMascotaScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.events.EventsScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui.MASCOTA_ID
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui.MascotasScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.premium.PremiumScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.tumascota.TuMascotaScreen
+import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.TasksScreen
 
 /**
  * Project: IREPCP
@@ -66,7 +66,7 @@ fun NavigationDashboard(
         /**
          * Drawer
          * */
-        composable(Pantalla2Screen.drawerItem.route) { Pantalla2Screen() }
+        composable(TasksScreen.drawerItem.route) { TasksScreen() }
         composable(ConsumoApisScreen.drawerItem.route) { ConsumoApisScreen() }
         composable(CanvasScreen.drawerItem.route) { CanvasScreen() }
         itemChildDrawerGraph(navController)
