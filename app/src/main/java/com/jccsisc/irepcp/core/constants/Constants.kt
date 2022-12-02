@@ -8,6 +8,9 @@ package com.jccsisc.irepcp.core.constants
 object Constants {
 
     const val NO_VALUE = ""
+    const val SPACER_50 = 50
+    const val SPACER_20 = 20
+    const val SPACER_10 = 10
 
     /**
      * Routes Login
@@ -28,7 +31,7 @@ object Constants {
     const val FAVORITES_SCREEN = "FAVORITES_SCREEN"
     const val GALLERY_SCREEN = "GALLERY_SCREEN"
     const val MASCOTA_HEADER = "MASCOTA_HEADER"
-    const val PANTALLA2_SCREEN = "PANTALLA2_SCREEN"
+    const val TASKS_SCREEN = "TASKS_SCREEN"
     const val CONSUMO_APIS_HEADER = "CONSUMO_APIS_HEADER"
     const val CANVAS_SCREEN = "CANVAS_SCREEN"
     const val DETAILS_FAVORITES_SCREEN = "DETAILS_FAVORITES_SCREEN"
