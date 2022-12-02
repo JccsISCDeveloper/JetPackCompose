@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.model.Mascota
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.repository.MascotaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,10 +22,30 @@ import javax.inject.Inject
 class MascotasViewModel @Inject constructor(private val repo: MascotaRepository) : ViewModel() {
     var openDialog by mutableStateOf(false)
     val mascotas = repo.getMascotasFromRoom()
+    var mascota by mutableStateOf(Mascota(0, NO_VALUE, NO_VALUE))
 
     fun addMascota(mascota: Mascota) = viewModelScope.launch(Dispatchers.IO) {
         repo.addMascotaToRoom(mascota)
     }
+
+    fun getMascota(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        mascota = repo.getMascotaFromRoom(id)
+    }
+
+    fun updateAnimal(animal: String) {
+        mascota = mascota.copy(
+            animal = animal
+        )
+    }
+    fun updateRaza(raza: String) {
+        mascota = mascota.copy(
+            raza = raza
+        )
+    }
+    fun updateMascota(mascota: Mascota) = viewModelScope.launch(Dispatchers.IO) {
+        repo.updateMascotaFromRoom(mascota)
+    }
+
 
     fun deleteMascota(mascota: Mascota) {
         viewModelScope.launch(Dispatchers.IO) {

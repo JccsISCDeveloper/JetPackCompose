@@ -3,6 +3,7 @@
 package com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,8 +29,13 @@ import kotlinx.coroutines.job
  * FROM: com.jccsisc.irepcp.ui.features.dashboard.ui
  * Created by Julio Cesar Camacho Silva on 16/11/22
  */
+const val MASCOTA_ID = "mascotaId"
+
 @Composable
-fun MascotasScreen(viewModel: MascotasViewModel = hiltViewModel()) {
+fun MascotasScreen(
+    viewModel: MascotasViewModel = hiltViewModel(),
+    navigateToDetailMascota: (mascotaId: Int) -> Unit
+) {
 
     val mascotas by viewModel.mascotas.collectAsState(initial = emptyList())
 
@@ -43,7 +49,8 @@ fun MascotasScreen(viewModel: MascotasViewModel = hiltViewModel()) {
             mascotas = mascotas,
             deleteMascota = { mascota ->
                 viewModel.deleteMascota(mascota)
-            }
+            },
+            navigateToDetailMascota = navigateToDetailMascota
         )
         AddMascotaAlertDialog(
             opendDialog = viewModel.openDialog,
@@ -60,7 +67,11 @@ fun MascotasScreen(viewModel: MascotasViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun AddMascotaAlertDialog(opendDialog: Boolean, closeDialog: () -> Unit, addMascota: (mascota: Mascota) -> Unit) {
+fun AddMascotaAlertDialog(
+    opendDialog: Boolean,
+    closeDialog: () -> Unit,
+    addMascota: (mascota: Mascota) -> Unit
+) {
     if (opendDialog) {
         var animal by remember { mutableStateOf(NO_VALUE) }
         var raza by remember { mutableStateOf(NO_VALUE) }
@@ -104,7 +115,11 @@ fun AddMascotaAlertDialog(opendDialog: Boolean, closeDialog: () -> Unit, addMasc
 }
 
 @Composable
-fun BodyMascotas(mascotas: List<Mascota>, deleteMascota: (mascota: Mascota) -> Unit) {
+fun BodyMascotas(
+    mascotas: List<Mascota>,
+    deleteMascota: (mascota: Mascota) -> Unit,
+    navigateToDetailMascota: (mascotaId: Int) -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -113,14 +128,20 @@ fun BodyMascotas(mascotas: List<Mascota>, deleteMascota: (mascota: Mascota) -> U
         items(mascotas) { mascota ->
             MascotaCard(
                 mascota = mascota,
-                deleteMascota = { deleteMascota(mascota) }
+                deleteMascota = { deleteMascota(mascota) },
+                navigateToDetailMascota = navigateToDetailMascota
             )
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MascotaCard(mascota: Mascota, deleteMascota: () -> Unit) {
+fun MascotaCard(
+    mascota: Mascota,
+    deleteMascota: () -> Unit,
+    navigateToDetailMascota: (idMascota: Int) -> Unit
+) {
     Card(
         modifier = Modifier
             .padding(
@@ -131,7 +152,10 @@ fun MascotaCard(mascota: Mascota, deleteMascota: () -> Unit) {
             )
             .fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
-        elevation = 4.dp
+        elevation = 4.dp,
+        onClick = {
+            navigateToDetailMascota(mascota.id)
+        }
     ) {
         Row(
             modifier = Modifier

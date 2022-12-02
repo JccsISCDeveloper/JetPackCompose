@@ -5,6 +5,7 @@ import com.jccsisc.irepcp.core.constants.Constants.CANVAS_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.CONSUMO_APIS_HEADER
 import com.jccsisc.irepcp.core.constants.Constants.CONTENT_DASHBOARD_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.DETAILS_FAVORITES_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.DETAIL_MASCOTA_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.EVENTS_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.FAVORITES_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.GALLERY_SCREEN
@@ -37,6 +38,7 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
      * BottomBar
      * */
     object MascotasScreen : ScreensDashboard(DrawerItem(MASCOTAS_SCREEN, "Home", R.drawable.ic_home))
+    object DetailMascotaScreen : ScreensDashboard(DrawerItem(DETAIL_MASCOTA_SCREEN, "Detalle mascota"))
     object FavoritesScreen :
         ScreensDashboard(DrawerItem(FAVORITES_SCREEN, "Favoritos", R.drawable.ic_favorites))
 

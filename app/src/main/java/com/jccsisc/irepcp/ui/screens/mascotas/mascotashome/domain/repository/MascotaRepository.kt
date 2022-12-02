@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.Flow
  */
 typealias Mascotas = List<Mascota>
 interface MascotaRepository {
-    fun getMascotasFromRoom() : Flow<Mascotas>
+    fun getMascotasFromRoom(): Flow<Mascotas>
+    fun getMascotaFromRoom(id: Int): Mascota
     fun addMascotaToRoom(mascota: Mascota)
+    fun updateMascotaFromRoom(mascota: Mascota)
     fun deleteMascotaFromRoom(mascota: Mascota)
 }
