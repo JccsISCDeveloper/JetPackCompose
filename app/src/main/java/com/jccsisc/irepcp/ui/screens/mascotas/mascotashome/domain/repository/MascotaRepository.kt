@@ -12,4 +12,5 @@ typealias Mascotas = List<Mascota>
 interface MascotaRepository {
     fun getMascotasFromRoom() : Flow<Mascotas>
     fun addMascotaToRoom(mascota: Mascota)
+    fun deleteMascotaFromRoom(mascota: Mascota)
 }

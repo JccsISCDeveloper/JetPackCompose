@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +39,12 @@ fun MascotasScreen(viewModel: MascotasViewModel = hiltViewModel()) {
             .background(GrayBg), contentAlignment = Alignment.Center
     ) {
 
-        BodyMascotas(mascotas = mascotas)
+        BodyMascotas(
+            mascotas = mascotas,
+            deleteMascota = { mascota ->
+                viewModel.deleteMascota(mascota)
+            }
+        )
         AddMascotaAlertDialog(
             opendDialog = viewModel.openDialog,
             closeDialog = { viewModel.closeDialog() },
@@ -97,20 +104,23 @@ fun AddMascotaAlertDialog(opendDialog: Boolean, closeDialog: () -> Unit, addMasc
 }
 
 @Composable
-fun BodyMascotas(mascotas: List<Mascota>) {
+fun BodyMascotas(mascotas: List<Mascota>, deleteMascota: (mascota: Mascota) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(dimensionResource(id = R.dimen.padding_10))
     ) {
         items(mascotas) { mascota ->
-            MascotaCard(mascota)
+            MascotaCard(
+                mascota = mascota,
+                deleteMascota = { deleteMascota(mascota) }
+            )
         }
     }
 }
 
 @Composable
-fun MascotaCard(mascota: Mascota) {
+fun MascotaCard(mascota: Mascota, deleteMascota: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(
@@ -133,6 +143,17 @@ fun MascotaCard(mascota: Mascota) {
                 Text(mascota.animal)
                 Text(mascota.raza)
             }
+            Spacer(modifier = Modifier.weight(1f))
+            DeleteIcon(
+                deleteMascota = deleteMascota
+            )
         }
+    }
+}
+
+@Composable
+fun DeleteIcon(deleteMascota: () -> Unit) {
+    IconButton(onClick = deleteMascota) {
+        Icon(imageVector = Icons.Filled.Delete, contentDescription = "ic delete")
     }
 }

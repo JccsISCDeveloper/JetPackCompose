@@ -26,6 +26,12 @@ class MascotasViewModel @Inject constructor(private val repo: MascotaRepository)
         repo.addMascotaToRoom(mascota)
     }
 
+    fun deleteMascota(mascota: Mascota) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.deleteMascotaFromRoom(mascota)
+        }
+    }
+
     fun closeDialog() { openDialog = false }
     fun openDialog() { openDialog = true }
 }

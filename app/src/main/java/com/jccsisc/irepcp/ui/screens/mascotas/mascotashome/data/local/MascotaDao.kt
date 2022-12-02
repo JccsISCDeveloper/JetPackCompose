@@ -1,6 +1,7 @@
 package com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
@@ -22,5 +23,6 @@ interface MascotaDao {
     @Insert(onConflict = IGNORE)
     fun addMascota(mascota: Mascota)
 
-
+    @Delete
+    fun deleteMascota(mascota: Mascota)
 }

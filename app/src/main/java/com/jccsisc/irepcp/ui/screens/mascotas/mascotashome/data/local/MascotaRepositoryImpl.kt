@@ -14,5 +14,6 @@ class MascotaRepositoryImpl(private val mascotaDao: MascotaDao): MascotaReposito
 
     override fun getMascotasFromRoom(): Flow<Mascotas> = mascotaDao.getMascotas()
     override fun addMascotaToRoom(mascota: Mascota) = mascotaDao.addMascota(mascota)
+    override fun deleteMascotaFromRoom(mascota: Mascota) = mascotaDao.deleteMascota(mascota)
 
 }
