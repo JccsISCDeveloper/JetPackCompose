@@ -8,7 +8,7 @@ package com.jccsisc.irepcp.core.constants
 object ConstantsRoom {
 
     /**
-     * DB ROOM
+     * DB ROOM DB_MASCOTAS
      * */
     const val DB_MASCOTAS = "DB_MASCOTAS"
 
@@ -18,5 +18,14 @@ object ConstantsRoom {
     const val TBL_MASCOTA = "TBL_MASCOTA"
 
 
+    /**
+     * DB ROOM DB_TASKS
+     * */
+    const val DB_TASKS = "DB_TASKS"
+
+    /**
+     * TABLES DB_TASKS
+     * */
+    const val TBL_TASK = "TBL_TASK"
 
 }

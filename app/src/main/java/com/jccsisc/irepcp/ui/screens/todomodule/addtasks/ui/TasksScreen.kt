@@ -1,7 +1,6 @@
 package com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,10 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
-import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.model.TaskModel
+import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.GrayBg
 
 /**
@@ -34,7 +32,7 @@ import com.jccsisc.irepcp.ui.theme.GrayBg
  */
 @Composable
 fun TasksScreen(viewModel: TaskViewModel = hiltViewModel()) {
-    val showDialog: Boolean by viewModel.showDialog.observeAsState(false)
+    val tasks by viewModel.tasks.collectAsState(initial = emptyList())
 
     Box(
         modifier = Modifier
@@ -42,17 +40,14 @@ fun TasksScreen(viewModel: TaskViewModel = hiltViewModel()) {
             .background(GrayBg)
     ) {
         AddTasksDialog(
-            show = showDialog,
-            onDismish = { viewModel.onDialogClose() },
-            onTaskAdded = { viewModel.onTasksCreated(it) }
+            show = viewModel.openDialog,
+            onDismish = { viewModel.closeDialog() },
+            addTask = { task ->
+                viewModel.addTask(task)
+            }
         )
-        TaskList(viewModel)
-        FabDialog(
-            viewModel,
-            Modifier
-                .align(Alignment.BottomStart)
-                .padding(bottom = 40.dp)
-        )
+        TaskList(tasks, viewModel)
+        FabDialog(viewModel, Modifier.align(Alignment.BottomStart).padding(bottom = 40.dp))
     }
 }
 
@@ -65,7 +60,7 @@ fun PreviewTasks() {
 @Composable
 fun FabDialog(viewModel: TaskViewModel, modifier: Modifier) {
     FloatingActionButton(
-        onClick = { viewModel.onDialogShow() },
+        onClick = { viewModel.openDialog() },
         modifier = modifier
             .padding(dimensionResource(id = R.dimen.padding_10))
     ) {
@@ -74,9 +69,11 @@ fun FabDialog(viewModel: TaskViewModel, modifier: Modifier) {
 }
 
 @Composable
-private fun AddTasksDialog(show: Boolean, onDismish: () -> Unit, onTaskAdded: (String) -> Unit) {
-    var myTask by remember { mutableStateOf(NO_VALUE) }
+private fun AddTasksDialog(show: Boolean, onDismish: () -> Unit, addTask: (TaskModel) -> Unit) {
     if (show) {
+        var task by remember { mutableStateOf(NO_VALUE) }
+        val selected by remember { mutableStateOf(false) }
+
         Dialog(onDismissRequest = { }) {
             Box(modifier = Modifier.background(Color.White)) {
                 IconButton(onClick = onDismish, modifier = Modifier.align(Alignment.TopEnd)) {
@@ -102,8 +99,8 @@ private fun AddTasksDialog(show: Boolean, onDismish: () -> Unit, onTaskAdded: (S
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     TextField(
-                        value = myTask,
-                        onValueChange = { myTask = it },
+                        value = task,
+                        onValueChange = { task = it },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         maxLines = 1
@@ -111,8 +108,9 @@ private fun AddTasksDialog(show: Boolean, onDismish: () -> Unit, onTaskAdded: (S
                     Spacer(modifier = Modifier.size(16.dp))
                     Button(
                         onClick = {
-                            onTaskAdded(myTask)
-                            myTask = NO_VALUE
+                            onDismish()
+                            val newTask = TaskModel(task = task, selected = selected)
+                            addTask(newTask)
                         }, modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = dimensionResource(id = R.dimen.padding_10))
@@ -126,14 +124,13 @@ private fun AddTasksDialog(show: Boolean, onDismish: () -> Unit, onTaskAdded: (S
 }
 
 @Composable
-private fun TaskList(viewModel: TaskViewModel) {
-    val myTasks: List<TaskModel> = viewModel.tasks
+private fun TaskList(tasks: List<TaskModel>, viewModel: TaskViewModel) {
     LazyColumn {
-        items(myTasks, key = { it.id }) { task ->
+        items(tasks, key = { it.id }) { task ->
             CardTask(
                 taskModel = task,
-                onCheckBoxSelected = { viewModel.onCheckBoxSelected(it) },
-                onDeleteTask = { viewModel.onDeleteTask(it)}
+                onCheckBoxSelected = { viewModel.onTaskSelected(it) },
+                onDeleteTask = { viewModel.deleteTask(it)}
             )
         }
     }
@@ -142,7 +139,7 @@ private fun TaskList(viewModel: TaskViewModel) {
 @Composable
 fun CardTask(
     taskModel: TaskModel,
-    onCheckBoxSelected: (taskModel: TaskModel) -> Unit,
+    onCheckBoxSelected: (selected: Boolean) -> Unit,
     onDeleteTask: (taskModel: TaskModel) -> Unit
 ) {
     Card(
@@ -168,7 +165,7 @@ fun CardTask(
             )
             Checkbox(
                 checked = taskModel.selected,
-                onCheckedChange = { onCheckBoxSelected(taskModel) }
+                onCheckedChange = { onCheckBoxSelected(taskModel.selected) }
             )
         }
     }
