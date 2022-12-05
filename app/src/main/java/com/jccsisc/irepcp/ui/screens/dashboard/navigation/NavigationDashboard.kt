@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_GRAPH
+import com.jccsisc.irepcp.ui.navigation.Screens
 import com.jccsisc.irepcp.ui.screens.dashboard.canvas.CanvasScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.consumoapis.ConsumoApisScreen
 import com.jccsisc.irepcp.ui.screens.dashboard.detailsfavorites.DetailsFavoritesScreen
@@ -27,6 +28,7 @@ import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.TasksScreen
  */
 @Composable
 fun NavigationDashboard(
+    principalNavController: NavHostController,
     navController: NavHostController = rememberNavController(),
     startDestination: String = MascotasScreen.drawerItem.route
 ) {
@@ -66,7 +68,11 @@ fun NavigationDashboard(
         /**
          * Drawer
          * */
-        composable(TasksScreen.drawerItem.route) { TasksScreen() }
+        composable(TasksScreen.drawerItem.route) {
+            TasksScreen(navigateToModifyTask = {
+                principalNavController.navigate(Screens.ModifyTaskScreen.route)
+            })
+        }
         composable(ConsumoApisScreen.drawerItem.route) { ConsumoApisScreen() }
         composable(CanvasScreen.drawerItem.route) { CanvasScreen() }
         itemChildDrawerGraph(navController)

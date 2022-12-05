@@ -2,12 +2,14 @@ package com.jccsisc.irepcp.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.core.constants.Constants.DASHBOARD_CONTENT_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.ROOT_GRAPH
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.dashboardContentGraph
 import com.jccsisc.irepcp.ui.screens.logingraph.login.ui.LoginViewModel
 import com.jccsisc.irepcp.ui.screens.logingraph.loginGraph
+import com.jccsisc.irepcp.ui.screens.todomodule.modiafytask.ModifyTaskScreen
 
 /**
  * Project: IREPCP
@@ -23,6 +25,9 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
         route = ROOT_GRAPH
     ) {
         loginGraph(navController, loginViewModel)
-        dashboardContentGraph()
+        dashboardContentGraph(navController)
+        composable(Screens.ModifyTaskScreen.route) {
+            ModifyTaskScreen()
+        }
     }
 }

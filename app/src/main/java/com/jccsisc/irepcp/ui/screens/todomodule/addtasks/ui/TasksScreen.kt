@@ -32,7 +32,10 @@ import com.jccsisc.irepcp.ui.theme.PrimaryColor
  * Created by Julio Cesar Camacho Silva on 02/12/22
  */
 @Composable
-fun TasksScreen(viewModel: TaskViewModel = hiltViewModel()) {
+fun TasksScreen(
+    viewModel: TaskViewModel = hiltViewModel(),
+    navigateToModifyTask: (taskId: Long) -> Unit
+) {
     val tasks by viewModel.tasks.collectAsState(initial = emptyList())
 
     Box(
@@ -47,15 +50,20 @@ fun TasksScreen(viewModel: TaskViewModel = hiltViewModel()) {
                 viewModel.addTask(task)
             }
         )
-        TaskList(tasks, viewModel)
-        FabDialog(viewModel, Modifier.align(Alignment.BottomStart).padding(bottom = 40.dp))
+        TaskList(tasks, viewModel, navigateToModifyTask)
+        FabDialog(
+            viewModel,
+            Modifier
+                .align(Alignment.BottomStart)
+                .padding(bottom = 40.dp)
+        )
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewTasks() {
-    TasksScreen()
+//    TasksScreen()
 }
 
 @Composable
@@ -125,29 +133,36 @@ private fun AddTasksDialog(show: Boolean, onDismish: () -> Unit, addTask: (TaskM
 }
 
 @Composable
-private fun TaskList(tasks: List<TaskModel>, viewModel: TaskViewModel) {
+private fun TaskList(
+    tasks: List<TaskModel>,
+    viewModel: TaskViewModel,
+    navigateToModifyTask: (taskId: Long) -> Unit
+) {
     LazyColumn {
         items(tasks, key = { it.id }) { task ->
             CardTask(
                 taskModel = task,
                 onCheckBoxSelected = { viewModel.onTaskSelected(it) },
                 onUpdateTask = { viewModel.updateTask(it) },
-                onDeleteTask = { viewModel.deleteTask(it) }
+                onDeleteTask = { viewModel.deleteTask(it) },
+                navigateToModifyTask = navigateToModifyTask
             )
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CardTask(
     taskModel: TaskModel,
     onCheckBoxSelected: (selected: Boolean) -> Unit,
     onUpdateTask: (taskModel: TaskModel) -> Unit,
-    onDeleteTask: (taskModel: TaskModel) -> Unit
+    onDeleteTask: (taskModel: TaskModel) -> Unit,
+    navigateToModifyTask: (taskId: Long) -> Unit
 ) {
     var selected by remember { mutableStateOf(false) }
     Card(
-        Modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(
                 vertical = dimensionResource(id = R.dimen.padding_3),
@@ -160,7 +175,8 @@ fun CardTask(
                 })
             },
         backgroundColor = Color.White,
-        elevation = 6.dp
+        elevation = 6.dp,
+        onClick = { navigateToModifyTask(taskModel.id) }
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(

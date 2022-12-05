@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
  * Created by Julio Cesar Camacho Silva on 24/11/22
  */
 @Composable
-fun DashboardContentScreen() {
+fun DashboardContentScreen(principalNavController: NavHostController) {
     SetNavbarColor(color = PrimaryDarkColor, useDarkIcons = false)
 
     val dashboardNavController = rememberNavController()
@@ -80,7 +80,10 @@ fun DashboardContentScreen() {
         drawerShape = RoundedCornerShape(bottomEnd = 60.dp),
         drawerElevation = 6.dp
     ) { padding ->
-        NavigationDashboard(navController = dashboardNavController)
+        NavigationDashboard(
+            principalNavController = principalNavController,
+            navController = dashboardNavController
+        )
         padding.calculateBottomPadding()
     }
 }
