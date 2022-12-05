@@ -10,7 +10,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +22,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
+import com.jccsisc.irepcp.ui.theme.Gray50
 import com.jccsisc.irepcp.ui.theme.GrayBg
+import com.jccsisc.irepcp.ui.theme.PrimaryColor
 
 /**
  * Project: IREPCP
@@ -130,7 +131,8 @@ private fun TaskList(tasks: List<TaskModel>, viewModel: TaskViewModel) {
             CardTask(
                 taskModel = task,
                 onCheckBoxSelected = { viewModel.onTaskSelected(it) },
-                onDeleteTask = { viewModel.deleteTask(it)}
+                onUpdateTask = { viewModel.updateTask(it) },
+                onDeleteTask = { viewModel.deleteTask(it) }
             )
         }
     }
@@ -140,8 +142,10 @@ private fun TaskList(tasks: List<TaskModel>, viewModel: TaskViewModel) {
 fun CardTask(
     taskModel: TaskModel,
     onCheckBoxSelected: (selected: Boolean) -> Unit,
+    onUpdateTask: (taskModel: TaskModel) -> Unit,
     onDeleteTask: (taskModel: TaskModel) -> Unit
 ) {
+    var selected by remember { mutableStateOf(false) }
     Card(
         Modifier
             .fillMaxWidth()
@@ -151,6 +155,7 @@ fun CardTask(
             )
             .pointerInput(Unit) {
                 detectTapGestures(onLongPress = {
+                    //todo abrir un dialog para confirmar eliminar tarea
                     onDeleteTask(taskModel)
                 })
             },
@@ -165,7 +170,18 @@ fun CardTask(
             )
             Checkbox(
                 checked = taskModel.selected,
-                onCheckedChange = { onCheckBoxSelected(taskModel.selected) }
+                onCheckedChange = {
+                    selected = it
+                    onCheckBoxSelected(selected)
+                    val modifyTask = TaskModel(taskModel.id, taskModel.task, selected)
+                    onUpdateTask(modifyTask)
+                },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = PrimaryColor,
+                    uncheckedColor = Gray50,
+                    checkmarkColor = GrayBg,
+                    disabledColor = Color.Gray
+                )
             )
         }
     }

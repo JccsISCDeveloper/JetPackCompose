@@ -47,8 +47,6 @@ class TaskViewModel  @Inject constructor(private val repo: UseCaseTasks): ViewMo
     }
 
     fun deleteTask(taskModel: TaskModel) {
-        /* val task = _tasks.find { it.id == taskModel.id }
-         _tasks.remove(task)*/
         viewModelScope.launch(Dispatchers.IO) { repo.deleteTaskFromRoom(taskModel) }
     }
 
