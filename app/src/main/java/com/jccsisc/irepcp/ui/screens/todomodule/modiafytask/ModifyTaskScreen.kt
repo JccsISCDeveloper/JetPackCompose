@@ -33,7 +33,10 @@ fun ModifyTaskScreen(
     }
     Scaffold(
         topBar = {
-            GenericTopBar(navigateBack = navigateBack, "Modificar tarea")
+            GenericTopBar(
+                navigateBack = navigateBack,
+                title = "Modificar tarea"
+            )
         },
         content = { padding ->
             DetailTaskContent(
@@ -60,11 +63,6 @@ fun DetailTaskContent(
             .fillMaxSize()
             .padding(padding)
     ) {
-       /* TextField(
-            value = mascota.animal,
-            onValueChange = { updateAnimal(it) },
-            placeholder = { Text(text = "Animal") }
-        )*/
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
             value = task.task,
