@@ -1,15 +1,17 @@
 package com.jccsisc.irepcp.ui.screens.mascotas.detail
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.Button
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.jccsisc.irepcp.ui.generalcomponents.GenericTopBar
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.model.Mascota
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui.MascotasViewModel
 
@@ -29,7 +31,7 @@ fun DetailMascotaScreen(
     }
     Scaffold(
         topBar = {
-            MascotaTopBar(navigateBack = navigateBack)
+            GenericTopBar(navigateBack = navigateBack, "Modificar mascota")
         },
         content = { padding ->
             DetailMascotaContent(
@@ -40,18 +42,6 @@ fun DetailMascotaScreen(
                 updateMascota = { mascota -> viewModel.updateMascota(mascota) },
                 navigateBack = navigateBack
             )
-        }
-    )
-}
-
-@Composable
-fun MascotaTopBar(navigateBack: () -> Unit) {
-    TopAppBar(
-        title = { Text(text = "Modificar mascota") },
-        navigationIcon = {
-            IconButton(onClick = navigateBack) {
-                Icon(imageVector = Icons.Outlined.ArrowBack, contentDescription = "ic arrow back")
-            }
         }
     )
 }

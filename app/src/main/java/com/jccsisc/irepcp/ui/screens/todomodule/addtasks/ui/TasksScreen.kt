@@ -1,7 +1,8 @@
 package com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -151,7 +151,7 @@ private fun TaskList(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CardTask(
     taskModel: TaskModel,
@@ -168,15 +168,15 @@ fun CardTask(
                 vertical = dimensionResource(id = R.dimen.padding_3),
                 horizontal = dimensionResource(id = R.dimen.padding_10)
             )
-            .pointerInput(Unit) {
-                detectTapGestures(onLongPress = {
+            .combinedClickable(
+                onClick = { navigateToModifyTask(taskModel.id) },
+                onLongClick = {
                     //todo abrir un dialog para confirmar eliminar tarea
                     onDeleteTask(taskModel)
-                })
-            },
+                }
+            ),
         backgroundColor = Color.White,
-        elevation = 6.dp,
-        onClick = { navigateToModifyTask(taskModel.id) }
+        elevation = 6.dp
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(

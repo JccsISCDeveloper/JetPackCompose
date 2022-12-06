@@ -3,8 +3,6 @@ package com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
@@ -52,13 +50,5 @@ class TaskViewModel  @Inject constructor(private val repo: UseCaseTasks): ViewMo
 
     fun closeDialog() { openDialog = false }
     fun openDialog() { openDialog = true }
-
-  /*  fun onCheckBoxSelected(taskModel: TaskModel) {
-        val index = _tasks.indexOf(taskModel)
-        _tasks[index] = _tasks[index].let {
-            it.copy(selected = !it.selected)
-        }
-
-    }*/
 
 }

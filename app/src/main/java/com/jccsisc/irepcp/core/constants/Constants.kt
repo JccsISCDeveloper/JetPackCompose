@@ -46,6 +46,13 @@ object Constants {
     const val EVENTS_SCREEN = "EVENTS_SCREEN"
     const val PREMIUM_SCREEN = "PREMIUM_SCREEN"
 
+    /**
+     * Argumentos
+     * */
+    const val PRODUCT = "producto"
+    const val MASCOTA_ID = "mascotaId"
+    const val TASK_ID = "taskId"
+
 
 
 }

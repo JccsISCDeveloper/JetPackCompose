@@ -29,8 +29,6 @@ import kotlinx.coroutines.job
  * FROM: com.jccsisc.irepcp.ui.features.dashboard.ui
  * Created by Julio Cesar Camacho Silva on 16/11/22
  */
-const val MASCOTA_ID = "mascotaId"
-
 @Composable
 fun MascotasScreen(
     viewModel: MascotasViewModel = hiltViewModel(),
