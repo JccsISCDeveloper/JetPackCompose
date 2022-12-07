@@ -23,7 +23,8 @@ fun NavGraphBuilder.rickAndMortyGraph(navController: NavHostController) {
             HomeRickAndMortyScreen(
                 navigateToDetail = {
                     RickAndMortyActions(navController).navigateToDetail(it)
-                }
+                },
+                navigateBack = { navController.popBackStack() }
             )
         }
         composable(DetailRickAndMortyScreen.route) {

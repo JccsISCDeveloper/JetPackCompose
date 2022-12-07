@@ -47,7 +47,7 @@ fun TasksScreen(
     ) {
         AddTasksDialog(
             show = viewModel.openDialog,
-            onDismish = { viewModel.closeDialog() },
+            onDismiss = { viewModel.closeDialog() },
             addTask = { task ->
                 viewModel.addTask(task)
             }
@@ -80,14 +80,14 @@ fun FabDialog(viewModel: TaskViewModel, modifier: Modifier) {
 }
 
 @Composable
-private fun AddTasksDialog(show: Boolean, onDismish: () -> Unit, addTask: (TaskModel) -> Unit) {
+private fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, addTask: (TaskModel) -> Unit) {
     if (show) {
         var task by remember { mutableStateOf(NO_VALUE) }
         val selected by remember { mutableStateOf(false) }
 
         Dialog(onDismissRequest = { }) {
             Box(modifier = Modifier.background(Color.White)) {
-                IconButton(onClick = onDismish, modifier = Modifier.align(Alignment.TopEnd)) {
+                IconButton(onClick = onDismiss, modifier = Modifier.align(Alignment.TopEnd)) {
                     Icon(
                         imageVector = Icons.Filled.Close,
                         contentDescription = "ic close"
@@ -119,7 +119,7 @@ private fun AddTasksDialog(show: Boolean, onDismish: () -> Unit, addTask: (TaskM
                     Spacer(modifier = Modifier.size(16.dp))
                     Button(
                         onClick = {
-                            onDismish()
+                            onDismiss()
                             val newTask = TaskModel(task = task, selected = selected)
                             addTask(newTask)
                         }, modifier = Modifier

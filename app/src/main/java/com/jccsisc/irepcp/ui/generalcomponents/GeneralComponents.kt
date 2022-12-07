@@ -5,12 +5,12 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 
 /**
@@ -28,7 +28,7 @@ fun GenericTopBar(
     backgroundColor: Color = PrimaryDarkColor
 ) {
     TopAppBar(
-        title = { Text(text = title) },
+        title = { Text(text = title, textAlign = TextAlign.Center) },
         navigationIcon = {
             IconButton(onClick = navigateBack) {
                 Icon(imageVector = Icons.Outlined.ArrowBack, contentDescription = "ic arrow back")
@@ -38,7 +38,7 @@ fun GenericTopBar(
         actions = {
             if (showClick) {
                 IconButton(onClick = {
-                    onClick?.let { callBack->
+                    onClick?.let { callBack ->
                         callBack()
                     }
                 }) {
