@@ -20,6 +20,7 @@ import com.jccsisc.irepcp.ui.screens.mascotas.events.EventsScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui.MascotasScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.premium.PremiumScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.tumascota.TuMascotaScreen
+import com.jccsisc.irepcp.ui.screens.rickandmorty.RickAndMortyActions
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.TasksScreen
 
 /**
@@ -70,7 +71,13 @@ fun NavigationDashboard(
                 principalNavController.navigate("${Screens.ModifyTaskScreen.route}/${taskId}")
             })
         }
-        composable(ConsumoApisScreen.drawerItem.route) { ConsumoApisScreen() }
+        composable(ConsumoApisScreen.drawerItem.route) {
+            ConsumoApisScreen(
+                navigateToRickAndMorty = {
+                    RickAndMortyActions(principalNavController).navigateToHome()
+                }
+            )
+        }
         composable(CanvasScreen.drawerItem.route) { CanvasScreen() }
         itemChildDrawerGraph(navController)
 

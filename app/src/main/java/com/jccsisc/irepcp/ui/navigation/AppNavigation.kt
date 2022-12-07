@@ -6,13 +6,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.jccsisc.irepcp.core.constants.Constants
 import com.jccsisc.irepcp.core.constants.Constants.DASHBOARD_CONTENT_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.ROOT_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.TASK_ID
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.dashboardContentGraph
 import com.jccsisc.irepcp.ui.screens.logingraph.login.ui.LoginViewModel
 import com.jccsisc.irepcp.ui.screens.logingraph.loginGraph
+import com.jccsisc.irepcp.ui.screens.rickandmorty.rickAndMortyGraph
 import com.jccsisc.irepcp.ui.screens.todomodule.modiafytask.ModifyTaskScreen
 
 /**
@@ -30,6 +30,7 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
     ) {
         loginGraph(navController, loginViewModel)
         dashboardContentGraph(navController)
+        rickAndMortyGraph(navController)
         composable(
             route = "${Screens.ModifyTaskScreen.route}/{${TASK_ID}}",
             arguments = listOf(navArgument(TASK_ID) { type = NavType.LongType })
