@@ -7,4 +7,11 @@ package com.jccsisc.irepcp.core.constants
  */
 object ConstantsApi {
 
+    /**
+     * API Rick and Morty
+     * */
+    const val BASE_URL_RICK_AND_MORTY = "https://rickandmortyapi.com/api/"
+
+
+
 }

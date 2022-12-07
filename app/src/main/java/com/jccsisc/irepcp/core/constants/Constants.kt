@@ -52,7 +52,13 @@ object Constants {
     const val PRODUCT = "producto"
     const val MASCOTA_ID = "mascotaId"
     const val TASK_ID = "taskId"
+    const val ID = "id"
 
-
+    /**
+     * Routes Rick and Morty
+     * */
+    const val RICK_AND_MORTY_GRAPH = "RICK_AND_MORTY_GRAPH"
+    const val HOME_RICK_AND_MORTY = "HOME_RICK_AND_MORTY"
+    const val DETAIL_RICK_AND_MORTY = "DETAIL_RICK_AND_MORTY"
 
 }
