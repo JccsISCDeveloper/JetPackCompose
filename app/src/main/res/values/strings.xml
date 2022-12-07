@@ -11,4 +11,18 @@
     <string name="label_remember_user">Remember user</string>
     <string name="label_log_in">Log In</string>
 
+    <!--Task module-->
+
+    <!--Rick and Morty module-->
+    <!--HomeScreen-->
+    <string name="home_title_rick_and_morty">Characters</string>
+    <string name="previous_button">Previous</string>
+    <string name="next_button">Next</string>
+    <!--DetailScreen-->
+    <string name="first_location">First seen in:</string>
+    <string name="last_location">Last know location:</string>
+    <string name="specie">Specie</string>
+    <string name="status">Status:</string>
+    <string name="gender">Gender:</string>
+
 </resources>
