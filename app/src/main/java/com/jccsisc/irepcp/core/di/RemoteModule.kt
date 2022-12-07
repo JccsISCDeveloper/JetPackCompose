@@ -1,6 +1,8 @@
 package com.jccsisc.irepcp.core.di
 
+import com.jccsisc.irepcp.core.constants.ConstantsApi.BASE_URL_RICK_AND_MORTY
 import com.jccsisc.irepcp.ui.screens.logingraph.login.data.remote.LoginClient
+import com.jccsisc.irepcp.ui.screens.rickandmorty.data.remote.RickAndMortyApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,5 +30,17 @@ class RemoteModule {
     @Singleton
     @Provides
     fun providerLoginClient(retrofit: Retrofit): LoginClient = retrofit.create(LoginClient::class.java)
+
+    /**
+     * API Rick and Morty
+     * */
+    @Provides
+    @Singleton
+    fun providerRickAndMortyApi(): RickAndMortyApi = Retrofit.Builder()
+        .baseUrl(BASE_URL_RICK_AND_MORTY)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(RickAndMortyApi::class.java)
+
 
 }
