@@ -4,7 +4,8 @@ import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.jccsisc.irepcp.core.constants.Constants.ID
 import com.jccsisc.irepcp.core.constants.Constants.RICK_AND_MORTY_GRAPH
-import com.jccsisc.irepcp.ui.screens.rickandmorty.ScreensRickAndMorty.*
+import com.jccsisc.irepcp.ui.screens.rickandmorty.ScreensRickAndMorty.DetailRickAndMortyScreen
+import com.jccsisc.irepcp.ui.screens.rickandmorty.ScreensRickAndMorty.HomeRickAndMortyScreen
 import com.jccsisc.irepcp.ui.screens.rickandmorty.ui.detail.DetailRickAndMortyScreen
 import com.jccsisc.irepcp.ui.screens.rickandmorty.ui.home.HomeRickAndMortyScreen
 
@@ -30,7 +31,7 @@ fun NavGraphBuilder.rickAndMortyGraph(navController: NavHostController) {
             route = DetailRickAndMortyScreen.route,
             arguments = listOf(navArgument(ID) { type = NavType.IntType })
         ) {
-            DetailRickAndMortyScreen()
+            DetailRickAndMortyScreen(navigateToBack =  { navController.popBackStack() })
         }
     }
 }

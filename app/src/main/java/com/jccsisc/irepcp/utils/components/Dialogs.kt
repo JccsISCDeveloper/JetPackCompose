@@ -15,20 +15,18 @@ import androidx.compose.ui.window.DialogProperties
  * Created by Julio Cesar Camacho Silva on 15/11/22
  */
 @Composable
-fun SimpleCircularProgressDialog(show: Boolean, onDismiss: (() -> Unit?)? = null) {
-    if (show) {
-        Dialog(
-            onDismissRequest = {
-                if (onDismiss != null) {
-                    onDismiss()
-                }
-            },
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
-        ) {
-            //Este nos permite meter cualquier diseño
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-               CircularProgressIndicator()
+fun SimpleCircularProgressDialog(onDismiss: (() -> Unit?)? = null) {
+    Dialog(
+        onDismissRequest = {
+            if (onDismiss != null) {
+                onDismiss()
             }
+        },
+        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+    ) {
+        //Este nos permite meter cualquier diseño
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
         }
     }
 }

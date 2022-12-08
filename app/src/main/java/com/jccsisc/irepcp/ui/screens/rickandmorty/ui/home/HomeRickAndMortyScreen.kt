@@ -111,7 +111,7 @@ private fun HomeContent(
             }
         )
         if (isLoading) {
-            SimpleCircularProgressDialog(true)
+            SimpleCircularProgressDialog()
         }
     }
 }

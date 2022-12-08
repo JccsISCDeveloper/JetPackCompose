@@ -276,7 +276,7 @@ fun GoToDashboard(loginViewModel: LoginViewModel, onNavigationToDashboard: () ->
 
     when (resultLogin.status) {
         StatusEnum.LOADING -> {
-            SimpleCircularProgressDialog(true)
+            SimpleCircularProgressDialog()
         }
         StatusEnum.SUCCESS -> {
             //todo ir a la siguiente vista

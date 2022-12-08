@@ -6,7 +6,7 @@ import com.jccsisc.irepcp.ui.screens.rickandmorty.domain.model.personaje.Persona
 
 data class PersonajeDto(
     val created: String,
-    val episode: List<String>,
+    val episode: List<String>, //todo en el bottomSheet mostrar la lista de episodios
     val gender: String,
     val id: Int,
     val image: String,

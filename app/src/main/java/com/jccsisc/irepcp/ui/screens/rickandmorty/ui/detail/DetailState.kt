@@ -8,6 +8,6 @@ import com.jccsisc.irepcp.ui.screens.rickandmorty.domain.model.personaje.Persona
  * Created by Julio Cesar Camacho Silva on 07/12/22
  */
 data class DetailState(
-    val character: Personaje? = null,
+    val personaje: Personaje? = null,
     val isLoading: Boolean = false
 )
