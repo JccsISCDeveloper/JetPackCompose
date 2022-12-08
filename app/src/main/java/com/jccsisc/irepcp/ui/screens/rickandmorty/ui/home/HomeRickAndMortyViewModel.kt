@@ -21,8 +21,9 @@ import javax.inject.Inject
  * Created by Julio Cesar Camacho Silva on 06/12/22
  */
 @HiltViewModel
-class HomeRickAndMortyViewModel @Inject constructor(private val getPersonajesUseCase: GetPersonajesUseCase) :
-    ViewModel() {
+class HomeRickAndMortyViewModel @Inject constructor(
+    private val getPersonajesUseCase: GetPersonajesUseCase
+) : ViewModel() {
 
     var state by mutableStateOf(HomeState(isLoading = true))
         private set
@@ -39,13 +40,13 @@ class HomeRickAndMortyViewModel @Inject constructor(private val getPersonajesUse
     fun getPersonajes(increase: Boolean) {
         viewModelScope.launch {
             if (increase) currentPage++ else if (currentPage > 1) currentPage--
+
             val showPrevious = currentPage > 1
             val showNext = currentPage < 42
+
             getPersonajesUseCase(currentPage).onEach { result ->
-                when(result) {
-                    is MyResultS.Loading -> {
-                        state = state.copy(isLoading = true)
-                    }
+                when (result) {
+                    is MyResultS.Loading -> state = state.copy(isLoading = true)
                     is MyResultS.Success -> {
                         state = state.copy(
                             personajes = result.data ?: emptyList(),
@@ -56,15 +57,12 @@ class HomeRickAndMortyViewModel @Inject constructor(private val getPersonajesUse
                     }
                     is MyResultS.Failure -> {
                         state = state.copy(isLoading = false)
-                        _eventFlow.emit(UIEvent.ShowSnackBar(
-                            result.msg ?: "Ocurrió un error"
-                        ))
+                        _eventFlow.emit(UIEvent.ShowSnackBar(result.msg ?: "Ocurrió un error"))
                     }
                 }
             }.launchIn(this)
         }
     }
-
 
     sealed class UIEvent {
         data class ShowSnackBar(val msg: String): UIEvent()

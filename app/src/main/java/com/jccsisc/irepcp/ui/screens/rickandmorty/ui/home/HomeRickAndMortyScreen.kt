@@ -26,6 +26,7 @@ import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.generalcomponents.GenericTopBar
 import com.jccsisc.irepcp.ui.screens.rickandmorty.domain.model.personajes.Personajes
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
+import com.jccsisc.irepcp.utils.components.SimpleCircularProgressDialog
 import kotlinx.coroutines.flow.collectLatest
 
 /**
@@ -110,7 +111,7 @@ private fun HomeContent(
             }
         )
         if (isLoading) {
-            FullScreenLoading()
+            SimpleCircularProgressDialog(true)
         }
     }
 }
@@ -217,16 +218,5 @@ private fun HomeBottomBar(
                 Text(text = stringResource(id = R.string.next_button))
             }
         }
-    }
-}
-
-@Composable
-private fun FullScreenLoading() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ) {
-        CircularProgressIndicator()
     }
 }

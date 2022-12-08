@@ -28,5 +28,7 @@ open class RickAndMortyActions(navController: NavHostController) {
             }*/
             launchSingleTop = true
         }
+
+        //
     }
 }
