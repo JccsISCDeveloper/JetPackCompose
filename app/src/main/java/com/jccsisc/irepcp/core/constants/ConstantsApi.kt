@@ -12,6 +12,9 @@ object ConstantsApi {
      * */
     const val BASE_URL_RICK_AND_MORTY = "https://rickandmortyapi.com/api/"
 
+    const val PATH_CHARACTER = "character/"
 
+    const val END_POINT_PAGE = "page"
+    const val END_POINT_ID = "id"
 
 }
