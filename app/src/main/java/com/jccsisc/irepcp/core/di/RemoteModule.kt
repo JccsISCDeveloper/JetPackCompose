@@ -20,6 +20,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RemoteModule {
 
+    /**
+     * Login IREP COPEC todo no está terminado
+     * */
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit = Retrofit.Builder()
@@ -30,6 +33,7 @@ class RemoteModule {
     @Singleton
     @Provides
     fun providerLoginClient(retrofit: Retrofit): LoginClient = retrofit.create(LoginClient::class.java)
+
 
     /**
      * API Rick and Morty
