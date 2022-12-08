@@ -5,6 +5,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jccsisc.irepcp.core.constants.Constants
 import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_ID
 import com.jccsisc.irepcp.core.constants.Constants.PRODUCT
@@ -20,7 +21,6 @@ import com.jccsisc.irepcp.ui.screens.mascotas.events.EventsScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.ui.MascotasScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.premium.PremiumScreen
 import com.jccsisc.irepcp.ui.screens.mascotas.tumascota.TuMascotaScreen
-import com.jccsisc.irepcp.ui.screens.rickandmorty.RickAndMortyActions
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.TasksScreen
 
 /**
@@ -74,7 +74,7 @@ fun NavigationDashboard(
         composable(ConsumoApisScreen.drawerItem.route) {
             ConsumoApisScreen(
                 navigateToRickAndMorty = {
-                    RickAndMortyActions(principalNavController).navigateToHome()
+                    principalNavController.navigate(Constants.RICK_AND_MORTY_GRAPH)
                 }
             )
         }

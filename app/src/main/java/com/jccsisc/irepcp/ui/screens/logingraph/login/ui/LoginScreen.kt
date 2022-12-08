@@ -32,7 +32,7 @@ import com.jccsisc.irepcp.ui.screens.logingraph.login.data.remote.model.request.
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.SpacerApp
-import com.jccsisc.irepcp.utils.components.MySimpleCustomDialog
+import com.jccsisc.irepcp.utils.components.SimpleCircularProgressDialog
 
 /**
  * Project: IREPCP
@@ -276,7 +276,7 @@ fun GoToDashboard(loginViewModel: LoginViewModel, onNavigationToDashboard: () ->
 
     when (resultLogin.status) {
         StatusEnum.LOADING -> {
-            MySimpleCustomDialog(true) {}
+            SimpleCircularProgressDialog(true)
         }
         StatusEnum.SUCCESS -> {
             //todo ir a la siguiente vista

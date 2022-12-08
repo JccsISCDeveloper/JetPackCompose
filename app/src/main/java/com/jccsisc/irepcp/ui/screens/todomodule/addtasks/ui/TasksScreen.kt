@@ -44,6 +44,7 @@ fun TasksScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(GrayBg)
+            .padding(bottom = 60.dp)
     ) {
         AddTasksDialog(
             show = viewModel.openDialog,
