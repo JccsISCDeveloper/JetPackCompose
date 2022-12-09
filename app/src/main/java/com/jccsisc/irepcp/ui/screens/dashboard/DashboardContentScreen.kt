@@ -17,6 +17,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.jccsisc.irepcp.ui.navigation.CurrentRoute
+import com.jccsisc.irepcp.ui.navigation.Screens
 import com.jccsisc.irepcp.ui.screens.dashboard.components.MyBottomBar
 import com.jccsisc.irepcp.ui.screens.dashboard.components.MyDrawerLayout
 import com.jccsisc.irepcp.ui.screens.dashboard.components.MyTopAppbar
@@ -39,6 +41,7 @@ fun DashboardContentScreen(principalNavController: NavHostController) {
     SetNavbarColor(color = PrimaryDarkColor, useDarkIcons = false)
 
     val dashboardNavController = rememberNavController()
+    val currenRoute = CurrentRoute(dashboardNavController)
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -70,7 +73,11 @@ fun DashboardContentScreen(principalNavController: NavHostController) {
                 navItems = itemsbottomBar
             )
         },
-        floatingActionButton = { FloatActionBttn() },
+        floatingActionButton = {
+            if (currenRoute == TasksScreen.drawerItem.route || currenRoute == MascotasScreen.drawerItem.route) {
+                FloatActionBttn(currenRoute, principalNavController)
+            }
+        },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.End,
         drawerContent = {
@@ -129,61 +136,72 @@ private fun HeaderContentScreens(
 }
 
 @Composable
-fun FloatActionBttn() {
+fun FloatActionBttn(
+    currenRoute: String?,
+    principalNavController: NavHostController
+) {
     var showDialogData by remember { mutableStateOf(false) }
     var nombre by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var aceptar by remember { mutableStateOf(false) }
 
     if (showDialogData) {
-        AlertDialog(
-            onDismissRequest = {},
-            confirmButton = {
-                TextButton(onClick = {}) {
-                    Text(text = "Solicitar")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDialogData = false }) {
-                    Text(text = "Cancelar")
-                }
-            },
-            title = { Text(text = "Recompensas") },
-            text = {
-                Column {
-                    Text(text = "Registre sus datos")
-                    TextField(
-                        value = nombre,
-                        onValueChange = { nombre = it },
-                        placeholder = { Text(text = "Nombre") },
-                        singleLine = true,
-                        colors = TextFieldDefaults.textFieldColors(
-                            textColor = Color(0xFFB2B2B2),
-                            backgroundColor = Color(0xFFFAFAFA),
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent
-                        )
-                    )
-                    Spacer(modifier = Modifier.size(10.dp))
-                    TextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        placeholder = { Text(text = "Correo") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        singleLine = true,
-                        colors = TextFieldDefaults.textFieldColors(
-                            textColor = Color(0xFFB2B2B2),
-                            backgroundColor = Color(0xFFFAFAFA),
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent
-                        )
-                    )
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(checked = aceptar, onCheckedChange = { aceptar = it })
-                        Text(text = "Acepto los términos y condiciones")
-                    }
-                }
-            })
+        when (currenRoute) {
+            TasksScreen.drawerItem.route -> {
+                principalNavController.navigate(Screens.AddTaskScreen.route)
+                showDialogData = false
+            }
+            MascotasScreen.drawerItem.route -> {
+                AlertDialog(
+                    onDismissRequest = {},
+                    confirmButton = {
+                        TextButton(onClick = {}) {
+                            Text(text = "Solicitar")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showDialogData = false }) {
+                            Text(text = "Cancelar")
+                        }
+                    },
+                    title = { Text(text = "Recompensas") },
+                    text = {
+                        Column {
+                            Text(text = "Registre sus datos")
+                            TextField(
+                                value = nombre,
+                                onValueChange = { nombre = it },
+                                placeholder = { Text(text = "Nombre") },
+                                singleLine = true,
+                                colors = TextFieldDefaults.textFieldColors(
+                                    textColor = Color(0xFFB2B2B2),
+                                    backgroundColor = Color(0xFFFAFAFA),
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent
+                                )
+                            )
+                            Spacer(modifier = Modifier.size(10.dp))
+                            TextField(
+                                value = email,
+                                onValueChange = { email = it },
+                                placeholder = { Text(text = "Correo") },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                                singleLine = true,
+                                colors = TextFieldDefaults.textFieldColors(
+                                    textColor = Color(0xFFB2B2B2),
+                                    backgroundColor = Color(0xFFFAFAFA),
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent
+                                )
+                            )
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Checkbox(checked = aceptar, onCheckedChange = { aceptar = it })
+                                Text(text = "Acepto los términos y condiciones")
+                            }
+                        }
+                    })
+            }
+        }
     }
 
     FloatingActionButton(onClick = { showDialogData = true }) {

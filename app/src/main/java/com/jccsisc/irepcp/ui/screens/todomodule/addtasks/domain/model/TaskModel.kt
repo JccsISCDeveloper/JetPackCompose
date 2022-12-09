@@ -13,6 +13,6 @@ import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_TASK
 data class TaskModel(
     @PrimaryKey
     val id: Long = System.currentTimeMillis(),
-    val task: String,
+    val task: String = "",
     var selected: Boolean = false,
 )
