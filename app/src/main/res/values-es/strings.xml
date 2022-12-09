@@ -12,6 +12,9 @@
 
 
     <!--Task module-->
+    <string name="new_task">Nueva tarea</string>
+    <string name="ph_write_your_note">Escribe tu nota</string>
+    <string name="str_number_of_characteres">%s caracteres</string>
 
     <!--Rick and Morty module-->
     <!--HomeScreen-->

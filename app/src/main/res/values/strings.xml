@@ -12,6 +12,9 @@
     <string name="label_log_in">Log In</string>
 
     <!--Task module-->
+    <string name="new_task">New Task</string>
+    <string name="ph_write_your_note">Write your note</string>
+    <string name="str_number_of_characteres">%s characters</string>
 
     <!--Rick and Morty module-->
     <!--HomeScreen-->
