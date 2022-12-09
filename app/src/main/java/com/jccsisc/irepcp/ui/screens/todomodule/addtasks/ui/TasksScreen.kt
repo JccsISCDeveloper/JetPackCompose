@@ -46,20 +46,20 @@ fun TasksScreen(
             .background(GrayBg)
             .padding(bottom = 60.dp)
     ) {
-        AddTasksDialog(
+     /*   AddTasksDialog(
             show = viewModel.openDialog,
             onDismiss = { viewModel.closeDialog() },
             addTask = { task ->
                 viewModel.addTask(task)
             }
-        )
+        )*/
         TaskList(tasks, viewModel, navigateToModifyTask)
-        FabDialog(
+       /* FabDialog(
             viewModel,
             Modifier
                 .align(Alignment.BottomStart)
                 .padding(bottom = 40.dp)
-        )
+        )*/
     }
 }
 

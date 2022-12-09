@@ -26,19 +26,18 @@ import com.jccsisc.irepcp.ui.screens.dashboard.navigation.model.DrawerItem
  */
 sealed class ScreensDashboard(val drawerItem: DrawerItem) {
 
-    object DashboardContentScreen : ScreensDashboard(
-        DrawerItem(
-            CONTENT_DASHBOARD_SCREEN,
-            "Content Dashboard",
-            R.drawable.ic_home
-        )
-    )
+    object DashboardContentScreen :
+        ScreensDashboard(DrawerItem(CONTENT_DASHBOARD_SCREEN, "Content Dashboard"))
 
     /**
      * BottomBar
      * */
-    object MascotasScreen : ScreensDashboard(DrawerItem(MASCOTAS_SCREEN, "Home", R.drawable.ic_home))
-    object DetailMascotaScreen : ScreensDashboard(DrawerItem(DETAIL_MASCOTA_SCREEN, "Detalle mascota"))
+    object MascotasScreen :
+        ScreensDashboard(DrawerItem(MASCOTAS_SCREEN, "Home", R.drawable.ic_home))
+
+    object DetailMascotaScreen :
+        ScreensDashboard(DrawerItem(DETAIL_MASCOTA_SCREEN, "Detalle mascota"))
+
     object FavoritesScreen :
         ScreensDashboard(DrawerItem(FAVORITES_SCREEN, "Favoritos", R.drawable.ic_favorites))
 
@@ -48,14 +47,15 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
     /**
      * Drawer
      * */
-    object MascotaFelizScreen : ScreensDashboard(
-        DrawerItem(
-            MASCOTA_HEADER,
-            "Mascota",
-            R.drawable.ic_pets,
-            listMascotaOptions
-        )
-    ) //todo esta clase ya no se visualiza, se tomó como padre pero en qué momoento se mostrará? RESOLVER
+    object MascotaFelizScreen :
+        ScreensDashboard(
+            DrawerItem(
+                MASCOTA_HEADER,
+                "Mascota",
+                R.drawable.ic_pets,
+                listMascotaOptions
+            )
+        ) //todo esta clase ya no se visualiza, se tomó como padre pero en qué momoento se mostrará? RESOLVER
 
     object TasksScreen :
         ScreensDashboard(DrawerItem(TASKS_SCREEN, "Tareas", R.drawable.ic_tasks))

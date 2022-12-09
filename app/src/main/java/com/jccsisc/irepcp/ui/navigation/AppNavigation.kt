@@ -13,6 +13,7 @@ import com.jccsisc.irepcp.ui.screens.dashboard.navigation.dashboardContentGraph
 import com.jccsisc.irepcp.ui.screens.logingraph.login.ui.LoginViewModel
 import com.jccsisc.irepcp.ui.screens.logingraph.loginGraph
 import com.jccsisc.irepcp.ui.screens.rickandmorty.rickAndMortyGraph
+import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.AddTaskScreen
 import com.jccsisc.irepcp.ui.screens.todomodule.modiafytask.ModifyTaskScreen
 
 /**
@@ -41,6 +42,11 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
             ) {
                 navController.popBackStack()
             }
+        }
+        composable(Screens.AddTaskScreen.route) {
+            AddTaskScreen(navigateBack = {
+                navController.popBackStack()
+            })
         }
     }
 }
