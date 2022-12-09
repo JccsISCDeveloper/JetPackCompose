@@ -142,7 +142,7 @@ private fun TaskList(
     navigateToModifyTask: (taskId: Long) -> Unit
 ) {
     LazyColumn {
-        items(tasks, key = { it.id }) { task ->
+        items(tasks.sortedBy { it.selected }, key = { it.id }) { task ->
             CardTask(
                 taskModel = task,
                 onCheckBoxSelected = { viewModel.onTaskSelected(it) },

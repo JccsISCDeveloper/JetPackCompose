@@ -1,6 +1,7 @@
 package com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -8,8 +9,10 @@ import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -81,6 +84,7 @@ private fun TopBar(
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ContentNewTask(
     modifier: Modifier = Modifier,
@@ -88,6 +92,7 @@ fun ContentNewTask(
 ) {
     var task by remember { mutableStateOf(Constants.NO_VALUE) }
     val selected by remember { mutableStateOf(false) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Box {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -117,6 +122,10 @@ fun ContentNewTask(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     capitalization = KeyboardCapitalization.Sentences
+                ),
+                keyboardActions = KeyboardActions(
+                    //todo en este caso no aplica pero así se ocultaría teclado
+                    onSend = { keyboardController?.hide() }
                 )
             )
         }
