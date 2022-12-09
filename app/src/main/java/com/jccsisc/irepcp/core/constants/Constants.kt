@@ -31,11 +31,15 @@ object Constants {
     const val FAVORITES_SCREEN = "FAVORITES_SCREEN"
     const val GALLERY_SCREEN = "GALLERY_SCREEN"
     const val MASCOTA_HEADER = "MASCOTA_HEADER"
-    const val TASKS_SCREEN = "TASKS_SCREEN"
-    const val MODIFY_TASKS_SCREEN = "MODIFY_TASKS_SCREEN"
     const val CONSUMO_APIS_HEADER = "CONSUMO_APIS_HEADER"
     const val CANVAS_SCREEN = "CANVAS_SCREEN"
     const val DETAILS_FAVORITES_SCREEN = "DETAILS_FAVORITES_SCREEN"
+    /**
+     * Routes Tasks
+     * */
+    const val TASKS_SCREEN = "TASKS_SCREEN"
+    const val ADD_TASK_SCREEN = "ADD_TASK_SCREEN"
+    const val MODIFY_TASKS_SCREEN = "MODIFY_TASKS_SCREEN"
 
     /**
      * Routes Mascota
