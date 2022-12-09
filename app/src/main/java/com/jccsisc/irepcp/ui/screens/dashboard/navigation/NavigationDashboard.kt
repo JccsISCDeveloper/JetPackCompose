@@ -68,7 +68,7 @@ fun NavigationDashboard(
          * */
         composable(TasksScreen.drawerItem.route) {
             TasksScreen(navigateToModifyTask = { taskId ->
-                principalNavController.navigate("${Screens.ModifyTaskScreen.route}/${taskId}")
+                principalNavController.navigate("${Screens.AddOrModifyTaskScreen.route}/${taskId}")
             })
         }
         composable(ConsumoApisScreen.drawerItem.route) {

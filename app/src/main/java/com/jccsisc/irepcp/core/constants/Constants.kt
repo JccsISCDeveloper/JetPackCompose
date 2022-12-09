@@ -38,8 +38,7 @@ object Constants {
      * Routes Tasks
      * */
     const val TASKS_SCREEN = "TASKS_SCREEN"
-    const val ADD_TASK_SCREEN = "ADD_TASK_SCREEN"
-    const val MODIFY_TASKS_SCREEN = "MODIFY_TASKS_SCREEN"
+    const val ADD_OR_MODIFY_TASK_SCREEN = "ADD_OR_MODIFY_TASK_SCREEN"
 
     /**
      * Routes Mascota

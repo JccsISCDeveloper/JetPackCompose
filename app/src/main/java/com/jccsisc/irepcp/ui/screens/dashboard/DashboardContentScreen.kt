@@ -148,7 +148,7 @@ fun FloatActionBttn(
     if (showDialogData) {
         when (currenRoute) {
             TasksScreen.drawerItem.route -> {
-                principalNavController.navigate(Screens.AddTaskScreen.route)
+                principalNavController.navigate("${Screens.AddOrModifyTaskScreen.route}/${-1L}")
                 showDialogData = false
             }
             MascotasScreen.drawerItem.route -> {

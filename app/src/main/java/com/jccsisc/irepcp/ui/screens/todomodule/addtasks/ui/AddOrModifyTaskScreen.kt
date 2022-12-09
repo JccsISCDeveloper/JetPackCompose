@@ -1,5 +1,6 @@
 package com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -33,42 +34,67 @@ import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
  * Created by Julio Cesar Camacho Silva on 08/12/22
  */
 @Composable
-fun AddTaskScreen(
-    navigateBack: () -> Unit,
-    viewModel: TaskViewModel = hiltViewModel()
+fun AddOrModifyTaskScreen(
+    taskId: Long = -1L,
+    viewModel: TaskViewModel = hiltViewModel(),
+    navigateBack: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
-    var newTask by remember { mutableStateOf(TaskModel()) }
+    var task by remember { mutableStateOf(TaskModel()) }
+    var isNewaTask by remember { mutableStateOf(false) }
+
+    isNewaTask = taskId == -1L
+
+    if (!isNewaTask) {
+        LaunchedEffect(Unit) {
+            viewModel.getTask(taskId)
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         scaffoldState = scaffoldState,
         topBar = {
             TopBar(
+                title = if (isNewaTask) {
+                    stringResource(id = R.string.new_task)
+                } else {
+                    stringResource(id = R.string.modify_task)
+                },
                 navigateBack = navigateBack,
                 onSaveClick = {
-                    viewModel.addTask(newTask)
-                    //todo mostrar un toast indicando que se fguardó correctamente
-                    navigateBack()
+                    if (isNewaTask) {
+                        viewModel.addTask(task)
+                        //todo mostrar un toast indicando que se fguardó correctamente
+                        navigateBack()
+                    } else {
+                        viewModel.updateTask(task)
+                        navigateBack()
+                    }
                 }
             )
         }
     ) { padding ->
         ContentNewTask(
             modifier = Modifier.padding(padding),
-            addTask = { newTask = it }
+            isNewTask = isNewaTask,
+            taskModel = viewModel.taskVM,
+            onCheckSelected = { viewModel.onTaskSelected(false) },
+            updateTaskString = { viewModel.updateTask(it) },
+            addOrModifyTask = { task = it }
         )
     }
 }
 
 @Composable
 private fun TopBar(
+    title: String,
     navigateBack: () -> Unit,
     onSaveClick: () -> Unit
 ) {
     TopAppBar(
         title = {
-            Text(text = stringResource(id = R.string.new_task), textAlign = TextAlign.Center)
+            Text(text = title, textAlign = TextAlign.Center)
         },
         navigationIcon = {
             IconButton(onClick = navigateBack) {
@@ -88,10 +114,13 @@ private fun TopBar(
 @Composable
 fun ContentNewTask(
     modifier: Modifier = Modifier,
-    addTask: (TaskModel) -> Unit
+    isNewTask: Boolean,
+    taskModel: TaskModel,
+    onCheckSelected: () -> Unit,
+    updateTaskString: (task: String) -> Unit,
+    addOrModifyTask: (TaskModel) -> Unit
 ) {
     var task by remember { mutableStateOf(Constants.NO_VALUE) }
-    val selected by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Box {
@@ -104,13 +133,21 @@ fun ContentNewTask(
             }
             Spacer(modifier = Modifier.height(4.dp))
             TextField(
-                value = task,
+                value = if (isNewTask) task else taskModel.task,
                 onValueChange = {
                     task = it
-                    val newTask = TaskModel(task = task, selected = selected)
-                    addTask(newTask)
+                    if (isNewTask) {
+                        val newTask = TaskModel(task = task, selected = false)
+                        addOrModifyTask(newTask)
+                    } else {
+                        updateTaskString(task)
+                        addOrModifyTask(taskModel)
+                    }
                 },
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { onCheckSelected() },
+                enabled = isNewTask || !taskModel.selected,
                 placeholder = { Text(text = stringResource(id = R.string.ph_write_your_note)) },
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = GrayBg,
@@ -130,7 +167,10 @@ fun ContentNewTask(
             )
         }
         Text(
-            text = stringResource(id = R.string.str_number_of_characteres, task.length),
+            text = stringResource(
+                id = R.string.str_number_of_characteres,
+                if (isNewTask) task.length else taskModel.task.length
+            ),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(bottom = 80.dp, end = dimensionResource(id = R.dimen.padding_3)),

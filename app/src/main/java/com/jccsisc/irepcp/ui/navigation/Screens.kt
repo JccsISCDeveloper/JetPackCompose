@@ -1,9 +1,6 @@
 package com.jccsisc.irepcp.ui.navigation
 
-import com.jccsisc.irepcp.core.constants.Constants
-import com.jccsisc.irepcp.core.constants.Constants.MODIFY_TASKS_SCREEN
-import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
-import com.jccsisc.irepcp.ui.screens.dashboard.navigation.model.DrawerItem
+import com.jccsisc.irepcp.core.constants.Constants.ADD_OR_MODIFY_TASK_SCREEN
 
 /**
  * Project: IREPCP
@@ -15,7 +12,6 @@ sealed class Screens(val route: String) {
     /**
      * Task module
      * */
-    object ModifyTaskScreen: Screens(MODIFY_TASKS_SCREEN)
-    object AddTaskScreen : Screens(Constants.ADD_TASK_SCREEN)
+    object AddOrModifyTaskScreen : Screens(ADD_OR_MODIFY_TASK_SCREEN)
 
 }

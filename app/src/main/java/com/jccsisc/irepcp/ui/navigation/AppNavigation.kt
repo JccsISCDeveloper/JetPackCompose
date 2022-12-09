@@ -13,8 +13,7 @@ import com.jccsisc.irepcp.ui.screens.dashboard.navigation.dashboardContentGraph
 import com.jccsisc.irepcp.ui.screens.logingraph.login.ui.LoginViewModel
 import com.jccsisc.irepcp.ui.screens.logingraph.loginGraph
 import com.jccsisc.irepcp.ui.screens.rickandmorty.rickAndMortyGraph
-import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.AddTaskScreen
-import com.jccsisc.irepcp.ui.screens.todomodule.modiafytask.ModifyTaskScreen
+import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.AddOrModifyTaskScreen
 
 /**
  * Project: IREPCP
@@ -33,20 +32,13 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
         dashboardContentGraph(navController)
         rickAndMortyGraph(navController)
         composable(
-            route = "${Screens.ModifyTaskScreen.route}/{${TASK_ID}}",
+            route = "${Screens.AddOrModifyTaskScreen.route}/{${TASK_ID}}",
             arguments = listOf(navArgument(TASK_ID) { type = NavType.LongType })
-        ) { backStackEntry ->
-            val taskId = backStackEntry.arguments?.getLong(TASK_ID) ?: 0
-            ModifyTaskScreen(
-                taskId = taskId
-            ) {
+        ) {backStackEntry ->
+            val taskId = backStackEntry.arguments?.getLong(TASK_ID) ?: -1L
+            AddOrModifyTaskScreen(taskId = taskId) {
                 navController.popBackStack()
             }
-        }
-        composable(Screens.AddTaskScreen.route) {
-            AddTaskScreen(navigateBack = {
-                navController.popBackStack()
-            })
         }
     }
 }
