@@ -30,7 +30,7 @@ import com.jccsisc.irepcp.ui.theme.GrayBg
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.ui.theme.PrimaryLight
-import com.jccsisc.irepcp.utils.components.SimpleCircularProgressDialog
+import com.jccsisc.irepcp.utils.components.loadings.SimpleCircularProgressDialog
 import kotlinx.coroutines.flow.collectLatest
 
 /**

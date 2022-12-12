@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -32,7 +33,7 @@ import com.jccsisc.irepcp.ui.screens.logingraph.login.data.remote.model.request.
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.SpacerApp
-import com.jccsisc.irepcp.utils.components.SimpleCircularProgressDialog
+import com.jccsisc.irepcp.utils.components.loadings.SimpleCircularProgressDialog
 
 /**
  * Project: IREPCP
@@ -73,7 +74,7 @@ fun LoginScreen(loginViewModel: LoginViewModel, onNavigationToDashboard: () -> U
 @Composable
 private fun HeaderLogin(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier, horizontalAlignment = CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_colombia),

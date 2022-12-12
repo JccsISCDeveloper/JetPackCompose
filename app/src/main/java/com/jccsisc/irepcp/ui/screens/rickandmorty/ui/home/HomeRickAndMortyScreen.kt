@@ -26,7 +26,7 @@ import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.generalcomponents.GenericTopBar
 import com.jccsisc.irepcp.ui.screens.rickandmorty.domain.model.personajes.Personajes
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
-import com.jccsisc.irepcp.utils.components.SimpleCircularProgressDialog
+import com.jccsisc.irepcp.utils.components.loadings.SimpleCircularProgressDialog
 import kotlinx.coroutines.flow.collectLatest
 
 /**
