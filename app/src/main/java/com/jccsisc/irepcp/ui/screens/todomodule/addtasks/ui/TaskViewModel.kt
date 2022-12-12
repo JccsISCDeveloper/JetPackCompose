@@ -20,9 +20,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class TaskViewModel  @Inject constructor(private val repo: UseCaseTasks): ViewModel() {
-    var openDialog by mutableStateOf(false)
     val tasks = repo.getTasksFromRoom()
-    var taskVM by mutableStateOf(TaskModel(0L,task = NO_VALUE, false))
+    var taskVM by mutableStateOf(TaskModel(0L,task = NO_VALUE, false, 0L))
 
     fun addTask(task: TaskModel) = viewModelScope.launch(Dispatchers.IO) {
         repo.addTaskToRoom(task)
@@ -36,6 +35,10 @@ class TaskViewModel  @Inject constructor(private val repo: UseCaseTasks): ViewMo
         taskVM = taskVM.copy(task = task)
     }
 
+    fun updateModifyTask(time: Long) {
+        taskVM = taskVM.copy(modificationDate = time)
+    }
+
     fun onTaskSelected(selected: Boolean) {
         taskVM = taskVM.copy(selected = selected)
     }
@@ -47,8 +50,5 @@ class TaskViewModel  @Inject constructor(private val repo: UseCaseTasks): ViewMo
     fun deleteTask(taskModel: TaskModel) {
         viewModelScope.launch(Dispatchers.IO) { repo.deleteTaskFromRoom(taskModel) }
     }
-
-    fun closeDialog() { openDialog = false }
-    fun openDialog() { openDialog = true }
 
 }
