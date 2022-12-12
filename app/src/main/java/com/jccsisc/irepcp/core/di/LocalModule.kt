@@ -8,6 +8,7 @@ import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local.MascotaDB
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local.MascotaDao
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.data.local.MascotaRepositoryImpl
 import com.jccsisc.irepcp.ui.screens.mascotas.mascotashome.domain.repository.MascotaRepository
+import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.data.local.DataBaseBuilder.TASKS_MIGRATION_1_2
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.data.local.TaskDao
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.data.local.TasksDB
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.data.local.TasksRepository
@@ -47,7 +48,9 @@ class LocalModule {
      * */
     @Provides
     fun provideTasksDB(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, TasksDB::class.java, DB_TASKS).build()
+        Room.databaseBuilder(context, TasksDB::class.java, DB_TASKS)
+            .addMigrations(TASKS_MIGRATION_1_2)
+            .build()
 
     @Provides
     fun provideTaskDao(tasksDB: TasksDB) = tasksDB.taskDao()
