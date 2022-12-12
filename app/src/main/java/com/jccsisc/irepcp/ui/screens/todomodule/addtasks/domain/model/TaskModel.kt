@@ -1,8 +1,10 @@
 package com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_TASK
+import javax.annotation.Nonnull
 
 /**
  * Project: IREPCP
@@ -12,7 +14,8 @@ import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_TASK
 @Entity(tableName = TBL_TASK)
 data class TaskModel(
     @PrimaryKey
-    val id: Long = System.currentTimeMillis(),
-    val task: String = "",
-    var selected: Boolean = false,
+    @ColumnInfo(name = "id") val id: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = "task") @Nonnull val task: String = "",
+    @ColumnInfo(name = "selected") var selected: Boolean = false,
+    @ColumnInfo(name = "modification_date") val modificationDate: Long = 0
 )
