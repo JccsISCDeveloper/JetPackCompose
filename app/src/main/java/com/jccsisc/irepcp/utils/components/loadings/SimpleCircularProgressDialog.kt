@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.utils.components
+package com.jccsisc.irepcp.utils.components.loadings
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
