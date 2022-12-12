@@ -15,7 +15,12 @@
     <string name="new_task">Nueva tarea</string>
     <string name="modify_task">Modificar tarea</string>
     <string name="ph_write_your_note">Escribe tu nota</string>
+    <string name="editing">Editando…</string>
+
     <string name="str_number_of_characteres">%s caracteres</string>
+    <string name="str_today">Hoy, %s</string>
+    <string name="str_yesterday">Ayer, %s</string>
+    <string name="str_yesterday_at">Ayer a las %s</string>
 
     <!--Rick and Morty module-->
     <!--HomeScreen-->
