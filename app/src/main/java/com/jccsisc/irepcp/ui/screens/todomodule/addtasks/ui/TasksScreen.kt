@@ -22,6 +22,7 @@ import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.Gray50
 import com.jccsisc.irepcp.ui.theme.GrayBg
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
+import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 
 /**
  * Project: IREPCP
@@ -34,6 +35,8 @@ fun TasksScreen(
     navigateToModifyTask: (taskId: Long) -> Unit
 ) {
     val tasks by viewModel.tasks.collectAsState(initial = emptyList())
+    var showDialog by remember { mutableStateOf(false) }
+    var task by remember { mutableStateOf(TaskModel()) }
 
     Box(
         modifier = Modifier
@@ -41,7 +44,24 @@ fun TasksScreen(
             .background(GrayBg)
             .padding(bottom = 60.dp)
     ) {
-        TaskList(tasks, viewModel, navigateToModifyTask)
+        TaskList(tasks, viewModel,navigateToModifyTask) { deleteTaskt ->
+            showDialog = true
+            task = deleteTaskt
+        }
+        GenericDialog(
+            show = showDialog,
+            onDismiss = {},
+            image = R.drawable.ic_info_circle,
+            title = "Eliminar tarea",
+            message = "¿Está seguro que desea eliminar la tarea?",
+            btnTitleNegative = "Cancelar",
+            btnTitlePositive = "Eliminar",
+            onNegativeClick = { showDialog = false },
+            onPositiveClick = {
+                viewModel.deleteTask(task)
+                showDialog = false
+            }
+        )
     }
 }
 
@@ -55,7 +75,8 @@ fun PreviewTasks() {
 private fun TaskList(
     tasks: List<TaskModel>,
     viewModel: TaskViewModel,
-    navigateToModifyTask: (taskId: Long) -> Unit
+    navigateToModifyTask: (taskId: Long) -> Unit,
+    onDeleteTask: (taskModel: TaskModel) -> Unit
 ) {
     LazyColumn {
         items(tasks.sortedBy { it.selected }, key = { it.id }) { task ->
@@ -63,7 +84,7 @@ private fun TaskList(
                 taskModel = task,
                 onCheckBoxSelected = { viewModel.onTaskSelected(it) },
                 onUpdateTask = { viewModel.updateTask(it) },
-                onDeleteTask = { viewModel.deleteTask(it) },
+                onDeleteTask = { onDeleteTask(it) },
                 navigateToModifyTask = navigateToModifyTask
             )
         }
@@ -89,10 +110,7 @@ fun CardTask(
             )
             .combinedClickable(
                 onClick = { navigateToModifyTask(taskModel.id) },
-                onLongClick = {
-                    //todo abrir un dialog para confirmar eliminar tarea
-                    onDeleteTask(taskModel)
-                }
+                onLongClick = { onDeleteTask(taskModel) }
             ),
         backgroundColor = Color.White,
         elevation = 6.dp
