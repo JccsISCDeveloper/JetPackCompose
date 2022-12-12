@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,10 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.Gray50
 import com.jccsisc.irepcp.ui.theme.GrayBg
@@ -46,20 +41,7 @@ fun TasksScreen(
             .background(GrayBg)
             .padding(bottom = 60.dp)
     ) {
-     /*   AddTasksDialog(
-            show = viewModel.openDialog,
-            onDismiss = { viewModel.closeDialog() },
-            addTask = { task ->
-                viewModel.addTask(task)
-            }
-        )*/
         TaskList(tasks, viewModel, navigateToModifyTask)
-       /* FabDialog(
-            viewModel,
-            Modifier
-                .align(Alignment.BottomStart)
-                .padding(bottom = 40.dp)
-        )*/
     }
 }
 
@@ -67,72 +49,6 @@ fun TasksScreen(
 @Composable
 fun PreviewTasks() {
 //    TasksScreen()
-}
-
-@Composable
-fun FabDialog(viewModel: TaskViewModel, modifier: Modifier) {
-    FloatingActionButton(
-        onClick = { viewModel.openDialog() },
-        modifier = modifier
-            .padding(dimensionResource(id = R.dimen.padding_10))
-    ) {
-        Icon(imageVector = Icons.Filled.Add, contentDescription = "ic add")
-    }
-}
-
-@Composable
-private fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, addTask: (TaskModel) -> Unit) {
-    if (show) {
-        var task by remember { mutableStateOf(NO_VALUE) }
-        val selected by remember { mutableStateOf(false) }
-
-        Dialog(onDismissRequest = { }) {
-            Box(modifier = Modifier.background(Color.White)) {
-                IconButton(onClick = onDismiss, modifier = Modifier.align(Alignment.TopEnd)) {
-                    Icon(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = "ic close"
-                    )
-                }
-                Column(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = dimensionResource(id = R.dimen.padding_16),
-                            start = dimensionResource(id = R.dimen.padding_10),
-                            end = dimensionResource(id = R.dimen.padding_10),
-                            bottom = dimensionResource(id = R.dimen.padding_10)
-                        )
-                ) {
-                    Text(
-                        text = "Añade tu tarea",
-                        style = MaterialTheme.typography.subtitle1,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                    Spacer(modifier = Modifier.size(16.dp))
-                    TextField(
-                        value = task,
-                        onValueChange = { task = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        maxLines = 1
-                    )
-                    Spacer(modifier = Modifier.size(16.dp))
-                    Button(
-                        onClick = {
-                            onDismiss()
-                            val newTask = TaskModel(task = task, selected = selected)
-                            addTask(newTask)
-                        }, modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = dimensionResource(id = R.dimen.padding_10))
-                    ) {
-                        Text(text = "Añadir tarea")
-                    }
-                }
-            }
-        }
-    }
 }
 
 @Composable
@@ -195,7 +111,7 @@ fun CardTask(
                 onCheckedChange = {
                     selected = it
                     onCheckBoxSelected(selected)
-                    val modifyTask = TaskModel(taskModel.id, taskModel.task, selected)
+                    val modifyTask = TaskModel(taskModel.id, taskModel.task, selected, taskModel.modificationDate)
                     onUpdateTask(modifyTask)
                 },
                 colors = CheckboxDefaults.colors(
