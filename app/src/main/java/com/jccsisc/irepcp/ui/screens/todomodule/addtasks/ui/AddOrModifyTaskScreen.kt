@@ -23,10 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants
+import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.GrayBg
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
+import com.jccsisc.irepcp.utils.lastModifiedTime
+import com.jccsisc.irepcp.utils.timeMillisToFormatDate
 
 /**
  * Project: IREPCP
@@ -65,12 +68,10 @@ fun AddOrModifyTaskScreen(
                 onSaveClick = {
                     if (isNewaTask) {
                         viewModel.addTask(task)
-                        //todo mostrar un toast indicando que se fguardó correctamente
-                        navigateBack()
                     } else {
                         viewModel.updateTask(task)
-                        navigateBack()
                     }
+                    navigateBack()
                 }
             )
         }
@@ -81,6 +82,7 @@ fun AddOrModifyTaskScreen(
             taskModel = viewModel.taskVM,
             onCheckSelected = { viewModel.onTaskSelected(false) },
             updateTaskString = { viewModel.updateTask(it) },
+            updateTaskTime = { viewModel.updateModifyTask(it) },
             addOrModifyTask = { task = it }
         )
     }
@@ -118,36 +120,75 @@ fun ContentNewTask(
     taskModel: TaskModel,
     onCheckSelected: () -> Unit,
     updateTaskString: (task: String) -> Unit,
+    updateTaskTime: (time: Long) -> Unit,
     addOrModifyTask: (TaskModel) -> Unit
 ) {
-    var task by remember { mutableStateOf(Constants.NO_VALUE) }
     val keyboardController = LocalSoftwareKeyboardController.current
+    var taskString by remember { mutableStateOf(Constants.NO_VALUE) }
+    var modificationTime by remember { mutableStateOf(0L) }
+    val createdDate by remember { mutableStateOf(System.currentTimeMillis()) }
+    var enableTask by remember { mutableStateOf(false) }
 
     Box {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_6))) {
-                //todo mostrar fecha de edicion
-                Text(text = "Editando...", modifier = Modifier.weight(1f), color = Color.Red)
-                //todo mostrar fecha en que se creó con hora
-                Text(text = "08/12/2022 17:40", color = Color.Red)
+                Text(
+                    text = if (isNewTask) {
+                        stringResource(id = R.string.editing)
+                    } else {
+                        if (enableTask) {
+                            stringResource(id = R.string.editing)
+                        } else {
+                            if (taskModel.modificationDate != 0L) {
+                                taskModel.modificationDate.lastModifiedTime()
+                            } else {
+                                NO_VALUE
+                            }
+                        }
+                    },
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.subtitle2,
+                    color = Color.Blue
+                )
+                Text(
+                    text = if (isNewTask) {
+                        createdDate.timeMillisToFormatDate()
+                    } else {
+                        taskModel.id.timeMillisToFormatDate()
+                    },
+                    style = MaterialTheme.typography.subtitle2,
+                    color = Color.Gray
+                )
             }
             Spacer(modifier = Modifier.height(4.dp))
             TextField(
-                value = if (isNewTask) task else taskModel.task,
+                value = if (isNewTask) taskString else taskModel.task,
                 onValueChange = {
-                    task = it
+                    taskString = it
+                    modificationTime = System.currentTimeMillis()
                     if (isNewTask) {
-                        val newTask = TaskModel(task = task, selected = false)
+                        val newTask =
+                            TaskModel(id = createdDate, task = taskString, selected = false)
                         addOrModifyTask(newTask)
                     } else {
-                        updateTaskString(task)
+                        var updateModifyDate = 0L
+                        updateModifyDate = if (modifyTask(taskString, taskModel.task)) {
+                            modificationTime
+                        } else {
+                            taskModel.modificationDate
+                        }
+                        updateTaskString(taskString)
+                        updateTaskTime(updateModifyDate)
                         addOrModifyTask(taskModel)
                     }
                 },
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickable { onCheckSelected() },
-                enabled = isNewTask || !taskModel.selected,
+                    .clickable {
+                        onCheckSelected()
+                        enableTask = isNewTask || !taskModel.selected
+                    },
+                enabled = enableTask,
                 placeholder = { Text(text = stringResource(id = R.string.ph_write_your_note)) },
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = GrayBg,
@@ -169,12 +210,17 @@ fun ContentNewTask(
         Text(
             text = stringResource(
                 id = R.string.str_number_of_characteres,
-                if (isNewTask) task.length else taskModel.task.length
+                if (isNewTask) taskString.length else taskModel.task.length
             ),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(bottom = 80.dp, end = dimensionResource(id = R.dimen.padding_3)),
+                .padding(
+                    bottom = dimensionResource(id = R.dimen.padding_6),
+                    end = dimensionResource(id = R.dimen.padding_6)
+                ),
             style = MaterialTheme.typography.caption
         )
     }
 }
+
+fun modifyTask(nowTask: String, lastTask: String): Boolean = nowTask.length != lastTask.length
