@@ -6,6 +6,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,9 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
-import com.jccsisc.irepcp.ui.theme.Gray50
-import com.jccsisc.irepcp.ui.theme.GrayBg
-import com.jccsisc.irepcp.ui.theme.PrimaryColor
+import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 
 /**
@@ -78,7 +77,7 @@ private fun TaskList(
     navigateToModifyTask: (taskId: Long) -> Unit,
     onDeleteTask: (taskModel: TaskModel) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn(modifier = Modifier.background(Color.Gray)) {
         items(tasks.sortedBy { it.selected }, key = { it.id }) { task ->
             CardTask(
                 taskModel = task,
@@ -106,16 +105,26 @@ fun CardTask(
             .fillMaxWidth()
             .padding(
                 vertical = dimensionResource(id = R.dimen.padding_3),
-                horizontal = dimensionResource(id = R.dimen.padding_10)
+                horizontal = dimensionResource(id = R.dimen.padding_6)
             )
             .combinedClickable(
                 onClick = { navigateToModifyTask(taskModel.id) },
                 onLongClick = { onDeleteTask(taskModel) }
             ),
+        shape = RoundedCornerShape(0.dp),
         backgroundColor = Color.White,
-        elevation = 6.dp
+        elevation = 0.dp
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Box(modifier = Modifier.width(5.dp).height(60.dp).background(
+                when(taskModel.priorityTask) {
+                    0 -> ColorRed
+                    1 -> ColorOrange
+                    else -> {
+                        ColorYellow
+                    }
+                }
+            ))
             Text(
                 text = taskModel.task, modifier = Modifier
                     .weight(1f)
