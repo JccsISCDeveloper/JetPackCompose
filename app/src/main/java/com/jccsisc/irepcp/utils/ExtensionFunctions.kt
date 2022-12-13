@@ -85,7 +85,7 @@ fun Long.lastModifiedTime(): String {
     }
 
     fun day(date: Long): String {
-        val sdf = SimpleDateFormat("EEEE", Locale.forLanguageTag("es-MX"))
+        val sdf = SimpleDateFormat("EEEE dd", Locale.forLanguageTag("es-MX"))
         return sdf.format(date)
     }
 

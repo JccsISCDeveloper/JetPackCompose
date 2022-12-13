@@ -1,13 +1,12 @@
 package com.jccsisc.irepcp.utils.components.dialogs
 
-import android.text.Layout.Alignment
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -58,21 +57,22 @@ fun GenericDialog(
                         modifier = Modifier.size(50.dp)
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text(text = title)
+                    Text(text = title, style = MaterialTheme.typography.h5)
                     Spacer(modifier = Modifier.height(14.dp))
-                    Text(text = message)
+                    Text(text = message, style = MaterialTheme.typography.body1)
+                    Spacer(modifier = Modifier.height(14.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        TextButton(onClick = {
-                            onNegativeClick()
-                        }) {
+                        OutlinedButton(
+                            onClick = { onNegativeClick() }
+                        ) {
                             Text(text = btnTitleNegative)
                         }
-                        TextButton(onClick = {
-                            onPositiveClick()
-                        }) {
+                        OutlinedButton(
+                            onClick = { onPositiveClick() },
+                        ) {
                             Text(text = btnTitlePositive)
                         }
                     }
