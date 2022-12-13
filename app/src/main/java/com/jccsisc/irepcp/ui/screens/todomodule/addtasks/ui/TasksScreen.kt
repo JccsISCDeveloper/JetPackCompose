@@ -50,11 +50,11 @@ fun TasksScreen(
         GenericDialog(
             show = showDialog,
             onDismiss = {},
-            image = R.drawable.ic_info_circle,
+            image = R.drawable.ic_warning,
             title = "Eliminar tarea",
             message = "¿Está seguro que desea eliminar la tarea?",
-            btnTitleNegative = "Cancelar",
-            btnTitlePositive = "Eliminar",
+            btnTitleNegative = "No",
+            btnTitlePositive = "Sí",
             onNegativeClick = { showDialog = false },
             onPositiveClick = {
                 viewModel.deleteTask(task)

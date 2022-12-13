@@ -74,7 +74,7 @@ fun AddOrModifyTaskScreen(
                     if (isNewaTask) {
                         viewModel.addTask(task)
                     } else {
-                        viewModel.updateTask(task)
+                        viewModel.updateTask(viewModel.taskVM)
                     }
                     navigateBack()
                 }
@@ -258,7 +258,12 @@ fun ContentNewTask(
                     modificationTime = System.currentTimeMillis()
                     if (isNewTask) {
                         val newTask =
-                            TaskModel(id = createdDate, task = taskString, selected = false)
+                            TaskModel(
+                                id = createdDate,
+                                task = taskString,
+                                selected = false,
+
+                            )
                         addOrModifyTask(newTask)
                     } else {
                         var updateModifyDate = 0L
@@ -269,7 +274,6 @@ fun ContentNewTask(
                         }
                         updateTaskString(taskString)
                         updateTaskTime(updateModifyDate)
-                        addOrModifyTask(taskModel)
                     }
                 },
                 modifier = Modifier
@@ -313,4 +317,4 @@ fun ContentNewTask(
     }
 }
 
-fun modifyTask(nowTask: String, lastTask: String): Boolean = nowTask.length != lastTask.length
+fun modifyTask(nowTask: String, lastTask: String): Boolean = nowTask != lastTask
