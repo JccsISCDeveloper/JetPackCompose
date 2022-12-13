@@ -17,5 +17,7 @@ data class TaskModel(
     @ColumnInfo(name = "id") val id: Long = System.currentTimeMillis(),
     @ColumnInfo(name = "task") @Nonnull val task: String = "",
     @ColumnInfo(name = "selected") var selected: Boolean = false,
-    @ColumnInfo(name = "modification_date") val modificationDate: Long = 0
+    @ColumnInfo(name = "modification_date") val modificationDate: Long = 0,
+    @ColumnInfo(name = "title") @Nonnull  var title: String = "",
+    @ColumnInfo(name = "priority_task") var priorityTask: Int = -1
 )

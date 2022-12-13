@@ -1,12 +1,15 @@
 package com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.LowPriority
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,18 +21,17 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
-import com.jccsisc.irepcp.ui.theme.GrayBg
-import com.jccsisc.irepcp.ui.theme.PrimaryColor
-import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
+import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.lastModifiedTime
 import com.jccsisc.irepcp.utils.timeMillisToFormatDate
+import java.util.*
 
 /**
  * Project: IREPCP
@@ -65,6 +67,9 @@ fun AddOrModifyTaskScreen(
                     stringResource(id = R.string.modify_task)
                 },
                 navigateBack = navigateBack,
+                onPriorityClick = {
+
+                },
                 onSaveClick = {
                     if (isNewaTask) {
                         viewModel.addTask(task)
@@ -77,7 +82,9 @@ fun AddOrModifyTaskScreen(
         }
     ) { padding ->
         ContentNewTask(
-            modifier = Modifier.padding(padding),
+            modifier = Modifier
+                .background(GrayBg)
+                .padding(padding),
             isNewTask = isNewaTask,
             taskModel = viewModel.taskVM,
             onCheckSelected = { viewModel.onTaskSelected(false) },
@@ -92,11 +99,37 @@ fun AddOrModifyTaskScreen(
 private fun TopBar(
     title: String,
     navigateBack: () -> Unit,
+    onPriorityClick: () -> Unit,
     onSaveClick: () -> Unit
 ) {
+    var showMenu by remember { mutableStateOf(false) }
+    var titleTapBar by remember { mutableStateOf(NO_VALUE) }
+
     TopAppBar(
         title = {
-            Text(text = title, textAlign = TextAlign.Center)
+            TextField(
+                value = titleTapBar,
+                onValueChange = {
+                    titleTapBar  = it
+                },
+                enabled = true,
+                textStyle = MaterialTheme.typography.subtitle1,
+                label = { Text(text = title) },
+                singleLine = true,
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = GrayBg,
+                    backgroundColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = GrayBg
+                ),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    capitalization = KeyboardCapitalization.Sentences
+                )
+            )
+//            Text(text = title, textAlign = TextAlign.Center)
         },
         navigationIcon = {
             IconButton(onClick = navigateBack) {
@@ -105,7 +138,63 @@ private fun TopBar(
         },
         backgroundColor = PrimaryDarkColor,
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(onClick = {
+                showMenu = !showMenu
+                onPriorityClick()
+            }) {
+                Icon(imageVector = Icons.Outlined.LowPriority, contentDescription = "ic priority")
+            }
+            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    Box(
+                        modifier = Modifier
+                            .size(35.dp)
+                            .background(shape = RoundedCornerShape(6.dp), color = ColorRed)
+                    )
+                    Text(
+                        text = "Alta",
+                        modifier = Modifier.padding(
+                            start = dimensionResource(id = R.dimen.padding_6),
+                            end = dimensionResource(id = R.dimen.padding_6)
+                        ),
+                        style = MaterialTheme.typography.overline,
+                        fontSize = 16.sp
+                    )
+                }
+                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    Box(
+                        modifier = Modifier
+                            .size(35.dp)
+                            .background(shape = RoundedCornerShape(6.dp), color = ColorOrange)
+                    )
+                    Text(
+                        text = "Media",
+                        modifier = Modifier.padding(
+                            start = dimensionResource(id = R.dimen.padding_6),
+                            end = dimensionResource(id = R.dimen.padding_6)
+                        ),
+                        style = MaterialTheme.typography.overline,
+                        fontSize = 16.sp
+                    )
+                }
+                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    Box(
+                        modifier = Modifier
+                            .size(35.dp)
+                            .background(shape = RoundedCornerShape(6.dp), color = ColorYellow)
+                    )
+                    Text(
+                        text = "Baja",
+                        modifier = Modifier.padding(
+                            start = dimensionResource(id = R.dimen.padding_6),
+                            end = dimensionResource(id = R.dimen.padding_6)
+                        ),
+                        style = MaterialTheme.typography.overline,
+                        fontSize = 16.sp
+                    )
+                }
+            }
+            IconButton(onClick = onSaveClick) {
                 Icon(imageVector = Icons.Outlined.Save, contentDescription = "ic save")
             }
         }
@@ -141,6 +230,7 @@ fun ContentNewTask(
                         } else {
                             if (taskModel.modificationDate != 0L) {
                                 taskModel.modificationDate.lastModifiedTime()
+                                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
                             } else {
                                 NO_VALUE
                             }
