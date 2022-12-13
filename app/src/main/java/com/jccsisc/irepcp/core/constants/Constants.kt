@@ -8,9 +8,14 @@ package com.jccsisc.irepcp.core.constants
 object Constants {
 
     const val NO_VALUE = ""
+
     const val SPACER_50 = 50
     const val SPACER_20 = 20
     const val SPACER_10 = 10
+
+    const val LOW_PRIORITY = 0
+    const val MEDIUM_PRIORITY = 1
+    const val HIGH_PRIORITY = 2
 
     /**
      * Routes Login
