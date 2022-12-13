@@ -30,6 +30,7 @@ import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.lastModifiedTime
+import com.jccsisc.irepcp.utils.showToast
 import com.jccsisc.irepcp.utils.timeMillisToFormatDate
 import java.util.*
 
@@ -47,6 +48,7 @@ fun AddOrModifyTaskScreen(
     val scaffoldState = rememberScaffoldState()
     var task by remember { mutableStateOf(TaskModel()) }
     var isNewaTask by remember { mutableStateOf(false) }
+    var priorityTask by remember { mutableStateOf(-1) }
 
     isNewaTask = taskId == -1L
 
@@ -67,16 +69,25 @@ fun AddOrModifyTaskScreen(
                     stringResource(id = R.string.modify_task)
                 },
                 navigateBack = navigateBack,
-                onPriorityClick = {
-
-                },
+                onPriorityClick = { priorityTask = it },
                 onSaveClick = {
                     if (isNewaTask) {
-                        viewModel.addTask(task)
+                        if (task.priorityTask != -1) {
+                            viewModel.addTask(task)
+                            navigateBack()
+                        } else {
+                            showToast("Selecciona la prioridad de la tarea")
+                        }
                     } else {
                         viewModel.updateTask(viewModel.taskVM)
+                        /*  if (!task.title.isNullOrEmpty()) {
+                              viewModel.updateTask(viewModel.taskVM)
+                          } else {
+                              showToast("Ingresa un título para esta tarea")
+                          }*/
+                        navigateBack()
                     }
-                    navigateBack()
+
                 }
             )
         }
@@ -86,7 +97,9 @@ fun AddOrModifyTaskScreen(
                 .background(GrayBg)
                 .padding(padding),
             isNewTask = isNewaTask,
+            priority = priorityTask,
             taskModel = viewModel.taskVM,
+            onPrioritySelected = { viewModel.onPrioritySelected(it) },
             onCheckSelected = { viewModel.onTaskSelected(false) },
             updateTaskString = { viewModel.updateTask(it) },
             updateTaskTime = { viewModel.updateModifyTask(it) },
@@ -99,7 +112,7 @@ fun AddOrModifyTaskScreen(
 private fun TopBar(
     title: String,
     navigateBack: () -> Unit,
-    onPriorityClick: () -> Unit,
+    onPriorityClick: (priority: Int) -> Unit,
     onSaveClick: () -> Unit
 ) {
     var showMenu by remember { mutableStateOf(false) }
@@ -110,7 +123,7 @@ private fun TopBar(
             TextField(
                 value = titleTapBar,
                 onValueChange = {
-                    titleTapBar  = it
+                    titleTapBar = it
                 },
                 enabled = true,
                 textStyle = MaterialTheme.typography.subtitle1,
@@ -140,12 +153,14 @@ private fun TopBar(
         actions = {
             IconButton(onClick = {
                 showMenu = !showMenu
-                onPriorityClick()
             }) {
                 Icon(imageVector = Icons.Outlined.LowPriority, contentDescription = "ic priority")
             }
             DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                DropdownMenuItem(onClick = {
+                    onPriorityClick(0)
+                    showMenu = false
+                }) {
                     Box(
                         modifier = Modifier
                             .size(35.dp)
@@ -161,7 +176,10 @@ private fun TopBar(
                         fontSize = 16.sp
                     )
                 }
-                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                DropdownMenuItem(onClick = {
+                    onPriorityClick(1)
+                    showMenu = false
+                }) {
                     Box(
                         modifier = Modifier
                             .size(35.dp)
@@ -177,7 +195,10 @@ private fun TopBar(
                         fontSize = 16.sp
                     )
                 }
-                DropdownMenuItem(onClick = { /*TODO*/ }) {
+                DropdownMenuItem(onClick = {
+                    onPriorityClick(2)
+                    showMenu = false
+                }) {
                     Box(
                         modifier = Modifier
                             .size(35.dp)
@@ -206,7 +227,9 @@ private fun TopBar(
 fun ContentNewTask(
     modifier: Modifier = Modifier,
     isNewTask: Boolean,
+    priority: Int,
     taskModel: TaskModel,
+    onPrioritySelected: (priority: Int) -> Unit,
     onCheckSelected: () -> Unit,
     updateTaskString: (task: String) -> Unit,
     updateTaskTime: (time: Long) -> Unit,
@@ -262,18 +285,24 @@ fun ContentNewTask(
                                 id = createdDate,
                                 task = taskString,
                                 selected = false,
-
+                                priorityTask = priority,
+                                title = taskModel.title
                             )
                         addOrModifyTask(newTask)
                     } else {
                         var updateModifyDate = 0L
-                        updateModifyDate = if (modifyTask(taskString, taskModel.task)) {
+                        updateModifyDate = if (modifyTask(taskString, taskModel.task) || taskModel.priorityTask != priority) {
                             modificationTime
                         } else {
                             taskModel.modificationDate
                         }
-                        updateTaskString(taskString)
-                        updateTaskTime(updateModifyDate)
+                        if (taskString.isNotEmpty()) {
+                            updateTaskString(taskString)
+                            updateTaskTime(updateModifyDate)
+                            onPrioritySelected(priority)
+                        } else {
+                            showToast("Escribe tu nota")
+                        }
                     }
                 },
                 modifier = Modifier

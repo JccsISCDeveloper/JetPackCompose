@@ -43,6 +43,10 @@ class TaskViewModel  @Inject constructor(private val repo: UseCaseTasks): ViewMo
         taskVM = taskVM.copy(selected = selected)
     }
 
+    fun onPrioritySelected(priority: Int) {
+        taskVM = taskVM.copy(priorityTask = priority)
+    }
+
     fun updateTask(task: TaskModel) = viewModelScope.launch(Dispatchers.IO) {
         repo.updateTaskFromRoom(task)
     }
