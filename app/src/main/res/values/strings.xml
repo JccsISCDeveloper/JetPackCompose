@@ -16,6 +16,9 @@
     <string name="modify_task">Modificar tarea</string>
     <string name="ph_write_your_note">Write your note</string>
     <string name="editing">Editing…</string>
+    <string name="low_priority">Low</string>
+    <string name="medium_priority">Medium</string>
+    <string name="high_priority">High</string>
 
     <string name="str_number_of_characteres">%s characters</string>
     <string name="str_today">Today, %s</string>
