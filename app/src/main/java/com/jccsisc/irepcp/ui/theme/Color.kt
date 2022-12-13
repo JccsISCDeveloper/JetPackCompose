@@ -17,7 +17,10 @@ val SecondaryColor = Color(0xFF263238)
 val SecondaryDarkColor = Color(0xFF000a12)
 val SecondaryLight = Color(0xFF4f5b62)
 
-
+//Colores prioridad de tarea
+val ColorRed = Color(0xFFCF0000)
+val ColorOrange = Color(0xFFFF9800)
+val ColorYellow = Color(0xFFE0CA00)
 
 //Colores distribucion screen
 val ColorHearder = Color(0xFF90a4ae)

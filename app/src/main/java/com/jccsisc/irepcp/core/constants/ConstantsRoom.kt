@@ -22,7 +22,7 @@ object ConstantsRoom {
      * DB ROOM DB_TASKS
      * */
     const val DB_TASKS = "DB_TASKS"
-    const val DB_TASKS_VERSION = 2
+    const val DB_TASKS_VERSION = 3
     /**
      * TABLES DB_TASKS
      * */
