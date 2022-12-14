@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -59,19 +60,26 @@ fun GenericDialog(
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(text = title, style = MaterialTheme.typography.h5)
                     Spacer(modifier = Modifier.height(14.dp))
-                    Text(text = message, style = MaterialTheme.typography.body1)
+                    Text(
+                        text = message,
+                        modifier = Modifier.fillMaxWidth(),
+                        style = MaterialTheme.typography.body1,
+                        textAlign = TextAlign.Center
+                    )
                     Spacer(modifier = Modifier.height(14.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         OutlinedButton(
-                            onClick = { onNegativeClick() }
+                            onClick = { onNegativeClick() },
+                            modifier = Modifier.width(140.dp)
                         ) {
                             Text(text = btnTitleNegative)
                         }
                         OutlinedButton(
                             onClick = { onPositiveClick() },
+                            modifier = Modifier.width(140.dp)
                         ) {
                             Text(text = btnTitlePositive)
                         }

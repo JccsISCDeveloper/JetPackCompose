@@ -17,11 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
+import com.jccsisc.irepcp.utils.lastModifiedTime
 
 /**
  * Project: IREPCP
@@ -43,7 +45,7 @@ fun TasksScreen(
             .background(GrayBg)
             .padding(bottom = 60.dp)
     ) {
-        TaskList(tasks, viewModel,navigateToModifyTask) { deleteTaskt ->
+        TaskList(tasks, viewModel, navigateToModifyTask) { deleteTaskt ->
             showDialog = true
             task = deleteTaskt
         }
@@ -116,28 +118,57 @@ fun CardTask(
         elevation = 0.dp
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Box(modifier = Modifier.width(5.dp).height(60.dp).background(
-                getColorPriority(priority = taskModel.priorityTask)
-            ))
-            Text(
-                text = taskModel.task, modifier = Modifier
-                    .weight(1f)
-                    .padding(start = dimensionResource(id = R.dimen.padding_6)),
-                fontWeight = if (taskModel.selected) FontWeight.Medium else FontWeight.Normal,
-                color = if (taskModel.selected) Color.Gray else Color.Black,
-                textDecoration = if (taskModel.selected) TextDecoration.LineThrough else TextDecoration.None
+            Box(
+                modifier = Modifier
+                    .width(5.dp)
+                    .height(70.dp)
+                    .background(
+                        getColorPriority(priority = taskModel.priorityTask)
+                    )
             )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = dimensionResource(id = R.dimen.padding_6))
+            ) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = taskModel.title.ifEmpty { "Sin título" },
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = taskModel.task,
+                    fontWeight = if (taskModel.selected) FontWeight.Medium else FontWeight.Normal,
+                    color = if (taskModel.selected) Color.Gray else Color.Black,
+                    textDecoration = if (taskModel.selected) TextDecoration.LineThrough else TextDecoration.None
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = taskModel.id.lastModifiedTime(),
+                    style = MaterialTheme.typography.caption
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+            }
             Checkbox(
                 checked = taskModel.selected,
                 onCheckedChange = {
                     selected = it
                     onCheckBoxSelected(selected)
-                    val modifyTask = TaskModel(taskModel.id, taskModel.task, selected, taskModel.modificationDate)
+                    val modifyTask = TaskModel(
+                        taskModel.id,
+                        taskModel.task,
+                        selected,
+                        taskModel.modificationDate,
+                        taskModel.title,
+                        taskModel.priorityTask
+                    )
                     onUpdateTask(modifyTask)
                 },
                 colors = CheckboxDefaults.colors(
                     checkedColor = PrimaryColor,
-                    uncheckedColor = Gray50,
+                    uncheckedColor = Color.Gray,
                     checkmarkColor = GrayBg,
                     disabledColor = Color.Gray
                 )

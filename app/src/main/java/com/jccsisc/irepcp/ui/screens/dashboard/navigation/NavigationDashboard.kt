@@ -32,7 +32,7 @@ import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.TasksScreen
 fun NavigationDashboard(
     principalNavController: NavHostController,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = MascotasScreen.drawerItem.route
+    startDestination: String = TasksScreen.drawerItem.route
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
 
