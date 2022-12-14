@@ -9,9 +9,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.LowPriority
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -26,6 +26,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants
+import com.jccsisc.irepcp.core.constants.Constants.HIGH_PRIORITY
+import com.jccsisc.irepcp.core.constants.Constants.LOW_PRIORITY
+import com.jccsisc.irepcp.core.constants.Constants.MEDIUM_PRIORITY
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.*
@@ -46,9 +49,10 @@ fun AddOrModifyTaskScreen(
     navigateBack: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
-    var task by remember { mutableStateOf(TaskModel()) }
+    val taskModel by viewModel.taskVM.observeAsState(initial = TaskModel())
     var isNewaTask by remember { mutableStateOf(false) }
     var priorityTask by remember { mutableStateOf(-1) }
+    var showPriorityMenu by remember { mutableStateOf(false) }
 
     isNewaTask = taskId == -1L
 
@@ -68,26 +72,29 @@ fun AddOrModifyTaskScreen(
                 } else {
                     stringResource(id = R.string.modify_task)
                 },
+                isNewTask = isNewaTask,
                 navigateBack = navigateBack,
-                onPriorityClick = { priorityTask = it },
+                taskModel = taskModel,
+                showMenu = showPriorityMenu,
+                onSetTitle = { viewModel.onSetTitleTask(it) },
+                onPriorityClick = {
+                    showPriorityMenu = false
+                    priorityTask = it
+                    viewModel.onSelectedPriorityTask(priorityTask)
+                },
                 onSaveClick = {
                     if (isNewaTask) {
-                        if (task.priorityTask != -1) {
-                            viewModel.addTask(task)
+                        if (priorityTask != -1) {
+                            viewModel.addModelTask(taskModel)
                             navigateBack()
                         } else {
+                            showPriorityMenu = true
                             showToast("Selecciona la prioridad de la tarea")
                         }
                     } else {
-                        viewModel.updateTask(viewModel.taskVM)
-                        /*  if (!task.title.isNullOrEmpty()) {
-                              viewModel.updateTask(viewModel.taskVM)
-                          } else {
-                              showToast("Ingresa un título para esta tarea")
-                          }*/
+                        viewModel.updateModelTask(taskModel)
                         navigateBack()
                     }
-
                 }
             )
         }
@@ -97,13 +104,10 @@ fun AddOrModifyTaskScreen(
                 .background(GrayBg)
                 .padding(padding),
             isNewTask = isNewaTask,
-            priority = priorityTask,
-            taskModel = viewModel.taskVM,
-            onPrioritySelected = { viewModel.onPrioritySelected(it) },
-            onCheckSelected = { viewModel.onTaskSelected(false) },
-            updateTaskString = { viewModel.updateTask(it) },
-            updateTaskTime = { viewModel.updateModifyTask(it) },
-            addOrModifyTask = { task = it }
+            taskModel,
+            setSelectedCheckbx = { viewModel.onSelectedTask(false) },
+            setdateTaskString = { viewModel.updateTask(it) },
+            setdateTaskTime = { viewModel.updateModificationTimeTask(it) }
         )
     }
 }
@@ -111,19 +115,28 @@ fun AddOrModifyTaskScreen(
 @Composable
 private fun TopBar(
     title: String,
+    isNewTask: Boolean,
     navigateBack: () -> Unit,
+    taskModel: TaskModel,
+    showMenu: Boolean = false,
+    onSetTitle: (String) -> Unit,
     onPriorityClick: (priority: Int) -> Unit,
     onSaveClick: () -> Unit
 ) {
-    var showMenu by remember { mutableStateOf(false) }
+    var show by remember { mutableStateOf(false) }
     var titleTapBar by remember { mutableStateOf(NO_VALUE) }
+    var priorityTask by remember { mutableStateOf(-1) }
+
+    priorityTask = taskModel.priorityTask
+    show = showMenu
 
     TopAppBar(
         title = {
             TextField(
-                value = titleTapBar,
+                value = if (isNewTask) titleTapBar else taskModel.title,
                 onValueChange = {
                     titleTapBar = it
+                    onSetTitle(titleTapBar)
                 },
                 enabled = true,
                 textStyle = MaterialTheme.typography.subtitle1,
@@ -142,84 +155,93 @@ private fun TopBar(
                     capitalization = KeyboardCapitalization.Sentences
                 )
             )
-//            Text(text = title, textAlign = TextAlign.Center)
         },
         navigationIcon = {
             IconButton(onClick = navigateBack) {
-                Icon(imageVector = Icons.Outlined.ArrowBack, contentDescription = "ic arrow back")
+                Icon(
+                    imageVector = Icons.Outlined.ArrowBack,
+                    contentDescription = "ic arrow back",
+                    tint = GrayBg
+                )
             }
         },
-        backgroundColor = PrimaryDarkColor,
+        backgroundColor = getColorPriority(true, priorityTask),
         actions = {
             IconButton(onClick = {
-                showMenu = !showMenu
+                show = !show
             }) {
-                Icon(imageVector = Icons.Outlined.LowPriority, contentDescription = "ic priority")
+                Box(
+                    modifier = Modifier
+                        .size(35.dp)
+                        .background(
+                            shape = RoundedCornerShape(6.dp),
+                            color = getColorPriority(priority = priorityTask)
+                        )
+                )
             }
-            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+            DropdownMenu(expanded = show, onDismissRequest = { show = false }) {
                 DropdownMenuItem(onClick = {
-                    onPriorityClick(0)
-                    showMenu = false
+                    priorityTask = LOW_PRIORITY
+                    onPriorityClick(priorityTask)
+                    show = false
                 }) {
-                    Box(
-                        modifier = Modifier
-                            .size(35.dp)
-                            .background(shape = RoundedCornerShape(6.dp), color = ColorRed)
-                    )
-                    Text(
-                        text = "Alta",
-                        modifier = Modifier.padding(
-                            start = dimensionResource(id = R.dimen.padding_6),
-                            end = dimensionResource(id = R.dimen.padding_6)
-                        ),
-                        style = MaterialTheme.typography.overline,
-                        fontSize = 16.sp
+                    shapePriorityMenu(LOW_PRIORITY, stringResource(id = R.string.low_priority))
+                }
+                DropdownMenuItem(onClick = {
+                    priorityTask = MEDIUM_PRIORITY
+                    onPriorityClick(priorityTask)
+                    show = false
+                }) {
+                    shapePriorityMenu(
+                        MEDIUM_PRIORITY,
+                        stringResource(id = R.string.medium_priority)
                     )
                 }
                 DropdownMenuItem(onClick = {
-                    onPriorityClick(1)
-                    showMenu = false
+                    priorityTask = HIGH_PRIORITY
+                    onPriorityClick(priorityTask)
+                    show = false
                 }) {
-                    Box(
-                        modifier = Modifier
-                            .size(35.dp)
-                            .background(shape = RoundedCornerShape(6.dp), color = ColorOrange)
-                    )
-                    Text(
-                        text = "Media",
-                        modifier = Modifier.padding(
-                            start = dimensionResource(id = R.dimen.padding_6),
-                            end = dimensionResource(id = R.dimen.padding_6)
-                        ),
-                        style = MaterialTheme.typography.overline,
-                        fontSize = 16.sp
-                    )
-                }
-                DropdownMenuItem(onClick = {
-                    onPriorityClick(2)
-                    showMenu = false
-                }) {
-                    Box(
-                        modifier = Modifier
-                            .size(35.dp)
-                            .background(shape = RoundedCornerShape(6.dp), color = ColorYellow)
-                    )
-                    Text(
-                        text = "Baja",
-                        modifier = Modifier.padding(
-                            start = dimensionResource(id = R.dimen.padding_6),
-                            end = dimensionResource(id = R.dimen.padding_6)
-                        ),
-                        style = MaterialTheme.typography.overline,
-                        fontSize = 16.sp
-                    )
+                    shapePriorityMenu(HIGH_PRIORITY, stringResource(id = R.string.high_priority))
                 }
             }
             IconButton(onClick = onSaveClick) {
-                Icon(imageVector = Icons.Outlined.Save, contentDescription = "ic save")
+                Icon(
+                    imageVector = Icons.Outlined.Save,
+                    contentDescription = "ic save",
+                    tint = GrayBg
+                )
             }
         }
     )
+}
+
+@Composable
+private fun shapePriorityMenu(priority: Int, title: String) {
+    Box(
+        modifier = Modifier
+            .size(35.dp)
+            .background(
+                shape = RoundedCornerShape(6.dp),
+                color = getColorPriority(priority = priority)
+            )
+    )
+    Text(
+        text = title,
+        modifier = Modifier.padding(
+            start = dimensionResource(id = R.dimen.padding_6),
+            end = dimensionResource(id = R.dimen.padding_6)
+        ),
+        style = MaterialTheme.typography.overline,
+        fontSize = 16.sp
+    )
+}
+
+fun getColorPriority(isTapbar: Boolean = false, priority: Int): Color = when (priority) {
+    LOW_PRIORITY -> if (isTapbar) ColorYellowTapBar else ColorYellow
+    MEDIUM_PRIORITY -> if (isTapbar) ColorOrangeTapBar else ColorOrange
+    HIGH_PRIORITY -> if (isTapbar) ColorRedTapBar else ColorRed
+    else -> PrimaryDarkColor
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -227,17 +249,13 @@ private fun TopBar(
 fun ContentNewTask(
     modifier: Modifier = Modifier,
     isNewTask: Boolean,
-    priority: Int,
     taskModel: TaskModel,
-    onPrioritySelected: (priority: Int) -> Unit,
-    onCheckSelected: () -> Unit,
-    updateTaskString: (task: String) -> Unit,
-    updateTaskTime: (time: Long) -> Unit,
-    addOrModifyTask: (TaskModel) -> Unit
+    setSelectedCheckbx: () -> Unit,
+    setdateTaskString: (task: String) -> Unit,
+    setdateTaskTime: (time: Long) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     var taskString by remember { mutableStateOf(Constants.NO_VALUE) }
-    var modificationTime by remember { mutableStateOf(0L) }
     val createdDate by remember { mutableStateOf(System.currentTimeMillis()) }
     var enableTask by remember { mutableStateOf(false) }
 
@@ -278,37 +296,23 @@ fun ContentNewTask(
                 value = if (isNewTask) taskString else taskModel.task,
                 onValueChange = {
                     taskString = it
-                    modificationTime = System.currentTimeMillis()
-                    if (isNewTask) {
-                        val newTask =
-                            TaskModel(
-                                id = createdDate,
-                                task = taskString,
-                                selected = false,
-                                priorityTask = priority,
-                                title = taskModel.title
-                            )
-                        addOrModifyTask(newTask)
-                    } else {
-                        var updateModifyDate = 0L
-                        updateModifyDate = if (modifyTask(taskString, taskModel.task) || taskModel.priorityTask != priority) {
-                            modificationTime
+                    if (!isNewTask) {
+                        if (modifyTask(taskString, taskModel.task)) {
+                            setdateTaskTime(System.currentTimeMillis())
                         } else {
                             taskModel.modificationDate
                         }
-                        if (taskString.isNotEmpty()) {
-                            updateTaskString(taskString)
-                            updateTaskTime(updateModifyDate)
-                            onPrioritySelected(priority)
-                        } else {
-                            showToast("Escribe tu nota")
-                        }
+                    }
+                    if (taskString.isNotEmpty()) {
+                        setdateTaskString(taskString)
+                    } else {
+                        showToast("Escribe tu nota")
                     }
                 },
                 modifier = Modifier
                     .fillMaxSize()
                     .clickable {
-                        onCheckSelected()
+                        setSelectedCheckbx()
                         enableTask = isNewTask || !taskModel.selected
                     },
                 enabled = enableTask,

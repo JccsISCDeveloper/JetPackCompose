@@ -1,11 +1,9 @@
 package com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.usecase.UseCaseTasks
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,33 +19,38 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskViewModel  @Inject constructor(private val repo: UseCaseTasks): ViewModel() {
     val tasks = repo.getTasksFromRoom()
-    var taskVM by mutableStateOf(TaskModel(0L,task = NO_VALUE, false, 0L))
+    private val _taskVM = MutableLiveData(TaskModel())
+    val taskVM: LiveData<TaskModel> = _taskVM
 
-    fun addTask(task: TaskModel) = viewModelScope.launch(Dispatchers.IO) {
+    fun addModelTask(task: TaskModel) = viewModelScope.launch(Dispatchers.IO) {
         repo.addTaskToRoom(task)
     }
 
     fun getTask(id: Long) = viewModelScope.launch(Dispatchers.IO) {
-        taskVM = repo.getTaskFromRoom(id)
+        _taskVM.postValue(repo.getTaskFromRoom(id))
+    }
+
+    fun onSetTitleTask(title: String) {
+        _taskVM.value = _taskVM.value?.copy(title = title)
     }
 
     fun updateTask(task: String) {
-        taskVM = taskVM.copy(task = task)
+        _taskVM.value = taskVM.value?.copy(task = task)
     }
 
-    fun updateModifyTask(time: Long) {
-        taskVM = taskVM.copy(modificationDate = time)
+    fun updateModificationTimeTask(time: Long) {
+        _taskVM.value = taskVM.value?.copy(modificationDate = time)
     }
 
-    fun onTaskSelected(selected: Boolean) {
-        taskVM = taskVM.copy(selected = selected)
+    fun onSelectedTask(selected: Boolean) {
+        _taskVM.value = taskVM.value?.copy(selected = selected)
     }
 
-    fun onPrioritySelected(priority: Int) {
-        taskVM = taskVM.copy(priorityTask = priority)
+    fun onSelectedPriorityTask(priority: Int) {
+        _taskVM.value = taskVM.value?.copy(priorityTask = priority)
     }
 
-    fun updateTask(task: TaskModel) = viewModelScope.launch(Dispatchers.IO) {
+    fun updateModelTask(task: TaskModel) = viewModelScope.launch(Dispatchers.IO) {
         repo.updateTaskFromRoom(task)
     }
 
