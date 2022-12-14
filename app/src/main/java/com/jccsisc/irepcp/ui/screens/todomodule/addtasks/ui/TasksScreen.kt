@@ -81,8 +81,8 @@ private fun TaskList(
         items(tasks.sortedBy { it.selected }, key = { it.id }) { task ->
             CardTask(
                 taskModel = task,
-                onCheckBoxSelected = { viewModel.onTaskSelected(it) },
-                onUpdateTask = { viewModel.updateTask(it) },
+                onCheckBoxSelected = { viewModel.onSelectedTask(it) },
+                onUpdateTask = { viewModel.updateModelTask(it) },
                 onDeleteTask = { onDeleteTask(it) },
                 navigateToModifyTask = navigateToModifyTask
             )
@@ -117,13 +117,7 @@ fun CardTask(
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Box(modifier = Modifier.width(5.dp).height(60.dp).background(
-                when(taskModel.priorityTask) {
-                    0 -> ColorRed
-                    1 -> ColorOrange
-                    else -> {
-                        ColorYellow
-                    }
-                }
+                getColorPriority(priority = taskModel.priorityTask)
             ))
             Text(
                 text = taskModel.task, modifier = Modifier
