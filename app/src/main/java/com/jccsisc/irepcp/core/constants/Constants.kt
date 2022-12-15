@@ -17,6 +17,12 @@ object Constants {
     const val MEDIUM_PRIORITY = 1
     const val HIGH_PRIORITY = 2
 
+    const val DATE_DESC = "DATE_DESC"
+    const val DATE_ASC = "DATE_ASC"
+    const val PRIORITY_DESC = "PRIORITY_DESC"
+    const val PRIORITY_ASC = "PRIORITY_ASC"
+
+
     /**
      * Routes Login
      * */
