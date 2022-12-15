@@ -1,9 +1,6 @@
 package com.jccsisc.irepcp.core.di
 
 import androidx.lifecycle.MutableLiveData
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 
 /**
  * Project: IREPCP
@@ -12,4 +9,6 @@ import dagger.hilt.components.SingletonComponent
  */
 class MySingletonClass {
     var taskOrder = MutableLiveData("")
+    var titleDateFilter = MutableLiveData("Fecha")
+    var titlePriorityFilter = MutableLiveData("Prioridad")
 }

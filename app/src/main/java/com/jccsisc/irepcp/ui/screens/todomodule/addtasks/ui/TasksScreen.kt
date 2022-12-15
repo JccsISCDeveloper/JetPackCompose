@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.airbnb.lottie.compose.*
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants.DATE_ASC
 import com.jccsisc.irepcp.core.constants.Constants.DATE_DESC
@@ -30,7 +31,6 @@ import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 import com.jccsisc.irepcp.utils.lastModifiedTime
-import com.jccsisc.irepcp.utils.showToast
 
 /**
  * Project: IREPCP
@@ -52,15 +52,20 @@ fun TasksScreen(
             .background(GrayBg)
             .padding(bottom = 60.dp)
     ) {
-        TaskList(
-            taskOrderVM,
-            tasks,
-            viewModel,
-            navigateToModifyTask
-        ) { deleteTaskt ->
-            showDialog = true
-            task = deleteTaskt
+        if (tasks.isNotEmpty()) {
+            TaskList(
+                taskOrderVM,
+                tasks,
+                viewModel,
+                navigateToModifyTask
+            ) { deleteTaskt ->
+                showDialog = true
+                task = deleteTaskt
+            }
+        } else {
+            LottieEmpty()
         }
+
         GenericDialog(
             show = showDialog,
             onDismiss = {},
@@ -75,6 +80,25 @@ fun TasksScreen(
                 showDialog = false
             }
         )
+    }
+}
+
+@Composable
+fun LottieEmpty() {
+    val comositeResult: LottieCompositionResult = rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.empty)
+    )
+
+    val progressAnimation by animateLottieCompositionAsState(
+        composition = comositeResult.value,
+        isPlaying = true,
+        iterations = LottieConstants.IterateForever,
+        speed = 1.0f
+    )
+
+    Box {
+        LottieAnimation(composition = comositeResult.value, progress = progressAnimation)
+        Text(text = "Agrega una nota", modifier = Modifier.align(Alignment.BottomCenter), color = Color.Gray)
     }
 }
 

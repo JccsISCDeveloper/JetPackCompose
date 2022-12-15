@@ -38,6 +38,9 @@ fun MyTopAppbar(
     val currentRoute = CurrentRoute(dashboardNavController)
     val chilItems = mutableListOf<ScreenChildItemDrawer>()
 
+
+    var dateTitle by remember { mutableStateOf("Fecha") }
+    var prioridyTitle by remember { mutableStateOf("Prioridad") }
     var clickDate by remember { mutableStateOf(true) }
     var clickPriority by remember { mutableStateOf(true) }
     var myTitle = stringResource(id = R.string.app_name)
@@ -84,7 +87,7 @@ fun MyTopAppbar(
                             contentDescription = "ic person"
                         )
                         Text(
-                            text = "Fecha",
+                            text = if (clickDate) "FECHA: DESC" else "FECHA: ASC",
                             style = MaterialTheme.typography.overline,
                             fontSize = 16.sp
                         )
@@ -99,7 +102,7 @@ fun MyTopAppbar(
                             contentDescription = "ic share"
                         )
                         Text(
-                            text = "Prioridad",
+                            text = if (clickPriority) "Prioridad: DESC" else "Prioridad: ASC",
                             style = MaterialTheme.typography.overline,
                             fontSize = 16.sp
                         )

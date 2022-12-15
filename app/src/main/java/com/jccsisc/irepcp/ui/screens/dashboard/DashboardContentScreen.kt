@@ -50,7 +50,7 @@ fun DashboardContentScreen(
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    val singleton = taskViewModel.mySingletonClass
+    val singletonProviderToTaskVM = taskViewModel.mySingletonClass
 
     val itemsbottomBar = listOf(MascotasScreen, FavoritesScreen, GalleryScreen)
     val itemsDrawer = listOf(
@@ -71,7 +71,9 @@ fun DashboardContentScreen(
                 dashboardNavController,
                 coroutineScope = scope,
                 scaffoldState = scaffoldState,
-                setTaskOrder = { singleton.taskOrder.value = it }
+                setTaskOrder = {
+                    singletonProviderToTaskVM.taskOrder.value = it
+                }
             )
         },
         bottomBar = {
