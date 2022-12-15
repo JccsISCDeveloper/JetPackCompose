@@ -32,6 +32,7 @@ import com.jccsisc.irepcp.core.constants.Constants.MEDIUM_PRIORITY
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.lastModifiedTime
 import com.jccsisc.irepcp.utils.showToast
 import com.jccsisc.irepcp.utils.timeMillisToFormatDate
@@ -129,6 +130,8 @@ private fun TopBar(
 
     priorityTask = taskModel.priorityTask
     show = showMenu
+
+    SetNavbarColor(color = getColorPriority(true, priorityTask), useDarkIcons = false)
 
     TopAppBar(
         title = {
