@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.ui.navigation.CurrentRoute
@@ -25,6 +26,7 @@ import com.jccsisc.irepcp.ui.screens.dashboard.components.MyTopAppbar
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.NavigationDashboard
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.screens.dashboard.navigation.ScreensDashboard.*
+import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.ui.TaskViewModel
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.showToast
@@ -37,14 +39,18 @@ import kotlinx.coroutines.launch
  * Created by Julio Cesar Camacho Silva on 24/11/22
  */
 @Composable
-fun DashboardContentScreen(principalNavController: NavHostController) {
+fun DashboardContentScreen(
+    principalNavController: NavHostController,
+    taskViewModel: TaskViewModel = hiltViewModel()
+) {
     SetNavbarColor(color = PrimaryDarkColor, useDarkIcons = false)
-
     val dashboardNavController = rememberNavController()
     val currenRoute = CurrentRoute(dashboardNavController)
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
+    val singleton = taskViewModel.mySingletonClass
 
     val itemsbottomBar = listOf(MascotasScreen, FavoritesScreen, GalleryScreen)
     val itemsDrawer = listOf(
@@ -64,7 +70,8 @@ fun DashboardContentScreen(principalNavController: NavHostController) {
                 itemsbottomBar,
                 dashboardNavController,
                 coroutineScope = scope,
-                scaffoldState = scaffoldState
+                scaffoldState = scaffoldState,
+                setTaskOrder = { singleton.taskOrder.value = it }
             )
         },
         bottomBar = {
@@ -105,6 +112,7 @@ private fun HeaderContentScreens(
     dashboardNavController: NavHostController,
     coroutineScope: CoroutineScope,
     scaffoldState: ScaffoldState,
+    setTaskOrder: (String) -> Unit
 ) {
     MyTopAppbar(
         itemsDrawer = itemsDrawer,
@@ -112,16 +120,17 @@ private fun HeaderContentScreens(
         dashboardNavController = dashboardNavController,
         onClickDrawer = {
             coroutineScope.launch { scaffoldState.drawerState.open() }
-        }, onInfoClick = {
-            showToast("Click en info")
-        }, displaySnackBarClick = {
+        },
+        onInfoClick = {
+            setTaskOrder(it)
+        },
+        displaySnackBarClick = {
             coroutineScope.launch {
                 val result = scaffoldState.snackbarHostState.showSnackbar(
                     message = "Este es un snackbar",
                     actionLabel = "Da click",
                     duration = SnackbarDuration.Indefinite,
                 )
-
                 when (result) {
                     SnackbarResult.ActionPerformed -> {
                         showToast("Logica de codigo")

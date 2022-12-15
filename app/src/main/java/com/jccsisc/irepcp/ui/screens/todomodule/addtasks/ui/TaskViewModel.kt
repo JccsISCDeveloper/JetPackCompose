@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jccsisc.irepcp.core.di.MySingletonClass
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.usecase.UseCaseTasks
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,10 +18,18 @@ import javax.inject.Inject
  * Created by Julio Cesar Camacho Silva on 02/12/22
  */
 @HiltViewModel
-class TaskViewModel  @Inject constructor(private val repo: UseCaseTasks): ViewModel() {
+class TaskViewModel @Inject constructor(
+    private val repo: UseCaseTasks,
+    val mySingletonClass: MySingletonClass
+) : ViewModel() {
+
     val tasks = repo.getTasksFromRoom()
+
     private val _taskVM = MutableLiveData(TaskModel())
     val taskVM: LiveData<TaskModel> = _taskVM
+
+    private val _taskOrder = mySingletonClass.taskOrder
+    val taskOrder: LiveData<String> = _taskOrder
 
     fun addModelTask(task: TaskModel) = viewModelScope.launch(Dispatchers.IO) {
         repo.addTaskToRoom(task)

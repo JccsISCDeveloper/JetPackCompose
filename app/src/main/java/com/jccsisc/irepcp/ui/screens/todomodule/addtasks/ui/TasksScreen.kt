@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,10 +21,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.core.constants.Constants.DATE_ASC
+import com.jccsisc.irepcp.core.constants.Constants.DATE_DESC
+import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
+import com.jccsisc.irepcp.core.constants.Constants.PRIORITY_ASC
+import com.jccsisc.irepcp.core.constants.Constants.PRIORITY_DESC
 import com.jccsisc.irepcp.ui.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 import com.jccsisc.irepcp.utils.lastModifiedTime
+import com.jccsisc.irepcp.utils.showToast
 
 /**
  * Project: IREPCP
@@ -33,9 +40,9 @@ import com.jccsisc.irepcp.utils.lastModifiedTime
 @Composable
 fun TasksScreen(
     viewModel: TaskViewModel = hiltViewModel(),
-    navigateToModifyTask: (taskId: Long) -> Unit
-) {
+    navigateToModifyTask: (taskId: Long) -> Unit) {
     val tasks by viewModel.tasks.collectAsState(initial = emptyList())
+    val taskOrderVM: String by viewModel.taskOrder.observeAsState(initial = "")
     var showDialog by remember { mutableStateOf(false) }
     var task by remember { mutableStateOf(TaskModel()) }
 
@@ -45,7 +52,12 @@ fun TasksScreen(
             .background(GrayBg)
             .padding(bottom = 60.dp)
     ) {
-        TaskList(tasks, viewModel, navigateToModifyTask) { deleteTaskt ->
+        TaskList(
+            taskOrderVM,
+            tasks,
+            viewModel,
+            navigateToModifyTask
+        ) { deleteTaskt ->
             showDialog = true
             task = deleteTaskt
         }
@@ -74,13 +86,15 @@ fun PreviewTasks() {
 
 @Composable
 private fun TaskList(
+    taskOrder: String,
     tasks: List<TaskModel>,
     viewModel: TaskViewModel,
     navigateToModifyTask: (taskId: Long) -> Unit,
     onDeleteTask: (taskModel: TaskModel) -> Unit
 ) {
     LazyColumn(modifier = Modifier.background(Color.Gray)) {
-        items(tasks.sortedBy { it.selected }, key = { it.id }) { task ->
+
+        items(getOrderList(taskOrder, tasks).sortedBy { it.selected }) { task ->
             CardTask(
                 taskModel = task,
                 onCheckBoxSelected = { viewModel.onSelectedTask(it) },
@@ -89,6 +103,17 @@ private fun TaskList(
                 navigateToModifyTask = navigateToModifyTask
             )
         }
+    }
+}
+
+//todo moverl al viewModel
+private fun getOrderList(taskOrder: String, tasks: List<TaskModel>) = when (taskOrder) {
+    DATE_DESC -> tasks.sortedByDescending { it.id }
+    DATE_ASC -> tasks.sortedBy { it.id }
+    PRIORITY_DESC -> tasks.sortedByDescending { it.priorityTask }
+    PRIORITY_ASC -> tasks.sortedBy { it.priorityTask }
+    else -> {
+        tasks
     }
 }
 
@@ -102,6 +127,8 @@ fun CardTask(
     navigateToModifyTask: (taskId: Long) -> Unit
 ) {
     var selected by remember { mutableStateOf(false) }
+    var dateTask by remember { mutableStateOf(NO_VALUE) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -146,7 +173,11 @@ fun CardTask(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = taskModel.id.lastModifiedTime(),
+                    text = if (taskModel.modificationDate != 0L) {
+                        taskModel.modificationDate.lastModifiedTime()
+                    } else {
+                        taskModel.id.lastModifiedTime()
+                    },
                     style = MaterialTheme.typography.caption
                 )
                 Spacer(modifier = Modifier.height(4.dp))
