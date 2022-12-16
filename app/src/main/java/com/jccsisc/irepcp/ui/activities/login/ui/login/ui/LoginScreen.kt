@@ -1,8 +1,13 @@
 package com.jccsisc.irepcp.ui.activities.login.ui.login.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -28,6 +33,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
@@ -37,9 +43,11 @@ import com.jccsisc.irepcp.core.enums.StatusEnum
 import com.jccsisc.irepcp.ui.activities.home.MainActivity
 import com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.model.request.LoginRequest
 import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.utils.GlobalData.onLoginClick
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.SpacerApp
 import com.jccsisc.irepcp.utils.components.loadings.SimpleCircularProgressDialog
+import dagger.hilt.android.qualifiers.ActivityContext
 
 /**
  * Project: IREPCP
@@ -48,6 +56,7 @@ import com.jccsisc.irepcp.utils.components.loadings.SimpleCircularProgressDialog
  */
 @Composable
 fun LoginScreen(
+    context: Context,
     loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
 //    GlobalData.transparentNavBar(false)
@@ -56,8 +65,6 @@ fun LoginScreen(
     val mContext = LocalContext.current as Activity
 
     var auth by remember { mutableStateOf(false) }
-    var canAuthenticate by remember { mutableStateOf(false) }
-    lateinit var prompInfo: BiometricPrompt.PromptInfo
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -73,8 +80,9 @@ fun LoginScreen(
             BodyLogin(
                 loginViewModel,
                 onNavigationToDashboard = {
-                    mContext.startActivity(Intent(mContext, MainActivity::class.java))
-                    mContext.finish()
+                    /*mContext.startActivity(Intent(mContext, MainActivity::class.java))
+                    mContext.finish()*/
+                    onLoginClick(true)
                 },
                 Modifier.weight(0.6f)
             )
@@ -86,7 +94,9 @@ fun LoginScreen(
         }
 //        GoToDashboard(loginViewModel, onNavigationToDashboard)
     }
+
 }
+
 
 /**
  * Header Login
