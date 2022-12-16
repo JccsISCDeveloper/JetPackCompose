@@ -36,5 +36,6 @@
     <string name="specie">Specie</string>
     <string name="status">Status:</string>
     <string name="gender">Gender:</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
 
 </resources>

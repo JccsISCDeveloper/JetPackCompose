@@ -1,14 +1,15 @@
 package com.jccsisc.irepcp.core.di
 
 import com.jccsisc.irepcp.core.constants.ConstantsApi.BASE_URL_RICK_AND_MORTY
-import com.jccsisc.irepcp.ui.screens.logingraph.login.data.remote.LoginClient
-import com.jccsisc.irepcp.ui.screens.rickandmorty.data.remote.RickAndMortyApi
+import com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.data.remote.RickAndMortyApi
+import com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.LoginClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 /**
@@ -23,17 +24,13 @@ class RemoteModule {
     /**
      * Login IREP COPEC todo no está terminado
      * */
-    @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit = Retrofit.Builder()
+    @Singleton
+    fun provideRetrofit(): LoginClient = Retrofit.Builder()
         .baseUrl("https://copec-irep-auth-qa.herokuapp.com")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-
-    @Singleton
-    @Provides
-    fun providerLoginClient(retrofit: Retrofit): LoginClient = retrofit.create(LoginClient::class.java)
-
+        .create(LoginClient::class.java)
 
     /**
      * API Rick and Morty

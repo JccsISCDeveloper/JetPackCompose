@@ -1,7 +1,7 @@
 package com.jccsisc.irepcp.core.di
 
-import com.jccsisc.irepcp.ui.screens.rickandmorty.data.remote.PersonajeRepositoryImpl
-import com.jccsisc.irepcp.ui.screens.rickandmorty.domain.repositories.PersonajeRepository
+import com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.data.remote.PersonajeRepositoryImpl
+import com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.domain.repositories.PersonajeRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
