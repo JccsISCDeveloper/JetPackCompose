@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.login.ui
+package com.jccsisc.irepcp.ui.activities.login.ui.navigation
 
 import com.jccsisc.irepcp.core.constants.Constants.LOGIN_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.SPLASH_SCREEN

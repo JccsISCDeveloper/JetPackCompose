@@ -1,5 +1,6 @@
 package com.jccsisc.irepcp.ui.activities.login.ui.login.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.widget.Toast
 import androidx.biometric.BiometricPrompt
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.MyResult
 import com.jccsisc.irepcp.core.constants.Constants.SPACER_20
@@ -51,7 +53,7 @@ fun LoginScreen(
 //    GlobalData.transparentNavBar(false)
     SetNavbarColor(color = Color.White)
 
-    val mContext = LocalContext.current
+    val mContext = LocalContext.current as Activity
 
     var auth by remember { mutableStateOf(false) }
     var canAuthenticate by remember { mutableStateOf(false) }
@@ -72,6 +74,7 @@ fun LoginScreen(
                 loginViewModel,
                 onNavigationToDashboard = {
                     mContext.startActivity(Intent(mContext, MainActivity::class.java))
+                    mContext.finish()
                 },
                 Modifier.weight(0.6f)
             )
