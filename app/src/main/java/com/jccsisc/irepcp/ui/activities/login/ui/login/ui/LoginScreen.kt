@@ -1,14 +1,7 @@
 package com.jccsisc.irepcp.ui.activities.login.ui.login.ui
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.widget.Toast
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
-import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
-import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
-import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -33,21 +26,20 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.MyResult
 import com.jccsisc.irepcp.core.constants.Constants.SPACER_20
 import com.jccsisc.irepcp.core.enums.StatusEnum
-import com.jccsisc.irepcp.ui.activities.home.MainActivity
 import com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.model.request.LoginRequest
-import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.ui.theme.Gray300
+import com.jccsisc.irepcp.ui.theme.Gray50
+import com.jccsisc.irepcp.ui.theme.PrimaryColor
+import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.GlobalData.onLoginClick
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.SpacerApp
 import com.jccsisc.irepcp.utils.components.loadings.SimpleCircularProgressDialog
-import dagger.hilt.android.qualifiers.ActivityContext
 
 /**
  * Project: IREPCP
@@ -56,8 +48,7 @@ import dagger.hilt.android.qualifiers.ActivityContext
  */
 @Composable
 fun LoginScreen(
-    context: Context,
-    loginViewModel: LoginViewModel = hiltViewModel(),
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
 //    GlobalData.transparentNavBar(false)
     SetNavbarColor(color = Color.White)

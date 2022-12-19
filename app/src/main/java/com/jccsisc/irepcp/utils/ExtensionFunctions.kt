@@ -25,8 +25,8 @@ import java.util.*
 
 
 /**
- * --------------------Componentes Composable
- * */
+ * -------------------- Componentes Composable
+ *****************************************--------------------------------------------------------*/
 @Composable
 fun SpacerApp(size: Int) {
     Spacer(modifier = Modifier.size(size.dp))
@@ -45,15 +45,15 @@ fun SetNavbarColor(color: Color, useDarkIcons: Boolean = true) {
 
 
 /**
- * Funciones Kotlin Globales
- * */
+ * -------------------- Funciones Kotlin Globales
+ *****************************************--------------------------------------------------------*/
 fun showToast(msg: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(IREPApp.INSTANCE.baseContext, msg, duration).show()
 }
 
 /**
  * -------------------- Extesion functions
- * */
+ *****************************************--------------------------------------------------------*/
 
 /**
  * Devuelve la fecha de System.currentTimeMillis() = 9/12/2022 13:44

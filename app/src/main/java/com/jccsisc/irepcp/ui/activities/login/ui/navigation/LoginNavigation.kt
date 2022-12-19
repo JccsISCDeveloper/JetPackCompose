@@ -1,6 +1,5 @@
 package com.jccsisc.irepcp.ui.activities.login.ui.navigation
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +14,7 @@ import com.jccsisc.irepcp.ui.activities.login.ui.login.ui.LoginScreen
  * Created by Julio Cesar Camacho Silva on 24/11/22
  */
 @Composable
-fun LoginNavigation(context: Context) {
+fun LoginNavigation() {
     val navController = rememberNavController()
 
     NavHost(
@@ -31,7 +30,7 @@ fun LoginNavigation(context: Context) {
             })
         }
         composable(ScreensLogin.LoginScreen.route) {
-            LoginScreen(context)
+            LoginScreen()
         }
     }
 }

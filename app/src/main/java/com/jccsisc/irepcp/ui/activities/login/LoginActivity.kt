@@ -2,6 +2,7 @@ package com.jccsisc.irepcp.ui.activities.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
@@ -36,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = GrayBg
                 ) {
-                    LoginNavigation(this)
+                    LoginNavigation()
                     onLoginClick = {
                         authenticate(canAuthenticate) {
                             startActivity(Intent(this, MainActivity::class.java))
@@ -46,7 +47,10 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-        setupAuth{ canAuthenticate = it }
+        setupAuth {
+            canAuthenticate
+            canAuthenticate = it
+        }
     }
 
     private fun authenticate(
@@ -78,6 +82,9 @@ class LoginActivity : AppCompatActivity() {
                 .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
                 .build()
             canAuthenticate2(true)
+        }
+        else {
+            Log.e("ERROR", "No pudo acceder a los permisos biometricos")
         }
     }
 }
