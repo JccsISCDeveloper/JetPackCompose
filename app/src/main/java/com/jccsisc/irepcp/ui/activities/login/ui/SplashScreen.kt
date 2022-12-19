@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.login
+package com.jccsisc.irepcp.ui.activities.login.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

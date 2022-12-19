@@ -7,5 +7,5 @@ package com.jccsisc.irepcp.utils
  */
 object GlobalData {
     lateinit var transparentNavBar: (Boolean) -> Unit
-    lateinit var onLoginClick: (Boolean) -> Unit
+    lateinit var onLoginClick: () -> Unit
 }

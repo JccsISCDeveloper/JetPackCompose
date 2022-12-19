@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +28,7 @@ import com.jccsisc.irepcp.core.constants.Constants.DATE_DESC
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.core.constants.Constants.PRIORITY_ASC
 import com.jccsisc.irepcp.core.constants.Constants.PRIORITY_DESC
+import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.addtasks.domain.model.TaskModel
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
@@ -40,7 +42,8 @@ import com.jccsisc.irepcp.utils.lastModifiedTime
 @Composable
 fun TasksScreen(
     viewModel: TaskViewModel = hiltViewModel(),
-    navigateToModifyTask: (taskId: Long) -> Unit) {
+    navigateToModifyTask: (taskId: Long) -> Unit
+) {
     val tasks by viewModel.tasks.collectAsState(initial = emptyList())
     val taskOrderVM: String by viewModel.taskOrder.observeAsState(initial = "")
     var showDialog by remember { mutableStateOf(false) }
@@ -63,7 +66,11 @@ fun TasksScreen(
                 task = deleteTaskt
             }
         } else {
-            LottieEmpty()
+            ShowLottie(
+                lottie = R.raw.empty,
+                text = stringResource(id = R.string.add_a_note),
+                showText = true
+            )
         }
 
         GenericDialog(
@@ -80,25 +87,6 @@ fun TasksScreen(
                 showDialog = false
             }
         )
-    }
-}
-
-@Composable
-fun LottieEmpty() {
-    val comositeResult: LottieCompositionResult = rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(R.raw.empty)
-    )
-
-    val progressAnimation by animateLottieCompositionAsState(
-        composition = comositeResult.value,
-        isPlaying = true,
-        iterations = LottieConstants.IterateForever,
-        speed = 1.0f
-    )
-
-    Box {
-        LottieAnimation(composition = comositeResult.value, progress = progressAnimation)
-        Text(text = "Agrega una nota", modifier = Modifier.align(Alignment.BottomCenter), color = Color.Gray)
     }
 }
 

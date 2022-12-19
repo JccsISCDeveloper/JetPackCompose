@@ -1,8 +1,10 @@
 package com.jccsisc.irepcp.ui.activities.login.ui.login.ui
 
 import android.app.Activity
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,12 +28,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.MyResult
 import com.jccsisc.irepcp.core.constants.Constants.SPACER_20
 import com.jccsisc.irepcp.core.enums.StatusEnum
+import com.jccsisc.irepcp.ui.activities.home.MainActivity
+import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.model.request.LoginRequest
 import com.jccsisc.irepcp.ui.theme.Gray300
 import com.jccsisc.irepcp.ui.theme.Gray50
@@ -61,7 +67,8 @@ fun LoginScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimensionResource(id = R.dimen.padding_8))
+                .padding(dimensionResource(id = R.dimen.padding_8)),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HeaderLogin(
                 Modifier
@@ -71,12 +78,19 @@ fun LoginScreen(
             BodyLogin(
                 loginViewModel,
                 onNavigationToDashboard = {
-                    /*mContext.startActivity(Intent(mContext, MainActivity::class.java))
-                    mContext.finish()*/
-                    onLoginClick(true)
+                    mContext.startActivity(Intent(mContext, MainActivity::class.java))
+                    mContext.finish()
                 },
                 Modifier.weight(0.6f)
             )
+            Box(
+                modifier = Modifier
+                    .size(150.dp)
+                    .clickable { onLoginClick() },
+                contentAlignment = Center
+            ) {
+                ShowLottie(lottie = R.raw.huella)
+            }
             FooterLogin(
                 Modifier
                     .fillMaxWidth()
@@ -85,7 +99,7 @@ fun LoginScreen(
         }
 //        GoToDashboard(loginViewModel, onNavigationToDashboard)
     }
-
+    onLoginClick()
 }
 
 

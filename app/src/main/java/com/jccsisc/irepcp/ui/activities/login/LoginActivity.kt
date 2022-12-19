@@ -2,12 +2,12 @@ package com.jccsisc.irepcp.ui.activities.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
@@ -47,10 +47,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-        setupAuth {
-            canAuthenticate
-            canAuthenticate = it
-        }
+        setupAuth()
     }
 
     private fun authenticate(
@@ -71,9 +68,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    private fun setupAuth(canAuthenticate2: (Boolean) -> Unit) {
+    private fun setupAuth() {
         if (BiometricManager.from(this)
-                .canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) == BiometricManager.BIOMETRIC_SUCCESS
+                .canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) == BIOMETRIC_SUCCESS
         ) {
             canAuthenticate = true
             prompInfo = BiometricPrompt.PromptInfo.Builder()
@@ -81,10 +78,6 @@ class LoginActivity : AppCompatActivity() {
                 .setSubtitle("Autentícate utilizando el sensor biométrico")
                 .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
                 .build()
-            canAuthenticate2(true)
-        }
-        else {
-            Log.e("ERROR", "No pudo acceder a los permisos biometricos")
         }
     }
 }
