@@ -258,7 +258,7 @@ fun ContentNewTask(
     setdateTaskTime: (time: Long) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    var taskString by remember { mutableStateOf(Constants.NO_VALUE) }
+    var taskString by remember { mutableStateOf(NO_VALUE) }
     val createdDate by remember { mutableStateOf(System.currentTimeMillis()) }
     var enableTask by remember { mutableStateOf(false) }
 

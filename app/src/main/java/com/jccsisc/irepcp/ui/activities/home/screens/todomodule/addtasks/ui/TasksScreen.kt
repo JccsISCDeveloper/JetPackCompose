@@ -139,7 +139,6 @@ fun CardTask(
     navigateToModifyTask: (taskId: Long) -> Unit
 ) {
     var selected by remember { mutableStateOf(false) }
-    var dateTask by remember { mutableStateOf(NO_VALUE) }
 
     Card(
         modifier = Modifier

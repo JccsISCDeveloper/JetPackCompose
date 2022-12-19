@@ -15,11 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
+import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.activities.home.MainActivity
 import com.jccsisc.irepcp.ui.activities.login.ui.navigation.LoginNavigation
 import com.jccsisc.irepcp.ui.theme.GrayBg
 import com.jccsisc.irepcp.ui.theme.IREPCPTheme
 import com.jccsisc.irepcp.utils.GlobalData.onLoginClick
+import com.jccsisc.irepcp.utils.setColorNavBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,6 +32,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setColorNavBar(R.color.white)
+
         setContent {
             IREPCPTheme {
                 // A surface container using the 'background' color from the theme

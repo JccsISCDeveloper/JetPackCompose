@@ -18,9 +18,8 @@
 
         <activity
             android:name=".ui.activities.login.LoginActivity"
-            android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/SplashSTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
