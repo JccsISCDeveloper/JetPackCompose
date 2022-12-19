@@ -19,6 +19,7 @@
     <string name="low_priority">Baja</string>
     <string name="medium_priority">Media</string>
     <string name="high_priority">Alta</string>
+    <string name="add_a_note">Agrega una nota</string>
 
     <string name="str_number_of_characteres">%s caracteres</string>
     <string name="str_today">Hoy, %s</string>
