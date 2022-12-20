@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.books
+package com.jccsisc.irepcp.ui.activities.home.screens.books.favorites
 
 import android.content.Intent
 import androidx.compose.foundation.Image
@@ -25,7 +25,7 @@ import com.jccsisc.irepcp.ui.activities.listaactivity.ListaActivity
  * Created by Julio Cesar Camacho Silva on 29/11/22
  */
 @Composable
-fun TuMascotaScreen() {
+fun BooksFavoritesScreen() {
     val mContext = LocalContext.current
 
     Column(

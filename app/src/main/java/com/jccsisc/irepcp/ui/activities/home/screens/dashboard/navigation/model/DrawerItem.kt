@@ -1,7 +1,7 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.model
 
 import androidx.annotation.DrawableRes
-import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenChildItemDrawer
+import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer
 
 /**
  * Project: IREPCP
@@ -12,5 +12,5 @@ data class DrawerItem(
     val route: String,
     val title: String,
     @DrawableRes val icon: Int? = -1,
-    val expandableOptions: List<ScreenChildItemDrawer>? = listOf()
+    val expandableOptions: List<ScreenBooksChildItemDrawer>? = listOf()
 )

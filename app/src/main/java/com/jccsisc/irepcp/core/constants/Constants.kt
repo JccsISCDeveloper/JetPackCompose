@@ -41,7 +41,7 @@ object Constants {
     const val DETAIL_MASCOTA_SCREEN = "DETAIL_MASCOTA_SCREEN"
     const val FAVORITES_SCREEN = "FAVORITES_SCREEN"
     const val GALLERY_SCREEN = "GALLERY_SCREEN"
-    const val MASCOTA_HEADER = "MASCOTA_HEADER"
+    const val BOOKS_HEADER = "BOOKS_HEADER"
     const val CONSUMO_APIS_HEADER = "CONSUMO_APIS_HEADER"
     const val CANVAS_SCREEN = "CANVAS_SCREEN"
     const val DETAILS_FAVORITES_SCREEN = "DETAILS_FAVORITES_SCREEN"
@@ -52,13 +52,14 @@ object Constants {
     const val ADD_OR_MODIFY_TASK_SCREEN = "ADD_OR_MODIFY_TASK_SCREEN"
 
     /**
-     * Routes Mascota
+     * Routes Books
      * */
-    const val ITEM_MASCOTAS_GRAPH = "ITEM_MASCOTAS_GRAPH"
-    const val MASCOTA_GRAPH = "MASCOTA_GRAPH"
-    const val TU_MASCOTA_SCREEN = "TU_MASCOTA_SCREEN"
-    const val EVENTS_SCREEN = "EVENTS_SCREEN"
-    const val PREMIUM_SCREEN = "PREMIUM_SCREEN"
+    const val ITEM_BOOKS_GRAPH = "ITEM_BOOKS_GRAPH"
+    const val BOOKS_GRAPH = "BOOKS_GRAPH"
+    const val BOOKS_HOME_SCREEN = "BOOKS_HOME_SCREEN"
+    const val BOOKS_FAVORITES_SCREEN = "BOOKS_FAVORITES_SCREEN"
+    const val TO_READ_SCREEN = "TO_READ_SCREEN"
+    const val BOOKS_READ_SCREEN = "BOOKS_READ_SCREEN"
 
     /**
      * Argumentos

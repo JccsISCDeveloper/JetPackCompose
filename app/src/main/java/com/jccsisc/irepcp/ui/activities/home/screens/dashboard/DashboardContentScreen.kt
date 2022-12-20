@@ -18,7 +18,7 @@ import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.components.MyTopA
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.NavigationDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
-import com.jccsisc.irepcp.ui.activities.home.screens.books.books.MascotasDialog
+import com.jccsisc.irepcp.ui.activities.home.screens.books.favorites.BooksDialog
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.showToast
@@ -48,7 +48,7 @@ fun DashboardContentScreen(
     val itemsDrawer = listOf(
         MascotasScreen,
         FavoritesScreen,
-        MascotaFelizScreen,
+        NavBooksHomeScreen,
         TasksScreen,
         ConsumoApisScreen,
         CanvasScreen
@@ -153,7 +153,7 @@ fun FloatActionBttn(
                 showDialogData = false
             }
             MascotasScreen.drawerItem.route -> {
-               MascotasDialog { showDialogData = it }
+               BooksDialog { showDialogData = it }
             }
         }
     }

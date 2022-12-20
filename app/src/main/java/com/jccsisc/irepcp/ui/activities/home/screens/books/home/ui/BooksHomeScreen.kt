@@ -1,6 +1,6 @@
 @file:Suppress("UNUSED_EXPRESSION")
 
-package com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.ui
+package com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.model.Mascota
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
 import com.jccsisc.irepcp.ui.theme.GrayBg
 import kotlinx.coroutines.job
 
@@ -29,7 +29,7 @@ import kotlinx.coroutines.job
  * Created by Julio Cesar Camacho Silva on 16/11/22
  */
 @Composable
-fun MascotasScreen(
+fun BooksHomeScreen(
     viewModel: MascotasViewModel = hiltViewModel(),
     navigateToDetailMascota: (mascotaId: Int) -> Unit
 ) {

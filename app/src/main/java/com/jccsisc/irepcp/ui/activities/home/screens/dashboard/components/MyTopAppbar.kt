@@ -13,7 +13,7 @@ import com.jccsisc.irepcp.core.constants.Constants.DATE_DESC
 import com.jccsisc.irepcp.core.constants.Constants.PRIORITY_ASC
 import com.jccsisc.irepcp.core.constants.Constants.PRIORITY_DESC
 import com.jccsisc.irepcp.ui.activities.home.navigation.CurrentRoute
-import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenChildItemDrawer
+import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 
@@ -36,7 +36,7 @@ fun MyTopAppbar(
     var showIconInfo by remember { mutableStateOf(false) }
     var showIconRefresh by remember { mutableStateOf(false) }
     val currentRoute = CurrentRoute(dashboardNavController)
-    val chilItems = mutableListOf<ScreenChildItemDrawer>()
+    val chilItems = mutableListOf<ScreenBooksChildItemDrawer>()
 
 
     var dateTitle by remember { mutableStateOf("Fecha") }

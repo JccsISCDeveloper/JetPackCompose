@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.model
+package com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

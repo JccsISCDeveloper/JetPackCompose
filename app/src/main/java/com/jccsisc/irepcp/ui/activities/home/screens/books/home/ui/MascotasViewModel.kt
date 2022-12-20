@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.ui
+package com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.model.Mascota
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.repository.MascotaRepository
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.MascotaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

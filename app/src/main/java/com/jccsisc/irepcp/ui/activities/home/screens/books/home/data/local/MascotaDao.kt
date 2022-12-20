@@ -1,10 +1,10 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.data.local
+package com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local
 
 import androidx.room.*
 import androidx.room.OnConflictStrategy.IGNORE
 import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_MASCOTA
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.model.Mascota
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.repository.Mascotas
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.Mascotas
 import kotlinx.coroutines.flow.Flow
 
 /**

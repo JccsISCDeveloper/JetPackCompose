@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.events
+package com.jccsisc.irepcp.ui.activities.home.screens.books.toread
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun EventsScreen() {
+fun ToReadScreen() {
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
     val bsScaffoldState = rememberBottomSheetScaffoldState(
@@ -141,7 +141,7 @@ fun EventsScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun PreviewEvents() {
-    EventsScreen()
+    ToReadScreen()
 }
 
 @OptIn(ExperimentalMaterialApi::class)

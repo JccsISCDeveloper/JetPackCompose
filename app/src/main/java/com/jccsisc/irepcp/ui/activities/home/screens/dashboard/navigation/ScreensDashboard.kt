@@ -1,19 +1,20 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation
 
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.core.constants.Constants.BOOKS_FAVORITES_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.CANVAS_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.CONSUMO_APIS_HEADER
 import com.jccsisc.irepcp.core.constants.Constants.CONTENT_DASHBOARD_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.DETAILS_FAVORITES_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.DETAIL_MASCOTA_SCREEN
-import com.jccsisc.irepcp.core.constants.Constants.EVENTS_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.TO_READ_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.FAVORITES_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.GALLERY_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.MASCOTAS_SCREEN
-import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_HEADER
-import com.jccsisc.irepcp.core.constants.Constants.PREMIUM_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.BOOKS_HEADER
+import com.jccsisc.irepcp.core.constants.Constants.BOOKS_HOME_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.BOOKS_READ_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.TASKS_SCREEN
-import com.jccsisc.irepcp.core.constants.Constants.TU_MASCOTA_SCREEN
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.model.DrawerChildItem
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.model.DrawerItem
 
@@ -47,15 +48,10 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
     /**
      * Drawer
      * */
-    object MascotaFelizScreen :
+    object NavBooksHomeScreen :
         ScreensDashboard(
-            DrawerItem(
-                MASCOTA_HEADER,
-                "Mascota",
-                R.drawable.ic_pets,
-                listMascotaOptions
-            )
-        ) //todo esta clase ya no se visualiza, se tomó como padre pero en qué momoento se mostrará? RESOLVER
+            DrawerItem(BOOKS_HEADER, "Mis libros", R.drawable.ic_books_home, listBooksOptions)
+        )
 
     object TasksScreen :
         ScreensDashboard(DrawerItem(TASKS_SCREEN, "Tareas", R.drawable.ic_tasks))
@@ -71,24 +67,27 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
         ScreensDashboard(DrawerItem(DETAILS_FAVORITES_SCREEN, "Detalles"))
 }
 
-val listMascotaOptions = listOf(
-    ScreenChildItemDrawer.TuMascotaScreen,
-    ScreenChildItemDrawer.EventosScreen,
-    ScreenChildItemDrawer.PremiumScreen
+private val listBooksOptions = listOf(
+    ScreenBooksChildItemDrawer.BooksHomeScreenBooks,
+    ScreenBooksChildItemDrawer.BooksFavoritesScreen,
+    ScreenBooksChildItemDrawer.ToReadScreenBooks,
+    ScreenBooksChildItemDrawer.BooksReadScreenBooks
 )
 
-sealed class ScreenChildItemDrawer(val drawerChildItem: DrawerChildItem) {
-    object TuMascotaScreen : ScreenChildItemDrawer(
-        DrawerChildItem(
-            TU_MASCOTA_SCREEN,
-            "Tu mascota",
-            R.drawable.ic_tu_mascota
-        )
+sealed class ScreenBooksChildItemDrawer(val drawerChildItem: DrawerChildItem) {
+    object BooksHomeScreenBooks : ScreenBooksChildItemDrawer(
+        DrawerChildItem(BOOKS_HOME_SCREEN, "Todos mis libros", R.drawable.ic_all_books)
     )
 
-    object EventosScreen :
-        ScreenChildItemDrawer(DrawerChildItem(EVENTS_SCREEN, "Eventos", R.drawable.ic_cat_2))
+    object BooksFavoritesScreen : ScreenBooksChildItemDrawer(
+        DrawerChildItem(BOOKS_FAVORITES_SCREEN, "Favoritros", R.drawable.ic_books_favorites)
+    )
 
-    object PremiumScreen :
-        ScreenChildItemDrawer(DrawerChildItem(PREMIUM_SCREEN, "Premium", R.drawable.ic_premium))
+    object ToReadScreenBooks : ScreenBooksChildItemDrawer(
+        DrawerChildItem(TO_READ_SCREEN, "Por leer", R.drawable.ic_books_to_read)
+    )
+
+    object BooksReadScreenBooks : ScreenBooksChildItemDrawer(
+        DrawerChildItem(BOOKS_READ_SCREEN, "Leídos", R.drawable.ic_books_read)
+    )
 }

@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.GenericTopBar
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.model.Mascota
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.ui.MascotasViewModel
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.MascotasViewModel
 
 /**
  * Project: IREPCP
@@ -21,7 +21,7 @@ import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.ui.Masco
  * Created by Julio Cesar Camacho Silva on 01/12/22
  */
 @Composable
-fun DetailMascotaScreen(
+fun BooksDetailScreen(
     viewModel: MascotasViewModel = hiltViewModel(),
     mascotaId: Int,
     navigateBack: () -> Unit

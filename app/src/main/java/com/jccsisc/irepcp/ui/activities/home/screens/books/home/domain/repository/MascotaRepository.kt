@@ -1,6 +1,6 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.repository
+package com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository
 
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.model.Mascota
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
 import kotlinx.coroutines.flow.Flow
 
 /**

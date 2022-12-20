@@ -6,21 +6,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.core.constants.Constants
-import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_GRAPH
+import com.jccsisc.irepcp.core.constants.Constants.BOOKS_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_ID
 import com.jccsisc.irepcp.core.constants.Constants.PRODUCT
 import com.jccsisc.irepcp.ui.activities.home.navigation.Screens
+import com.jccsisc.irepcp.ui.activities.home.screens.books.detail.BooksDetailScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.books.favorites.BooksFavoritesScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksHomeScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.books.readbooks.BooksReadScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.books.toread.ToReadScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.canvas.CanvasScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.consumoapis.ConsumoApisScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.detailsfavorites.DetailsFavoritesScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.favorites.FavoritesScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.gallery.GalleryScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer.*
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
-import com.jccsisc.irepcp.ui.activities.home.screens.books.detail.DetailMascotaScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.books.events.EventsScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.ui.MascotasScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.books.premium.PremiumScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.books.books.TuMascotaScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.ui.TasksScreen
 
 /**
@@ -40,7 +41,7 @@ fun NavigationDashboard(
          * BorromBar
          * */
         composable(MascotasScreen.drawerItem.route) {
-            MascotasScreen(navigateToDetailMascota = { mascotaId ->
+            BooksHomeScreen(navigateToDetailMascota = { mascotaId ->
                 navController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
             })
         }
@@ -49,7 +50,7 @@ fun NavigationDashboard(
             arguments = listOf(navArgument(MASCOTA_ID) { type = NavType.IntType })
         ) { backStackEntry ->
             val mascotaId = backStackEntry.arguments?.getInt(MASCOTA_ID) ?: 0
-            DetailMascotaScreen(
+            BooksDetailScreen(
                 mascotaId = mascotaId
             ) {
                 navController.popBackStack()
@@ -86,17 +87,22 @@ fun NavigationDashboard(
 
 fun NavGraphBuilder.itemChildDrawerGraph(navController: NavHostController) {
     navigation(
-        startDestination = ScreenChildItemDrawer.TuMascotaScreen.drawerChildItem.route,
-        route = MASCOTA_GRAPH
+        startDestination = BooksHomeScreenBooks.drawerChildItem.route,
+        route = BOOKS_GRAPH
     ) {
-        composable(ScreenChildItemDrawer.TuMascotaScreen.drawerChildItem.route) {
-            TuMascotaScreen()
+        composable(BooksHomeScreenBooks.drawerChildItem.route) {
+            BooksHomeScreen(navigateToDetailMascota = { mascotaId ->
+                navController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
+            })
         }
-        composable(ScreenChildItemDrawer.EventosScreen.drawerChildItem.route) {
-            EventsScreen()
+        composable(BooksFavoritesScreen.drawerChildItem.route) {
+            BooksFavoritesScreen()
         }
-        composable(ScreenChildItemDrawer.PremiumScreen.drawerChildItem.route) {
-            PremiumScreen()
+        composable(ToReadScreenBooks.drawerChildItem.route) {
+            ToReadScreen()
+        }
+        composable(BooksReadScreenBooks.drawerChildItem.route) {
+            BooksReadScreen()
         }
     }
 }

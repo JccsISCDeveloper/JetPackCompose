@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.premium
+package com.jccsisc.irepcp.ui.activities.home.screens.books.readbooks
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,7 +15,7 @@ import com.jccsisc.irepcp.ui.theme.GrayBg
  * Created by Julio Cesar Camacho Silva on 29/11/22
  */
 @Composable
-fun PremiumScreen() {
+fun BooksReadScreen() {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(GrayBg), contentAlignment = Alignment.Center) {

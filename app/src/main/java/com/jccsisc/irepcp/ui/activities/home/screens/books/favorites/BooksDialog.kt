@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.books
+package com.jccsisc.irepcp.ui.activities.home.screens.books.favorites
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
  * Created by Julio Cesar Camacho Silva on 20/12/22
  */
 @Composable
-fun MascotasDialog(showDialog: (Boolean) -> Unit) {
+fun BooksDialog(showDialog: (Boolean) -> Unit) {
     var nombre by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var aceptar by remember { mutableStateOf(false) }

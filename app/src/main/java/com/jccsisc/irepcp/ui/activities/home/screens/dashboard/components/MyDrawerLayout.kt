@@ -137,7 +137,9 @@ private fun DrawerItem(
             Image(
                 painter = it,
                 contentDescription = item.drawerItem.title,
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier
+                    .size(30.dp)
+                    .padding(dimensionResource(id = R.dimen.padding_3))
             )
         }
         Spacer(modifier = Modifier.size(12.dp))
@@ -158,7 +160,7 @@ private fun DrawerItem(
             )
             if (masInformacion)
                 item.drawerItem.expandableOptions?.forEach {
-                    DrawerItemChild(
+                    DrawerChildItem(
                         it.drawerChildItem,
                         currentRoute == it.drawerChildItem.route
                     ) { chilRouteSelected ->
@@ -179,7 +181,7 @@ private fun DrawerItem(
 }
 
 @Composable
-private fun DrawerItemChild(
+private fun DrawerChildItem(
     item: DrawerChildItem,
     selected: Boolean,
     onItemChildClick: (chilRouteSelected: String) -> Unit
@@ -198,7 +200,9 @@ private fun DrawerItemChild(
         Image(
             painter = painterResource(id = item.icon),
             contentDescription = item.title,
-            modifier = Modifier.size(28.dp)
+            modifier = Modifier
+                .size(24.dp)
+                .padding(end = dimensionResource(id = R.dimen.padding_6))
         )
         Text(
             text = item.title,

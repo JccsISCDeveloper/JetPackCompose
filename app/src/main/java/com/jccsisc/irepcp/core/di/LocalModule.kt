@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import com.jccsisc.irepcp.core.constants.ConstantsRoom.DB_MASCOTAS
 import com.jccsisc.irepcp.core.constants.ConstantsRoom.DB_TASKS
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.data.local.MascotaDB
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.data.local.MascotaDao
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.data.local.MascotaRepositoryImpl
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.repository.MascotaRepository
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.MascotaDB
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.MascotaDao
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.MascotaRepositoryImpl
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.MascotaRepository
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.DataBaseBuilder.TASKS_MIGRATION_2_3
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.TaskDao
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.TasksDB

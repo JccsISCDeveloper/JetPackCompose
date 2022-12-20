@@ -1,9 +1,9 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.data.local
+package com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.jccsisc.irepcp.core.constants.ConstantsRoom.DB_MASCOTAS_VERSION
-import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.domain.model.Mascota
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
 
 /**
  * Project: IREPCP
