@@ -18,9 +18,13 @@
     <string name="ph_write_your_note">Write your note</string>
     <string name="editing">Editing…</string>
     <string name="low_priority">Low</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="medium_priority">Medium</string>
     <string name="high_priority">High</string>
     <string name="add_a_note">Add a note</string>
+    <string name="delete_task">Delete tasj</string>
+    <string name="are_you_sure_you_want_to_delete_the_task">Are you sure you want to delete the task?</string>
 
     <string name="str_number_of_characteres">%s characters</string>
     <string name="str_today">Today, %s</string>

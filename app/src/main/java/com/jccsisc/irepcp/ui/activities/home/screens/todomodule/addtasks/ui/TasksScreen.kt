@@ -2,10 +2,13 @@ package com.jccsisc.irepcp.ui.activities.home.screens.todomodule.addtasks.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -33,6 +36,7 @@ import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.addtasks.domain.
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 import com.jccsisc.irepcp.utils.lastModifiedTime
+import com.jccsisc.irepcp.utils.showToast
 
 /**
  * Project: IREPCP
@@ -45,7 +49,7 @@ fun TasksScreen(
     navigateToModifyTask: (taskId: Long) -> Unit
 ) {
     val tasks by viewModel.tasks.collectAsState(initial = emptyList())
-    val taskOrderVM: String by viewModel.taskOrder.observeAsState(initial = "")
+    val taskOrderVM: String by viewModel.taskOrder.observeAsState(initial = NO_VALUE)
     var showDialog by remember { mutableStateOf(false) }
     var task by remember { mutableStateOf(TaskModel()) }
 
@@ -53,7 +57,6 @@ fun TasksScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(GrayBg)
-            .padding(bottom = 60.dp)
     ) {
         if (tasks.isNotEmpty()) {
             TaskList(
@@ -77,10 +80,10 @@ fun TasksScreen(
             show = showDialog,
             onDismiss = {},
             image = R.drawable.ic_warning,
-            title = "Eliminar tarea",
-            message = "¿Está seguro que desea eliminar la tarea?",
-            btnTitleNegative = "No",
-            btnTitlePositive = "Sí",
+            title = stringResource(id = R.string.delete_task),
+            message = stringResource(id = R.string.are_you_sure_you_want_to_delete_the_task),
+            btnTitleNegative = stringResource(id = R.string.no),
+            btnTitlePositive = stringResource(id = R.string.yes),
             onNegativeClick = { showDialog = false },
             onPositiveClick = {
                 viewModel.deleteTask(task)
@@ -104,16 +107,24 @@ private fun TaskList(
     navigateToModifyTask: (taskId: Long) -> Unit,
     onDeleteTask: (taskModel: TaskModel) -> Unit
 ) {
-    LazyColumn(modifier = Modifier.background(Color.Gray)) {
+    var addPadding by remember { mutableStateOf(0) }
+    Column(modifier = Modifier.padding(bottom = addPadding.dp)) {
+        LazyColumn(modifier = Modifier.background(Color.Gray)) {
 
-        items(getOrderList(taskOrder, tasks).sortedBy { it.selected }) { task ->
-            CardTask(
-                taskModel = task,
-                onCheckBoxSelected = { viewModel.onSelectedTask(it) },
-                onUpdateTask = { viewModel.updateModelTask(it) },
-                onDeleteTask = { onDeleteTask(it) },
-                navigateToModifyTask = navigateToModifyTask
-            )
+            itemsIndexed(getOrderList(taskOrder, tasks).sortedBy { it.selected }) { index, task ->
+                CardTask(
+                    taskModel = task,
+                    onCheckBoxSelected = { viewModel.onSelectedTask(it) },
+                    onUpdateTask = { viewModel.updateModelTask(it) },
+                    onDeleteTask = { onDeleteTask(it) },
+                    navigateToModifyTask = navigateToModifyTask
+                )
+                addPadding = if (index >= tasks.size -8) {
+                    58
+                } else {
+                    0
+                }
+            }
         }
     }
 }

@@ -17,9 +17,13 @@
     <string name="ph_write_your_note">Escribe tu nota</string>
     <string name="editing">Editando…</string>
     <string name="low_priority">Baja</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
     <string name="medium_priority">Media</string>
     <string name="high_priority">Alta</string>
     <string name="add_a_note">Agrega una nota</string>
+    <string name="delete_task">Eliminar tarea</string>
+    <string name="are_you_sure_you_want_to_delete_the_task">¿Está seguro que desea eliminar la tarea?</string>
 
     <string name="str_number_of_characteres">%s caracteres</string>
     <string name="str_today">Hoy, %s</string>
