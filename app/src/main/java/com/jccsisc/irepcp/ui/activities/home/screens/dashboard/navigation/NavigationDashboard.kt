@@ -16,12 +16,12 @@ import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.detailsfavorites.
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.favorites.FavoritesScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.gallery.GalleryScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
-import com.jccsisc.irepcp.ui.activities.home.screens.mascotas.detail.DetailMascotaScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.mascotas.events.EventsScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.mascotas.mascotashome.ui.MascotasScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.mascotas.premium.PremiumScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.mascotas.tumascota.TuMascotaScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.addtasks.ui.TasksScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.books.detail.DetailMascotaScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.books.events.EventsScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.books.mascotashome.ui.MascotasScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.books.premium.PremiumScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.books.books.TuMascotaScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.ui.TasksScreen
 
 /**
  * Project: IREPCP

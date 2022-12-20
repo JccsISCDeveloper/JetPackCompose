@@ -11,7 +11,7 @@ import com.jccsisc.irepcp.core.constants.Constants.ROOT_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.TASK_ID
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.dashboardContentGraph
 import com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.rickAndMortyGraph
-import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.addtasks.ui.AddOrModifyTaskScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.ui.AddOrModifyTaskScreen
 import com.jccsisc.irepcp.ui.activities.login.ui.login.ui.LoginViewModel
 
 /**
