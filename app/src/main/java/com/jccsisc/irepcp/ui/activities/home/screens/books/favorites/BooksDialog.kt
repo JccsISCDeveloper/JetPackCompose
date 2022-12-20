@@ -1,17 +1,20 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.books.favorites
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.jccsisc.irepcp.core.constants.Constants
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
+import kotlinx.coroutines.job
 
 /**
  * Project: IREPCP
@@ -19,15 +22,23 @@ import androidx.compose.ui.unit.dp
  * Created by Julio Cesar Camacho Silva on 20/12/22
  */
 @Composable
-fun BooksDialog(showDialog: (Boolean) -> Unit) {
-    var nombre by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var aceptar by remember { mutableStateOf(false) }
+fun BooksDialog(
+    showDialog: (Boolean) -> Unit,
+    addMascota: (mascota: Mascota) -> Unit
+) {
+    var animal by remember { mutableStateOf(Constants.NO_VALUE) }
+    var raza by remember { mutableStateOf(Constants.NO_VALUE) }
+    val focusRequester = FocusRequester()
+
     AlertDialog(
-        onDismissRequest = {},
+        onDismissRequest = { },
         confirmButton = {
-            TextButton(onClick = {}) {
-                Text(text = "Solicitar")
+            TextButton(onClick = {
+                showDialog(false)
+                val mascota = Mascota(0, animal, raza)
+                addMascota(mascota)
+            }) {
+                Text(text = "Agregar")
             }
         },
         dismissButton = {
@@ -35,14 +46,15 @@ fun BooksDialog(showDialog: (Boolean) -> Unit) {
                 Text(text = "Cancelar")
             }
         },
-        title = { Text(text = "Recompensas") },
+        title = { Text(text = "Agregar un libro") },
         text = {
             Column {
-                Text(text = "Registre sus datos")
+                Text(text = "Datos:")
                 TextField(
-                    value = nombre,
-                    onValueChange = { nombre = it },
-                    placeholder = { Text(text = "Nombre") },
+                    value = animal,
+                    onValueChange = { animal = it },
+                    modifier = Modifier.focusRequester(focusRequester),
+                    placeholder = { Text(text = "Titulo") },
                     singleLine = true,
                     colors = TextFieldDefaults.textFieldColors(
                         textColor = Color(0xFFB2B2B2),
@@ -51,11 +63,16 @@ fun BooksDialog(showDialog: (Boolean) -> Unit) {
                         unfocusedIndicatorColor = Color.Transparent
                     )
                 )
+                LaunchedEffect(Unit) {
+                    coroutineContext.job.invokeOnCompletion {
+                        focusRequester.requestFocus()
+                    }
+                }
                 Spacer(modifier = Modifier.size(10.dp))
                 TextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    placeholder = { Text(text = "Correo") },
+                    value = raza,
+                    onValueChange = { raza = it },
+                    placeholder = { Text(text = "Descripción") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     singleLine = true,
                     colors = TextFieldDefaults.textFieldColors(
@@ -65,10 +82,6 @@ fun BooksDialog(showDialog: (Boolean) -> Unit) {
                         unfocusedIndicatorColor = Color.Transparent
                     )
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(checked = aceptar, onCheckedChange = { aceptar = it })
-                    Text(text = "Acepto los términos y condiciones")
-                }
             }
         })
 }

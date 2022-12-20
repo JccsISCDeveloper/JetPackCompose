@@ -19,6 +19,8 @@ import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.Naviga
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
 import com.jccsisc.irepcp.ui.activities.home.screens.books.favorites.BooksDialog
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
@@ -34,7 +36,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun DashboardContentScreen(
     principalNavController: NavHostController,
-    taskViewModel: TaskViewModel = hiltViewModel()
+    taskViewModel: TaskViewModel = hiltViewModel(),
+    booksViewModel: BooksViewModel = hiltViewModel()
 ) {
     SetNavbarColor(color = PrimaryDarkColor, useDarkIcons = false)
     val dashboardNavController = rememberNavController()
@@ -76,12 +79,12 @@ fun DashboardContentScreen(
             )
         },
         floatingActionButton = {
-            if (
-                currenRoute == TasksScreen.drawerItem.route ||
-                currenRoute == HomeScreen.drawerItem.route ||
-                currenRoute == ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route
-            ) {
-                FloatActionBttn(currenRoute, principalNavController)
+            if (isTheseRoute(currenRoute)) {
+                FloatActionBttn(
+                    currenRoute = currenRoute,
+                    principalNavController = principalNavController,
+                    addMascota = { booksViewModel.addMascota(it) }
+                )
             }
         },
         isFloatingActionButtonDocked = true,
@@ -100,6 +103,11 @@ fun DashboardContentScreen(
         padding.calculateBottomPadding()
     }
 }
+
+@Composable
+fun isTheseRoute(currenRoute: String?) = currenRoute == TasksScreen.drawerItem.route ||
+        currenRoute == HomeScreen.drawerItem.route ||
+        currenRoute == ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route
 
 /**
  * Header MainScreen
@@ -146,7 +154,8 @@ private fun HeaderContentScreens(
 @Composable
 fun FloatActionBttn(
     currenRoute: String?,
-    principalNavController: NavHostController
+    principalNavController: NavHostController,
+    addMascota: (mascota: Mascota) -> Unit
 ) {
     var showDialogData by remember { mutableStateOf(false) }
 
@@ -158,7 +167,10 @@ fun FloatActionBttn(
                 showDialogData = false
             }
             HomeScreen.drawerItem.route, ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route -> {
-                BooksDialog { showDialogData = it }
+                BooksDialog(
+                    showDialog = { showDialogData = it },
+                    addMascota = { addMascota(it) }
+                )
             }
         }
     }

@@ -12,16 +12,12 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
 import com.jccsisc.irepcp.ui.theme.GrayBg
-import kotlinx.coroutines.job
 
 /**
  * Project: IREPCP
@@ -30,11 +26,11 @@ import kotlinx.coroutines.job
  */
 @Composable
 fun BooksHomeScreen(
-    viewModel: MascotasViewModel = hiltViewModel(),
+    viewModel: BooksViewModel = hiltViewModel(),
     navigateToDetailMascota: (mascotaId: Int) -> Unit
 ) {
 
-    val mascotas by viewModel.mascotas.collectAsState(initial = emptyList())
+    val books by viewModel.mascotas.collectAsState(initial = emptyList())
 
     Box(
         modifier = Modifier
@@ -42,78 +38,20 @@ fun BooksHomeScreen(
             .background(GrayBg), contentAlignment = Alignment.Center
     ) {
 
-        BodyMascotas(
-            mascotas = mascotas,
+        ContentBooks(
+            books = books,
             deleteMascota = { mascota ->
                 viewModel.deleteMascota(mascota)
             },
             navigateToDetailMascota = navigateToDetailMascota
         )
-        AddMascotaAlertDialog(
-            opendDialog = viewModel.openDialog,
-            closeDialog = { viewModel.closeDialog() },
-            addMascota = { mascota ->
-                viewModel.addMascota(mascota)
-            }
-        )
-        Button(onClick = { viewModel.openDialog() }, modifier = Modifier.align(Alignment.TopEnd)) {
-            Text(text = "Agregar mascota")
-        }
     }
 
 }
 
 @Composable
-fun AddMascotaAlertDialog(
-    opendDialog: Boolean,
-    closeDialog: () -> Unit,
-    addMascota: (mascota: Mascota) -> Unit
-) {
-    if (opendDialog) {
-        var animal by remember { mutableStateOf(NO_VALUE) }
-        var raza by remember { mutableStateOf(NO_VALUE) }
-        val focusRequester = FocusRequester()
-
-        AlertDialog(
-            onDismissRequest = { closeDialog() },
-            title = { Text(text = "Agregar mascota") },
-            text = {
-                Column {
-                    TextField(
-                        value = animal,
-                        onValueChange = { animal = it },
-                        modifier = Modifier.focusRequester(focusRequester),
-                        placeholder = { Text(text = "Animal") })
-                    LaunchedEffect(Unit) {
-                        coroutineContext.job.invokeOnCompletion {
-                            focusRequester.requestFocus()
-                        }
-                    }
-                    Spacer(modifier = Modifier.size(16.dp))
-                    TextField(value = raza, onValueChange = { raza = it }, placeholder = { "Raza" })
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    closeDialog()
-                    val mascota = Mascota(0, animal, raza)
-                    addMascota(mascota)
-                }) {
-                    Text(text = "Agregar")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = closeDialog) {
-                    Text(text = "Cerrar")
-                }
-            }
-        )
-    }
-}
-
-@Composable
-fun BodyMascotas(
-    mascotas: List<Mascota>,
+fun ContentBooks(
+    books: List<Mascota>,
     deleteMascota: (mascota: Mascota) -> Unit,
     navigateToDetailMascota: (mascotaId: Int) -> Unit
 ) {
@@ -122,7 +60,7 @@ fun BodyMascotas(
             .fillMaxSize()
             .padding(dimensionResource(id = R.dimen.padding_10))
     ) {
-        items(mascotas) { mascota ->
+        items(books) { mascota ->
             MascotaCard(
                 mascota = mascota,
                 deleteMascota = { deleteMascota(mascota) },
@@ -160,11 +98,11 @@ fun MascotaCard(
                 .padding(dimensionResource(id = R.dimen.padding_10)),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(mascota.animal)
                 Text(mascota.raza)
             }
-            Spacer(modifier = Modifier.weight(1f))
+//            Spacer(modifier = Modifier.weight(1f))
             DeleteIcon(
                 deleteMascota = deleteMascota
             )

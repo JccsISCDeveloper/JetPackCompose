@@ -19,8 +19,7 @@ import javax.inject.Inject
  * Created by Julio Cesar Camacho Silva on 01/12/22
  */
 @HiltViewModel
-class MascotasViewModel @Inject constructor(private val repo: MascotaRepository) : ViewModel() {
-    var openDialog by mutableStateOf(false)
+class BooksViewModel @Inject constructor(private val repo: MascotaRepository) : ViewModel() {
     val mascotas = repo.getMascotasFromRoom()
     var mascota by mutableStateOf(Mascota(0, NO_VALUE, NO_VALUE))
 
@@ -53,6 +52,4 @@ class MascotasViewModel @Inject constructor(private val repo: MascotaRepository)
         }
     }
 
-    fun closeDialog() { openDialog = false }
-    fun openDialog() { openDialog = true }
 }

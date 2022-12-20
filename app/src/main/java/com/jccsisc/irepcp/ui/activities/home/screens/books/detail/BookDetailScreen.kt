@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.GenericTopBar
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.MascotasViewModel
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
 
 /**
  * Project: IREPCP
@@ -22,7 +22,7 @@ import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.MascotasViewM
  */
 @Composable
 fun BooksDetailScreen(
-    viewModel: MascotasViewModel = hiltViewModel(),
+    viewModel: BooksViewModel = hiltViewModel(),
     mascotaId: Int,
     navigateBack: () -> Unit
 ) {
