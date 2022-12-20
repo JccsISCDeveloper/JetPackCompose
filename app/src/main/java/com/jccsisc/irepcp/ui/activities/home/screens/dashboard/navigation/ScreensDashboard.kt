@@ -10,7 +10,7 @@ import com.jccsisc.irepcp.core.constants.Constants.DETAIL_MASCOTA_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.TO_READ_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.FAVORITES_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.GALLERY_SCREEN
-import com.jccsisc.irepcp.core.constants.Constants.MASCOTAS_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.HOME_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.BOOKS_HEADER
 import com.jccsisc.irepcp.core.constants.Constants.BOOKS_HOME_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.BOOKS_READ_SCREEN
@@ -33,8 +33,8 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
     /**
      * BottomBar
      * */
-    object MascotasScreen :
-        ScreensDashboard(DrawerItem(MASCOTAS_SCREEN, "Home", R.drawable.ic_home))
+    object HomeScreen :
+        ScreensDashboard(DrawerItem(HOME_SCREEN, "Home", R.drawable.ic_home))
 
     object DetailMascotaScreen :
         ScreensDashboard(DrawerItem(DETAIL_MASCOTA_SCREEN, "Detalle mascota"))
@@ -68,14 +68,14 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
 }
 
 private val listBooksOptions = listOf(
-    ScreenBooksChildItemDrawer.BooksHomeScreenBooks,
+    ScreenBooksChildItemDrawer.BooksHomeScreen,
     ScreenBooksChildItemDrawer.BooksFavoritesScreen,
     ScreenBooksChildItemDrawer.ToReadScreenBooks,
     ScreenBooksChildItemDrawer.BooksReadScreenBooks
 )
 
 sealed class ScreenBooksChildItemDrawer(val drawerChildItem: DrawerChildItem) {
-    object BooksHomeScreenBooks : ScreenBooksChildItemDrawer(
+    object BooksHomeScreen : ScreenBooksChildItemDrawer(
         DrawerChildItem(BOOKS_HOME_SCREEN, "Todos mis libros", R.drawable.ic_all_books)
     )
 

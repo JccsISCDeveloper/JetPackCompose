@@ -40,7 +40,7 @@ fun NavigationDashboard(
         /**
          * BorromBar
          * */
-        composable(MascotasScreen.drawerItem.route) {
+        composable(HomeScreen.drawerItem.route) {
             BooksHomeScreen(navigateToDetailMascota = { mascotaId ->
                 navController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
             })
@@ -87,10 +87,10 @@ fun NavigationDashboard(
 
 fun NavGraphBuilder.itemChildDrawerGraph(navController: NavHostController) {
     navigation(
-        startDestination = BooksHomeScreenBooks.drawerChildItem.route,
+        startDestination = BooksHomeScreen.drawerChildItem.route,
         route = BOOKS_GRAPH
     ) {
-        composable(BooksHomeScreenBooks.drawerChildItem.route) {
+        composable(BooksHomeScreen.drawerChildItem.route) {
             BooksHomeScreen(navigateToDetailMascota = { mascotaId ->
                 navController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
             })

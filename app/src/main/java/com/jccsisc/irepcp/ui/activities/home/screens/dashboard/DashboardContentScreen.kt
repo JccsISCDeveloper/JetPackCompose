@@ -19,6 +19,7 @@ import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.Naviga
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
 import com.jccsisc.irepcp.ui.activities.home.screens.books.favorites.BooksDialog
+import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.showToast
@@ -44,9 +45,9 @@ fun DashboardContentScreen(
 
     val singletonProviderToTaskVM = taskViewModel.mySingletonClass
 
-    val itemsbottomBar = listOf(MascotasScreen, FavoritesScreen, GalleryScreen)
+    val itemsbottomBar = listOf(HomeScreen, FavoritesScreen, GalleryScreen)
     val itemsDrawer = listOf(
-        MascotasScreen,
+        HomeScreen,
         FavoritesScreen,
         NavBooksHomeScreen,
         TasksScreen,
@@ -75,7 +76,11 @@ fun DashboardContentScreen(
             )
         },
         floatingActionButton = {
-            if (currenRoute == TasksScreen.drawerItem.route || currenRoute == MascotasScreen.drawerItem.route) {
+            if (
+                currenRoute == TasksScreen.drawerItem.route ||
+                currenRoute == HomeScreen.drawerItem.route ||
+                currenRoute == ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route
+            ) {
                 FloatActionBttn(currenRoute, principalNavController)
             }
         },
@@ -152,8 +157,8 @@ fun FloatActionBttn(
                 principalNavController.navigate("${Screens.AddOrModifyTaskScreen.route}/${-1L}")
                 showDialogData = false
             }
-            MascotasScreen.drawerItem.route -> {
-               BooksDialog { showDialogData = it }
+            HomeScreen.drawerItem.route, ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route -> {
+                BooksDialog { showDialogData = it }
             }
         }
     }
