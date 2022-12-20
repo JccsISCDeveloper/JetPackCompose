@@ -2,13 +2,10 @@ package com.jccsisc.irepcp.ui.activities.home.screens.todomodule.addtasks.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -36,7 +33,6 @@ import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.addtasks.domain.
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 import com.jccsisc.irepcp.utils.lastModifiedTime
-import com.jccsisc.irepcp.utils.showToast
 
 /**
  * Project: IREPCP

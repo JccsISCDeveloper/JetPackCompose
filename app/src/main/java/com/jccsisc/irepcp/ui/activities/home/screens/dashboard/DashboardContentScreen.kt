@@ -27,6 +27,7 @@ import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.components.MyTopA
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.NavigationDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
+import com.jccsisc.irepcp.ui.activities.home.screens.mascotas.tumascota.MascotasDialog
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.showToast
@@ -152,9 +153,7 @@ fun FloatActionBttn(
     principalNavController: NavHostController
 ) {
     var showDialogData by remember { mutableStateOf(false) }
-    var nombre by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var aceptar by remember { mutableStateOf(false) }
+
 
     if (showDialogData) {
         when (currenRoute) {
@@ -163,54 +162,7 @@ fun FloatActionBttn(
                 showDialogData = false
             }
             MascotasScreen.drawerItem.route -> {
-                AlertDialog(
-                    onDismissRequest = {},
-                    confirmButton = {
-                        TextButton(onClick = {}) {
-                            Text(text = "Solicitar")
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { showDialogData = false }) {
-                            Text(text = "Cancelar")
-                        }
-                    },
-                    title = { Text(text = "Recompensas") },
-                    text = {
-                        Column {
-                            Text(text = "Registre sus datos")
-                            TextField(
-                                value = nombre,
-                                onValueChange = { nombre = it },
-                                placeholder = { Text(text = "Nombre") },
-                                singleLine = true,
-                                colors = TextFieldDefaults.textFieldColors(
-                                    textColor = Color(0xFFB2B2B2),
-                                    backgroundColor = Color(0xFFFAFAFA),
-                                    focusedIndicatorColor = Color.Transparent,
-                                    unfocusedIndicatorColor = Color.Transparent
-                                )
-                            )
-                            Spacer(modifier = Modifier.size(10.dp))
-                            TextField(
-                                value = email,
-                                onValueChange = { email = it },
-                                placeholder = { Text(text = "Correo") },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                                singleLine = true,
-                                colors = TextFieldDefaults.textFieldColors(
-                                    textColor = Color(0xFFB2B2B2),
-                                    backgroundColor = Color(0xFFFAFAFA),
-                                    focusedIndicatorColor = Color.Transparent,
-                                    unfocusedIndicatorColor = Color.Transparent
-                                )
-                            )
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Checkbox(checked = aceptar, onCheckedChange = { aceptar = it })
-                                Text(text = "Acepto los términos y condiciones")
-                            }
-                        }
-                    })
+               MascotasDialog { showDialogData = it }
             }
         }
     }
