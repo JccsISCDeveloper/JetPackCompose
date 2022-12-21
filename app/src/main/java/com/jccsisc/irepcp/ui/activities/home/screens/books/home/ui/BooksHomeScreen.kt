@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
@@ -29,8 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ImageContainer
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
-import com.jccsisc.irepcp.ui.theme.ColorRedTapBar
-import com.jccsisc.irepcp.ui.theme.GrayBg
+import com.jccsisc.irepcp.ui.theme.*
 
 /**
  * Project: IREPCP
@@ -48,7 +48,8 @@ fun BooksHomeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(GrayBg), contentAlignment = Alignment.Center
+            .background(GrayBg),
+        contentAlignment = Alignment.Center
     ) {
 
         ContentBooks(
@@ -73,8 +74,7 @@ fun ContentBooks(
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
-            .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.padding_10)),
+            .fillMaxSize(),
         content = {
             items(books) { mascota ->
                 BookCard(
@@ -83,7 +83,8 @@ fun ContentBooks(
                     navigateToDetailMascota = navigateToDetailMascota
                 )
             }
-        }
+        },
+        contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_12))
     )
 }
 
@@ -97,13 +98,13 @@ fun BookCard(
     Card(
         modifier = Modifier
             .padding(
-                top = dimensionResource(id = R.dimen.padding_3),
+                top = dimensionResource(id = R.dimen.padding_8),
                 start = dimensionResource(id = R.dimen.padding_8),
                 end = dimensionResource(id = R.dimen.padding_8),
-                bottom = dimensionResource(id = R.dimen.padding_6)
+                bottom = dimensionResource(id = R.dimen.padding_8)
             )
             .fillMaxWidth()
-            .height(250.dp),
+            .height(170.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = 4.dp,
         onClick = { navigateToDetailMascota(mascota.id) }
@@ -118,12 +119,13 @@ fun BookCard(
                 top.linkTo(parent.top)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-                width = Dimension.value(0.dp)
-                height = Dimension.value(250.dp)
+                bottom.linkTo(parent.bottom)
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
             }
             constrain(columnTFls) {
-                start.linkTo(parent.start, margin = 4.dp)
-                end.linkTo(parent.end, margin = 4.dp)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
                 bottom.linkTo(parent.bottom)
                 width = Dimension.fillToConstraints
             }
@@ -134,31 +136,30 @@ fun BookCard(
         }
 
         ConstraintLayout(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Gray),
+            modifier = Modifier.fillMaxSize(),
             constraintSet = constraints
         ) {
-
-//            val (imgBook, columnTFls, btnDelete) = createRefs()
-
             ImageContainer(
                 content = { bookImage(mascota) },
                 modifier = Modifier.layoutId("imgBook")
             )
-            Column(
+            Text(
+                text = mascota.animal,
                 modifier = Modifier
-                    .layoutId("columnTFls")
-            ) {
-                Text(
-                    text = mascota.animal,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = mascota.raza,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                SecondaryDarkColor.copy(alpha = 0.0f),
+                                SecondaryDarkColor.copy(alpha = 0.5f),
+                                SecondaryDarkColor.copy(alpha = 0.7f)
+                            )
+                        )
+                    )
+                    .padding(dimensionResource(id = R.dimen.padding_6))
+                    .layoutId("columnTFls"),
+                style = MaterialTheme.typography.caption,
+                color = Color.White
+            )
             DeleteIcon(
                 deleteMascota = deleteMascota,
                 modifier = Modifier
