@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -29,6 +28,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ImageContainer
+import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.setCoilImagePainter
@@ -52,14 +52,21 @@ fun BooksHomeScreen(
             .background(GrayBg),
         contentAlignment = Alignment.Center
     ) {
-
-        ContentBooks(
-            books = books,
-            deleteBook = { book ->
-                viewModel.deleteBook(book)
-            },
-            navigateToDetailBook = navigateToDetailMascota
-        )
+        if (books.isNotEmpty()) {
+            ContentBooks(
+                books = books,
+                deleteBook = { book ->
+                    viewModel.deleteBook(book)
+                },
+                navigateToDetailBook = navigateToDetailMascota
+            )
+        } else {
+            ShowLottie(
+                lottie = R.raw.empty,
+                text = "Agrega un libro",
+                showText = true
+            )
+        }
     }
 
 }
