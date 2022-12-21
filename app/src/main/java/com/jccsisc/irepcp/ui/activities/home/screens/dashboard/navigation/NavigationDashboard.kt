@@ -42,19 +42,8 @@ fun NavigationDashboard(
          * */
         composable(HomeScreen.drawerItem.route) {
             BooksHomeScreen(navigateToDetailMascota = { mascotaId ->
-                navController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
+                principalNavController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
             })
-        }
-        composable(
-            route = "${DetailMascotaScreen.drawerItem.route}/{$MASCOTA_ID}",
-            arguments = listOf(navArgument(MASCOTA_ID) { type = NavType.IntType })
-        ) { backStackEntry ->
-            val mascotaId = backStackEntry.arguments?.getInt(MASCOTA_ID) ?: 0
-            BooksDetailScreen(
-                mascotaId = mascotaId
-            ) {
-                navController.popBackStack()
-            }
         }
         composable(FavoritesScreen.drawerItem.route) { FavoritesScreen(navController) }
         composable("${DetailsFavoritesScreen.drawerItem.route}/{$PRODUCT}") { backStackEntry ->
@@ -80,19 +69,19 @@ fun NavigationDashboard(
             )
         }
         composable(CanvasScreen.drawerItem.route) { CanvasScreen() }
-        itemChildDrawerGraph(navController)
+        itemChildDrawerGraph(principalNavController)
 
     }
 }
 
-fun NavGraphBuilder.itemChildDrawerGraph(navController: NavHostController) {
+fun NavGraphBuilder.itemChildDrawerGraph(principalNavController: NavHostController) {
     navigation(
         startDestination = BooksHomeScreen.drawerChildItem.route,
         route = BOOKS_GRAPH
     ) {
         composable(BooksHomeScreen.drawerChildItem.route) {
             BooksHomeScreen(navigateToDetailMascota = { mascotaId ->
-                navController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
+                principalNavController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
             })
         }
         composable(BooksFavoritesScreen.drawerChildItem.route) {

@@ -6,9 +6,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.jccsisc.irepcp.core.constants.Constants
 import com.jccsisc.irepcp.core.constants.Constants.DASHBOARD_CONTENT_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.ROOT_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.TASK_ID
+import com.jccsisc.irepcp.ui.activities.home.screens.books.detail.BooksDetailScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.dashboardContentGraph
 import com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.rickAndMortyGraph
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.ui.AddOrModifyTaskScreen
@@ -29,6 +32,17 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
     ) {
         //loginGraph(navController, loginViewModel)
         dashboardContentGraph(navController)
+        composable(
+            route = "${ScreensDashboard.DetailMascotaScreen.drawerItem.route}/{${Constants.MASCOTA_ID}}",
+            arguments = listOf(navArgument(Constants.MASCOTA_ID) { type = NavType.IntType })
+        ) { backStackEntry ->
+            val mascotaId = backStackEntry.arguments?.getInt(Constants.MASCOTA_ID) ?: 0
+            BooksDetailScreen(
+                mascotaId = mascotaId
+            ) {
+                navController.popBackStack()
+            }
+        }
         rickAndMortyGraph(navController)
         composable(
             route = "${Screens.AddOrModifyTaskScreen.route}/{${TASK_ID}}",
