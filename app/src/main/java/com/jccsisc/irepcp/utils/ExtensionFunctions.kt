@@ -15,8 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.size.Size
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
@@ -34,7 +39,7 @@ import java.util.*
 
 
 /**
- * -------------------- Componentes Composable
+ * -------------------- Componentes y funciones Composable
  *****************************************--------------------------------------------------------*/
 @Composable
 fun SpacerApp(size: Int) {
@@ -51,6 +56,17 @@ fun SetNavbarColor(color: Color, useDarkIcons: Boolean = true) {
         systemUiController.setSystemBarsColor(color = color, darkIcons = useDarkIcons)
     }
 }
+
+/**
+ * Leemos una imagen con Coil
+ * */
+@Composable
+fun setCoilImagePainter(image: String?): AsyncImagePainter = rememberAsyncImagePainter(
+    model = ImageRequest.Builder(LocalContext.current)
+        .data(image)
+        .size(Size.ORIGINAL)
+        .build()
+)
 
 
 /**
@@ -85,10 +101,10 @@ fun Long.timeMillisToFormatDate(): String = DateFormat.getInstance().format(Date
  * */
 fun Long.lastModifiedTime(): String {
     val ctx: Context = IREPApp.INSTANCE
-    val nowDate =  System.currentTimeMillis()
+    val nowDate = System.currentTimeMillis()
     val lastDate = this
 
-    val seconds = ( nowDate - lastDate ) / 1000
+    val seconds = (nowDate - lastDate) / 1000
     val minutes = seconds / 60
     val hours = minutes / 60
     val days = hours / 24
@@ -149,7 +165,11 @@ const val WHITE_COLOR_TEXT = 0
 const val BLACK_COLOR_TEXT = 1
 const val BLACK_TEXT_COLOR_NAV_BAR = SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 const val WHITE_TEXT_COLOR_NAV_BAR = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-fun Activity.setColorNavBar(colorStatusBar: Int, fullScreen: Boolean = false, colorTextWhiteBlack: Int = 0) {
+fun Activity.setColorNavBar(
+    colorStatusBar: Int,
+    fullScreen: Boolean = false,
+    colorTextWhiteBlack: Int = 0
+) {
     this.apply {
         window.apply {
             when (colorStatusBar) {
@@ -189,7 +209,7 @@ fun Activity.setColorNavBar(colorStatusBar: Int, fullScreen: Boolean = false, co
                             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                             statusBarColor = setColor(context, colorStatusBar)
                         } else {
-                            when(colorTextWhiteBlack) {
+                            when (colorTextWhiteBlack) {
                                 WHITE_COLOR_TEXT -> {
                                     //texto blanco
                                     clearFlags(FLAG_FULLSCREEN)

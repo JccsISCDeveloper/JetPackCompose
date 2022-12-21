@@ -3,7 +3,6 @@ package com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.ui.detail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EmojiPeople
@@ -16,21 +15,19 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Size
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ImageContainer
 import com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.domain.model.personaje.Personaje
 import com.jccsisc.irepcp.ui.theme.GrayBg
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.ui.theme.PrimaryLight
 import com.jccsisc.irepcp.utils.components.loadings.SimpleCircularProgressDialog
+import com.jccsisc.irepcp.utils.setCoilImagePainter
 import kotlinx.coroutines.flow.collectLatest
 
 /**
@@ -133,14 +130,8 @@ fun HeaderDetail(
 fun ImagePersonaje(image: String?) {
     ImageContainer(modifier = Modifier.size(130.dp)) {
         Box {
-            val painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(image)
-                    .size(Size.ORIGINAL)
-                    .build()
-            )
             Image(
-                painter = painter,
+                painter = setCoilImagePainter(image),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()
@@ -149,6 +140,7 @@ fun ImagePersonaje(image: String?) {
     }
 }
 
+/*
 @Composable
 fun ImageContainer(
     modifier: Modifier,
@@ -158,6 +150,7 @@ fun ImageContainer(
         content()
     }
 }
+*/
 
 @Composable
 fun BodyDetail(personaje: Personaje?) {
