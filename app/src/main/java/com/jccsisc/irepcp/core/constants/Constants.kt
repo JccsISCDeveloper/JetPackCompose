@@ -65,7 +65,7 @@ object Constants {
      * Argumentos
      * */
     const val PRODUCT = "producto"
-    const val MASCOTA_ID = "mascotaId"
+    const val BOOK_ID = "bookId"
     const val TASK_ID = "taskId"
     const val ID = "id"
 

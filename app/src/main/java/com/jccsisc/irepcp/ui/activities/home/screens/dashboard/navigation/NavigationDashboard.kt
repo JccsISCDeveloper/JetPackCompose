@@ -1,16 +1,16 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.*
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.jccsisc.irepcp.core.constants.Constants
 import com.jccsisc.irepcp.core.constants.Constants.BOOKS_GRAPH
-import com.jccsisc.irepcp.core.constants.Constants.MASCOTA_ID
 import com.jccsisc.irepcp.core.constants.Constants.PRODUCT
 import com.jccsisc.irepcp.ui.activities.home.navigation.Screens
-import com.jccsisc.irepcp.ui.activities.home.screens.books.detail.BooksDetailScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.books.favorites.BooksFavoritesScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksHomeScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.books.readbooks.BooksReadScreen
@@ -41,8 +41,8 @@ fun NavigationDashboard(
          * BorromBar
          * */
         composable(HomeScreen.drawerItem.route) {
-            BooksHomeScreen(navigateToDetailMascota = { mascotaId ->
-                principalNavController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
+            BooksHomeScreen(navigateToDetailMascota = { bookId ->
+                principalNavController.navigate("${Screens.DetailBookScreen.route}/${bookId}")
             })
         }
         composable(FavoritesScreen.drawerItem.route) { FavoritesScreen(navController) }
@@ -80,8 +80,8 @@ fun NavGraphBuilder.itemChildDrawerGraph(principalNavController: NavHostControll
         route = BOOKS_GRAPH
     ) {
         composable(BooksHomeScreen.drawerChildItem.route) {
-            BooksHomeScreen(navigateToDetailMascota = { mascotaId ->
-                principalNavController.navigate("${DetailMascotaScreen.drawerItem.route}/${mascotaId}")
+            BooksHomeScreen(navigateToDetailMascota = { bookId ->
+                principalNavController.navigate("${Screens.DetailBookScreen.route}/${bookId}")
             })
         }
         composable(BooksFavoritesScreen.drawerChildItem.route) {

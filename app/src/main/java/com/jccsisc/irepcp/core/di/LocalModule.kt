@@ -2,13 +2,13 @@ package com.jccsisc.irepcp.core.di
 
 import android.content.Context
 import androidx.room.Room
-import com.jccsisc.irepcp.core.constants.ConstantsRoom.DB_MASCOTAS
+import com.jccsisc.irepcp.core.constants.ConstantsRoom.DB_BOOKS
 import com.jccsisc.irepcp.core.constants.ConstantsRoom.DB_TASKS
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.MascotaDB
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.MascotaDao
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.MascotaRepositoryImpl
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.MascotaRepository
-import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.DataBaseBuilder.TASKS_MIGRATION_2_3
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.BookRepositoryImpl
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.BooksDB
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.BooksDao
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.BooksRepository
+import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.TasksDataBaseBuilder.TASKS_MIGRATION_2_3
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.TaskDao
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.TasksDB
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.TasksRepository
@@ -29,18 +29,18 @@ import dagger.hilt.components.SingletonComponent
 class LocalModule {
 
     /**
-     * DB MASCOTAS
+     * DB BOOKS
      * */
     @Provides
-    fun provideMascotaDB(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, MascotaDB::class.java, DB_MASCOTAS).build()
+    fun provideBooksDB(@ApplicationContext context: Context) =
+        Room.databaseBuilder(context, BooksDB::class.java, DB_BOOKS).build()
 
     @Provides
-    fun provideMascotaDao(mascotaDB: MascotaDB) = mascotaDB.mascotaDao()
+    fun provideBooksDao(booksDB: BooksDB) = booksDB.booksDao()
 
     @Provides
-    fun provideMascotaRepository(mascotaDao: MascotaDao): MascotaRepository =
-        MascotaRepositoryImpl(mascotaDao = mascotaDao)
+    fun provideBooksRepository(booksDao: BooksDao): BooksRepository =
+        BookRepositoryImpl(booksDao = booksDao)
 
 
     /**

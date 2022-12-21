@@ -5,9 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.MascotaRepository
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.BooksRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,37 +18,35 @@ import javax.inject.Inject
  * Created by Julio Cesar Camacho Silva on 01/12/22
  */
 @HiltViewModel
-class BooksViewModel @Inject constructor(private val repo: MascotaRepository) : ViewModel() {
-    val mascotas = repo.getMascotasFromRoom()
-    var mascota by mutableStateOf(Mascota(0, NO_VALUE, NO_VALUE))
+class BooksViewModel @Inject constructor(private val repo: BooksRepository) : ViewModel() {
+    val mascotas = repo.getBooksFromRoom()
+    var book by mutableStateOf(Book())
 
-    fun addMascota(mascota: Mascota) = viewModelScope.launch(Dispatchers.IO) {
-        repo.addMascotaToRoom(mascota)
+    fun addBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
+        repo.addBookToRoom(book)
     }
 
-    fun getMascota(id: Int) = viewModelScope.launch(Dispatchers.IO) {
-        mascota = repo.getMascotaFromRoom(id)
+    fun getBook(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        book = repo.getBookFromRoom(id)
     }
 
-    fun updateAnimal(animal: String) {
-        mascota = mascota.copy(
-            animal = animal
-        )
+    fun updateImage(image: String) {
+        book = book.copy(image = image)
     }
-    fun updateRaza(raza: String) {
-        mascota = mascota.copy(
-            raza = raza
-        )
+    fun selectedRead(read: Boolean) {
+        book = book.copy(read = read)
     }
-    fun updateMascota(mascota: Mascota) = viewModelScope.launch(Dispatchers.IO) {
-        repo.updateMascotaFromRoom(mascota)
+    fun selectedFavorite(favorite: Boolean) {
+        book = book.copy(favorite = favorite)
     }
 
+    fun updateBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
+        repo.updateBookFromRoom(book)
+    }
 
-    fun deleteMascota(mascota: Mascota) {
+    fun deleteBook(book: Book) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.deleteMascotaFromRoom(mascota)
+            repo.deleteBookFromRoom(book)
         }
     }
-
 }

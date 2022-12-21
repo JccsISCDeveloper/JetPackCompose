@@ -36,9 +36,6 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
     object HomeScreen :
         ScreensDashboard(DrawerItem(HOME_SCREEN, "Home", R.drawable.ic_home))
 
-    object DetailMascotaScreen :
-        ScreensDashboard(DrawerItem(DETAIL_MASCOTA_SCREEN, "Detalle mascota"))
-
     object FavoritesScreen :
         ScreensDashboard(DrawerItem(FAVORITES_SCREEN, "Favoritos", R.drawable.ic_favorites))
 

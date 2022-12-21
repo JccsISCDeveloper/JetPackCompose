@@ -11,7 +11,7 @@ import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_TASK
  * FROM: com.jccsisc.irepcp.ui.screens.todomodule.addtasks.data.local
  * Created by Julio Cesar Camacho Silva on 09/12/22
  */
-object DataBaseBuilder {
+object TasksDataBaseBuilder {
 
     val TASKS_MIGRATION_1_2 = object : Migration(1, 2) {
         override fun migrate(database: SupportSQLiteDatabase) {

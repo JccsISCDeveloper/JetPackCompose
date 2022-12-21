@@ -29,8 +29,9 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ImageContainer
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Mascota
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.utils.setCoilImagePainter
 
 /**
  * Project: IREPCP
@@ -54,10 +55,10 @@ fun BooksHomeScreen(
 
         ContentBooks(
             books = books,
-            deleteMascota = { mascota ->
-                viewModel.deleteMascota(mascota)
+            deleteBook = { book ->
+                viewModel.deleteBook(book)
             },
-            navigateToDetailMascota = navigateToDetailMascota
+            navigateToDetailBook = navigateToDetailMascota
         )
     }
 
@@ -65,9 +66,9 @@ fun BooksHomeScreen(
 
 @Composable
 fun ContentBooks(
-    books: List<Mascota>,
-    deleteMascota: (mascota: Mascota) -> Unit,
-    navigateToDetailMascota: (mascotaId: Int) -> Unit
+    books: List<Book>,
+    deleteBook: (book: Book) -> Unit,
+    navigateToDetailBook: (bookdId: Int) -> Unit
 ) {
 
 
@@ -76,11 +77,11 @@ fun ContentBooks(
         modifier = Modifier
             .fillMaxSize(),
         content = {
-            items(books) { mascota ->
+            items(books) { book ->
                 BookCard(
-                    mascota = mascota,
-                    deleteMascota = { deleteMascota(mascota) },
-                    navigateToDetailMascota = navigateToDetailMascota
+                    book = book,
+                    deleteBook = { deleteBook(book) },
+                    navigateToDetailBook = navigateToDetailBook
                 )
             }
         },
@@ -91,9 +92,9 @@ fun ContentBooks(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BookCard(
-    mascota: Mascota,
-    deleteMascota: () -> Unit,
-    navigateToDetailMascota: (idMascota: Int) -> Unit
+    book: Book,
+    deleteBook: () -> Unit,
+    navigateToDetailBook: (bookId: Int) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -107,12 +108,12 @@ fun BookCard(
             .height(170.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = 4.dp,
-        onClick = { navigateToDetailMascota(mascota.id) }
+        onClick = { navigateToDetailBook(book.id) }
     ) {
 
         val constraints = ConstraintSet {
             val imgBook = createRefFor("imgBook")
-            val columnTFls = createRefFor("columnTFls")
+            val tfRead = createRefFor("tfRead")
             val btnDelete = createRefFor("btnDelete")
 
             constrain(imgBook) {
@@ -123,7 +124,7 @@ fun BookCard(
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
             }
-            constrain(columnTFls) {
+            constrain(tfRead) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
                 bottom.linkTo(parent.bottom)
@@ -140,28 +141,28 @@ fun BookCard(
             constraintSet = constraints
         ) {
             ImageContainer(
-                content = { bookImage(mascota) },
+                content = { bookImage(book) },
                 modifier = Modifier.layoutId("imgBook")
             )
             Text(
-                text = mascota.animal,
+                text = if (book.read) "Lerído" else "Por leer",
                 modifier = Modifier
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
-                                SecondaryDarkColor.copy(alpha = 0.0f),
-                                SecondaryDarkColor.copy(alpha = 0.5f),
-                                SecondaryDarkColor.copy(alpha = 0.7f)
+                                PrimaryDarkColor.copy(alpha = 0.0f),
+                                PrimaryDarkColor.copy(alpha = 0.5f),
+                                PrimaryDarkColor.copy(alpha = 0.7f)
                             )
                         )
                     )
                     .padding(dimensionResource(id = R.dimen.padding_6))
-                    .layoutId("columnTFls"),
+                    .layoutId("tfRead"),
                 style = MaterialTheme.typography.caption,
                 color = Color.White
             )
             DeleteIcon(
-                deleteMascota = deleteMascota,
+                deleteMascota = deleteBook,
                 modifier = Modifier
                     .size(28.dp)
                     .clip(RoundedCornerShape(bottomStart = 8.dp))
@@ -175,11 +176,11 @@ fun BookCard(
 
 @Composable
 fun bookImage(
-    mascota: Mascota
+    book: Book
 ) {
     Box {
         Image(
-            painter = painterResource(id = R.drawable.tiende_tu_cama),
+            painter = setCoilImagePainter(image = book.image),
             contentDescription = null,
             contentScale = ContentScale.Crop
         )

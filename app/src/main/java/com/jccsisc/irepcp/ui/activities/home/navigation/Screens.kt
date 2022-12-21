@@ -1,6 +1,7 @@
 package com.jccsisc.irepcp.ui.activities.home.navigation
 
 import com.jccsisc.irepcp.core.constants.Constants.ADD_OR_MODIFY_TASK_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.DETAIL_MASCOTA_SCREEN
 
 /**
  * Project: IREPCP
@@ -14,4 +15,9 @@ sealed class Screens(val route: String) {
      * */
     object AddOrModifyTaskScreen : Screens(ADD_OR_MODIFY_TASK_SCREEN)
 
+
+    /**
+     * Books module
+     * */
+    object DetailBookScreen : Screens(DETAIL_MASCOTA_SCREEN)
 }
