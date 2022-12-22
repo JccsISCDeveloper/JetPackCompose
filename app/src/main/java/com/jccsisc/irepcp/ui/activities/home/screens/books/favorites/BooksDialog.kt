@@ -45,6 +45,7 @@ fun BooksDialog(
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var bitmap = remember { mutableStateOf<Bitmap?>(null) }
 
+
     var imageBook by remember { mutableStateOf(Constants.NO_VALUE) }
     var favoriteBook by remember { mutableStateOf(false) }
 
@@ -52,6 +53,18 @@ fun BooksDialog(
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             imageUri = uri
         }
+
+
+    imageUri?.let {
+        if (Build.VERSION.SDK_INT < 28) {
+            bitmap.value =
+                MediaStore.Images.Media.getBitmap(IREPApp.INSTANCE.contentResolver, it)
+        } else {
+            val source = ImageDecoder.createSource(IREPApp.INSTANCE.contentResolver, it)
+            bitmap.value = ImageDecoder.decodeBitmap(source)
+        }
+    }
+
 
     Dialog(
         onDismissRequest = { },
@@ -69,17 +82,6 @@ fun BooksDialog(
             ) {
                 Text(text = "Agregar libro", style = MaterialTheme.typography.h5)
                 Spacer(modifier = Modifier.height(14.dp))
-
-                imageUri?.let {
-                    if (Build.VERSION.SDK_INT < 28) {
-                        bitmap.value =
-                            MediaStore.Images.Media.getBitmap(IREPApp.INSTANCE.contentResolver, it)
-                    } else {
-                        val source = ImageDecoder.createSource(IREPApp.INSTANCE.contentResolver, it)
-                        bitmap.value = ImageDecoder.decodeBitmap(source)
-                    }
-                }
-
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(6.dp))
