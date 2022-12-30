@@ -33,6 +33,7 @@ import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.utils.deleteImage
 
 /**
  * Project: IREPCP
@@ -57,7 +58,8 @@ fun BooksHomeScreen(
             ContentBooks(
                 books = books,
                 deleteBook = { book ->
-                    viewModel.deleteBook(book)
+                    //viewModel.deleteBook(book)
+                    deleteImage(filename = book.image)
                 },
                 navigateToDetailBook = navigateToDetailMascota
             )

@@ -11,15 +11,10 @@ import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN
 import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import android.widget.Toast
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -33,7 +28,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
 import java.io.File
-import java.lang.Exception
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -120,6 +114,17 @@ fun saveImage(
 
     if (file.exists()) {
         uriLmb(Uri.fromFile(file))
+    }
+}
+
+fun deleteImage(
+    outputDirectory: File = getOutputDirectory(IREPApp.INSTANCE),
+    filename: String
+) {
+    val file = File(outputDirectory, filename)
+    if (file.exists()) {
+        file.delete()
+        Log.i("file", "$filename eliminado $file")
     }
 }
 
