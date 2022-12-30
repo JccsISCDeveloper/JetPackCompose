@@ -1,8 +1,11 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_BOOKS
+import javax.annotation.Nonnull
 
 /**
  * Project: IREPCP
@@ -12,8 +15,9 @@ import com.jccsisc.irepcp.core.constants.ConstantsRoom.TBL_BOOKS
 @Entity(tableName = TBL_BOOKS)
 data class Book(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = -1,
-    val image: String = "",
-    val read: Boolean = false,
-    val favorite: Boolean = false
+    @ColumnInfo(name = "id") val id: Long = -1,
+    @ColumnInfo(name = "image") @Nonnull var image: String = "",
+    @ColumnInfo(name = "read") var read: Boolean = false,
+    @ColumnInfo(name = "favorite") var favorite: Boolean = false,
+    @ColumnInfo(name = "image_name") @Nonnull var imageName: String = ""
 )

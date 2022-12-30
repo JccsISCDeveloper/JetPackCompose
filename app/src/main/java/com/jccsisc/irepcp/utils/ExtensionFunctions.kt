@@ -107,13 +107,13 @@ fun saveImage(
     context: Context,
     file: File,
     uri: Uri,
-    uriLmb: (Uri) -> Unit
+    uriLmb: (Uri, String) -> Unit,
 ) {
     val bytes = context.contentResolver.openInputStream(uri)?.readBytes()!!
     file.writeBytes(bytes)
 
     if (file.exists()) {
-        uriLmb(Uri.fromFile(file))
+        uriLmb(Uri.fromFile(file), file.name)
     }
 }
 
@@ -124,7 +124,7 @@ fun deleteImage(
     val file = File(outputDirectory, filename)
     if (file.exists()) {
         file.delete()
-        Log.i("file", "$filename eliminado $file")
+        Log.i("file", " $file eliminado...")
     }
 }
 

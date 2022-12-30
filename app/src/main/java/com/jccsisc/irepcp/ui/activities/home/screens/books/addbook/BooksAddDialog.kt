@@ -182,8 +182,8 @@ fun BooksDialog(
 
                             val photo = getPhotoFile(outputDirectory = outputDirectory)
                             imageUri?.let {
-                                saveImage(ctx, photo, it) { uri ->
-                                    val book = Book(0, uri.toString(), false, favorite = favoriteBook)
+                                saveImage(ctx, photo, it) { uri, fileName ->
+                                    val book = Book(0, uri.toString(), false, favoriteBook, fileName)
                                     addBook(book)
                                 }
                             }

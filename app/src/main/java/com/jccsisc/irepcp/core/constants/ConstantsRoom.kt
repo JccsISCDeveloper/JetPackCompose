@@ -11,7 +11,7 @@ object ConstantsRoom {
      * DB ROOM DB_BOOKS
      * */
     const val DB_BOOKS = "DB_BOOKS"
-    const val DB_BOOKS_VERSION = 2
+    const val DB_BOOKS_VERSION = 3
     /**
      * TABLES DB_BOOKS
      * */

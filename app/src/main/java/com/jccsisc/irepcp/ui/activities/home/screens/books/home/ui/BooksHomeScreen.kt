@@ -43,7 +43,7 @@ import com.jccsisc.irepcp.utils.deleteImage
 @Composable
 fun BooksHomeScreen(
     viewModel: BooksViewModel = hiltViewModel(),
-    navigateToDetailMascota: (mascotaId: Int) -> Unit
+    navigateToDetailMascota: (mascotaId: Long) -> Unit
 ) {
 
     val books by viewModel.mascotas.collectAsState(initial = emptyList())
@@ -58,8 +58,8 @@ fun BooksHomeScreen(
             ContentBooks(
                 books = books,
                 deleteBook = { book ->
-                    //viewModel.deleteBook(book)
-                    deleteImage(filename = book.image)
+                    viewModel.deleteBook(book)
+                    deleteImage(filename = book.imageName)
                 },
                 navigateToDetailBook = navigateToDetailMascota
             )
@@ -78,7 +78,7 @@ fun BooksHomeScreen(
 fun ContentBooks(
     books: List<Book>,
     deleteBook: (book: Book) -> Unit,
-    navigateToDetailBook: (bookdId: Int) -> Unit
+    navigateToDetailBook: (bookdId: Long) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -102,7 +102,7 @@ fun ContentBooks(
 fun BookCard(
     book: Book,
     deleteBook: () -> Unit,
-    navigateToDetailBook: (bookId: Int) -> Unit
+    navigateToDetailBook: (bookId: Long) -> Unit
 ) {
     Card(
         modifier = Modifier

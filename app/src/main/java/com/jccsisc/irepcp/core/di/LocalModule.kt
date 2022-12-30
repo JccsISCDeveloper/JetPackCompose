@@ -7,6 +7,7 @@ import com.jccsisc.irepcp.core.constants.ConstantsRoom.DB_TASKS
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.BookRepositoryImpl
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.BooksDB
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.BooksDao
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.data.local.BooksDataBaseBuilder.BOOKS_MIGRATION_2_3
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.BooksRepository
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.TasksDataBaseBuilder.TASKS_MIGRATION_2_3
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.data.local.TaskDao
@@ -33,7 +34,9 @@ class LocalModule {
      * */
     @Provides
     fun provideBooksDB(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, BooksDB::class.java, DB_BOOKS).build()
+        Room.databaseBuilder(context, BooksDB::class.java, DB_BOOKS)
+            .addMigrations(BOOKS_MIGRATION_2_3)
+            .build()
 
     @Provides
     fun provideBooksDao(booksDB: BooksDB) = booksDB.booksDao()
