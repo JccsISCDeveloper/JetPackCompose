@@ -12,6 +12,10 @@
 
 
     <!--Books module-->
+    <string name="cancel">Cancelar</string>
+    <string name="add">Agregar</string>
+    <string name="add_book">Agregar libro</string>
+    <string name="add_an_image">Agrega una imagen</string>
     <string name="to_read">Por leer</string>
     <string name="read">Leído</string>
     <string name="reading">Leyendo…</string>
