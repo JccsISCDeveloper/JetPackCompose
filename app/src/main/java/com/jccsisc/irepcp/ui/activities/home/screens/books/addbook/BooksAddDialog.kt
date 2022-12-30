@@ -1,12 +1,9 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.books.addbook
 
 import android.Manifest
-import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -20,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -34,8 +30,7 @@ import com.jccsisc.irepcp.core.constants.Constants
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.Gray50
-import com.jccsisc.irepcp.ui.theme.GrayBg
-import com.jccsisc.irepcp.ui.theme.PrimaryLight
+import com.jccsisc.irepcp.ui.theme.PrimaryLight2
 import com.jccsisc.irepcp.utils.*
 import com.jccsisc.irepcp.utils.GlobalData.askPermissions
 import com.jccsisc.irepcp.utils.GlobalData.showCameraView
@@ -132,7 +127,7 @@ fun BooksDialog(
                         Icon(
                             painter = painterResource(id = R.drawable.ic_fsborite_tgl),
                             contentDescription = null,
-                            tint = if (favoriteBook) PrimaryLight else GrayBg
+                            tint = if (favoriteBook) PrimaryLight2 else Color.Gray
                         )
                     }
                     Text(
@@ -206,13 +201,6 @@ fun BooksDialog(
 
     outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
 }
-
-/*
-fun getRealpathFromUri(uri: Uri?): String {
-    var result: String = ""
-    var cursor: Cursor
-}
-*/
 
 private fun getPermissionsCamera(): List<String> = if (Build.VERSION.SDK_INT <= 28) {
     listOf(

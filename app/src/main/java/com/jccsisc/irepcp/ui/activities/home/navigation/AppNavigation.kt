@@ -48,7 +48,7 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
             }
         }
         composable(Screens.BookCameraScreen.route) {
-            BookCameraScreen {
+            BookCameraScreen() {
                 navController.popBackStack()
             }
         }

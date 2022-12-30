@@ -128,6 +128,13 @@ fun deleteImage(
     }
 }
 
+fun deleteImagesNotRegisteredInDB(
+    outputDirectory: File = getOutputDirectory(IREPApp.INSTANCE),
+    filename: String
+) {
+
+}
+
 /**
  * -------------------- Extesion functions
  *****************************************--------------------------------------------------------*/

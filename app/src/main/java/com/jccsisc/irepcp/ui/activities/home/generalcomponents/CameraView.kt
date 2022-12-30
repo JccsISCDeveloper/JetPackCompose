@@ -90,11 +90,12 @@ fun CameraView(
                 .padding(dimensionResource(id = R.dimen.padding_12))
                 .align(Alignment.TopStart)
                 .clip(CircleShape)
-                .background(GrayBg.copy(alpha = 0.6f))
+                .background(GrayBg.copy(alpha = 0.4f))
         ) {
             Icon(
                 imageVector = Icons.Sharp.ArrowBack,
-                contentDescription = null
+                contentDescription = null,
+                tint = Color.White
             )
         }
         IconButton(

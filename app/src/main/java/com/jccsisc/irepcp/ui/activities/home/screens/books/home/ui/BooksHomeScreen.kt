@@ -2,6 +2,7 @@
 
 package com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -29,11 +30,15 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.core.di.MySingletonClass
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.deleteImage
+import com.jccsisc.irepcp.utils.getOutputDirectory
+import java.io.File
 
 /**
  * Project: IREPCP
@@ -55,6 +60,20 @@ fun BooksHomeScreen(
         contentAlignment = Alignment.Center
     ) {
         if (books.isNotEmpty()) {
+
+           /* val outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
+            Log.i("files", "${outputDirectory.list()}")
+
+            books.forEach {
+                val list = outputDirectory.list()?.filter { file ->
+                    file != it.imageName
+                }
+                Log.i("lista", "$list")
+                list?.forEach {
+                    deleteImage(filename = it)
+                }
+            }*/
+
             ContentBooks(
                 books = books,
                 deleteBook = { book ->

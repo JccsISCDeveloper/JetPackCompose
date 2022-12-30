@@ -4,6 +4,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -41,8 +42,8 @@ fun MyTopAppbar(
 
     var dateTitle by remember { mutableStateOf("Fecha") }
     var prioridyTitle by remember { mutableStateOf("Prioridad") }
-    var clickDate by remember { mutableStateOf(true) }
-    var clickPriority by remember { mutableStateOf(true) }
+    var clickDate by rememberSaveable { mutableStateOf(true) }
+    var clickPriority by rememberSaveable { mutableStateOf(true) }
     var myTitle = stringResource(id = R.string.app_name)
 
     itemsDrawer.forEach { item ->
