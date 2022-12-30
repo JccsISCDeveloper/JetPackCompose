@@ -10,6 +10,7 @@ import com.jccsisc.irepcp.core.constants.Constants
 import com.jccsisc.irepcp.core.constants.Constants.DASHBOARD_CONTENT_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.ROOT_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.TASK_ID
+import com.jccsisc.irepcp.ui.activities.home.screens.books.addbook.BookCameraScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.books.detail.BooksDetailScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.dashboardContentGraph
 import com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.rickAndMortyGraph
@@ -30,7 +31,13 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
         route = ROOT_GRAPH
     ) {
         //loginGraph(navController, loginViewModel)
+        /**
+         * For Module Login
+         * */
         dashboardContentGraph(navController)
+        /**
+         * For Module Books
+         * */
         composable(
             route = "${Screens.DetailBookScreen.route}/{${Constants.BOOK_ID}}",
             arguments = listOf(navArgument(Constants.BOOK_ID) { type = NavType.IntType })
@@ -40,7 +47,18 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
                 navController.popBackStack()
             }
         }
+        composable(Screens.BookCameraScreen.route) {
+            BookCameraScreen {
+                navController.popBackStack()
+            }
+        }
+        /**
+         * For Module Rick And Morty
+         * */
         rickAndMortyGraph(navController)
+        /**
+         * For Module Tasks
+         * */
         composable(
             route = "${Screens.AddOrModifyTaskScreen.route}/{${TASK_ID}}",
             arguments = listOf(navArgument(TASK_ID) { type = NavType.LongType })

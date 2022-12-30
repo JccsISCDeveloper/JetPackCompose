@@ -1,9 +1,13 @@
 package com.jccsisc.irepcp.ui.activities.home
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -11,9 +15,13 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.jccsisc.irepcp.ui.activities.login.ui.login.ui.LoginViewModel
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.jccsisc.irepcp.ui.activities.home.navigation.AppNavigation
+import com.jccsisc.irepcp.ui.activities.login.ui.login.ui.LoginViewModel
 import com.jccsisc.irepcp.ui.theme.IREPCPTheme
+import com.jccsisc.irepcp.utils.GlobalData.askPermissions
+import com.jccsisc.irepcp.utils.GlobalData.showCameraView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,24 +29,20 @@ class MainActivity : ComponentActivity() {
 
     private val loginViewModel: LoginViewModel by viewModels()
 
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Log.i("permiso", "Permiso aceptado")
+        } else {
+            Log.i("permiso", "Permiso rechazado")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
 
-        //Todo controlar bien el estado del navBar
-        /*   transparentNavBar = {
-               if (it) {
-                   window.setFlags(
-                       WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                       WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                   )
-               } else {
-                   window.setFlags(
-                       WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
-                       WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-                   )
-               }
-           }*/
         setContent {
             IREPCPTheme {
                 Surface(
@@ -47,6 +51,34 @@ class MainActivity : ComponentActivity() {
                 ) {
                     AppNavigation(loginViewModel)
                 }
+            }
+        }
+
+        askPermissions = {
+            requestCameraPermission()
+        }
+    }
+
+    private fun requestCameraPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                Log.i("permiso", "previamente aceptado")
+                showCameraView(true)
+            }
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.CAMERA
+            ) -> {
+                Log.i(
+                    "permiso",
+                    "Muestra dialog explicando porque debe aceptar los permisos de la camara"
+                )
+            }
+            else -> {
+                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
         }
     }

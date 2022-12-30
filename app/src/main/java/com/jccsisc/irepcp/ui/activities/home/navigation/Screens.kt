@@ -1,6 +1,7 @@
 package com.jccsisc.irepcp.ui.activities.home.navigation
 
 import com.jccsisc.irepcp.core.constants.Constants.ADD_OR_MODIFY_TASK_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.BOOKS_ADD_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.DETAIL_MASCOTA_SCREEN
 
 /**
@@ -20,4 +21,6 @@ sealed class Screens(val route: String) {
      * Books module
      * */
     object DetailBookScreen : Screens(DETAIL_MASCOTA_SCREEN)
+    object BookCameraScreen : Screens(BOOKS_ADD_SCREEN)
+
 }

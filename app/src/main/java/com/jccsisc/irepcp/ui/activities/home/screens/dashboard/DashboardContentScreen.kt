@@ -5,6 +5,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -18,7 +19,7 @@ import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.components.MyTopA
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.NavigationDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
-import com.jccsisc.irepcp.ui.activities.home.screens.books.favorites.BooksDialog
+import com.jccsisc.irepcp.ui.activities.home.screens.books.addbook.BooksDialog
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer
@@ -159,7 +160,7 @@ fun FloatActionBttn(
     onCheckBoxSelected: (selected: Boolean) -> Unit,
     addBook: (book: Book) -> Unit
 ) {
-    var showDialogData by remember { mutableStateOf(false) }
+    var showDialogData by rememberSaveable { mutableStateOf(false) }
 
 
     if (showDialogData) {
@@ -171,9 +172,11 @@ fun FloatActionBttn(
             HomeScreen.drawerItem.route, ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route -> {
                 BooksDialog(
                     showDialog = { showDialogData = it },
-                    onCheckBoxSelected = { onCheckBoxSelected(it) },
+//                    onCheckBoxSelected = { onCheckBoxSelected(it) },
                     addBook = { addBook(it) }
-                )
+                ) {
+                    principalNavController.navigate(Screens.BookCameraScreen.route)
+                }
             }
         }
     }

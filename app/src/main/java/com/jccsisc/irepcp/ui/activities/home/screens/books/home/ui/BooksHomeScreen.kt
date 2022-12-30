@@ -2,7 +2,6 @@
 
 package com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -20,18 +19,20 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ImageContainer
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.*
-import com.jccsisc.irepcp.utils.setCoilImagePainter
 
 /**
  * Project: IREPCP
@@ -77,8 +78,6 @@ fun ContentBooks(
     deleteBook: (book: Book) -> Unit,
     navigateToDetailBook: (bookdId: Int) -> Unit
 ) {
-
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -107,12 +106,12 @@ fun BookCard(
         modifier = Modifier
             .padding(
                 top = dimensionResource(id = R.dimen.padding_8),
-                start = dimensionResource(id = R.dimen.padding_8),
-                end = dimensionResource(id = R.dimen.padding_8),
+                start = dimensionResource(id = R.dimen.padding_12),
+                end = dimensionResource(id = R.dimen.padding_12),
                 bottom = dimensionResource(id = R.dimen.padding_8)
             )
             .fillMaxWidth()
-            .height(170.dp),
+            .height(190.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = 4.dp,
         onClick = { navigateToDetailBook(book.id) }
@@ -147,9 +146,16 @@ fun BookCard(
             modifier = Modifier.fillMaxSize(),
             constraintSet = constraints
         ) {
-            ImageContainer(
-                content = { bookImage(book) },
-                modifier = Modifier.layoutId("imgBook")
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(book.image)
+                    .crossfade(1000)
+                    .error(R.drawable.ic_error_image)
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier.layoutId("imgBook"),
+                placeholder = painterResource(id = R.drawable.ic_placeholde_image),
+                contentScale = ContentScale.Crop
             )
             Text(
                 text = if (book.read) "Lerído" else "Por leer",
@@ -178,19 +184,6 @@ fun BookCard(
                     .layoutId("btnDelete")
             )
         }
-    }
-}
-
-@Composable
-fun bookImage(
-    book: Book
-) {
-    Box {
-        Image(
-            painter = setCoilImagePainter(image = book.image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
     }
 }
 

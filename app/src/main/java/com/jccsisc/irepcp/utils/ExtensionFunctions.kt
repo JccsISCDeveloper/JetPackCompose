@@ -1,7 +1,9 @@
 package com.jccsisc.irepcp.utils
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -30,6 +32,7 @@ import coil.size.Size
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
+import java.io.File
 import java.lang.Exception
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -66,12 +69,16 @@ fun SetNavbarColor(color: Color, useDarkIcons: Boolean = true) {
  * Leemos una imagen con Coil
  * */
 @Composable //todo crear un data class de tipo generico
-fun setCoilImagePainter(image: String?): AsyncImagePainter = rememberAsyncImagePainter(
-    model = ImageRequest.Builder(LocalContext.current)
-        .data(image)
-        .size(Size.ORIGINAL)
-        .build()
-)
+fun setCoilImagePainter(image: String?, duration: Int = 500): AsyncImagePainter =
+    rememberAsyncImagePainter(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(image)
+            .error(R.drawable.ic_error_image)
+            .placeholder(R.drawable.ic_placeholde_image)
+            .size(Size.ORIGINAL)
+            .crossfade(duration)
+            .build()
+    )
 
 
 /**
@@ -85,6 +92,36 @@ fun setColor(context: Context, color: Int) = run {
     ContextCompat.getColor(context, color)
 }
 
+fun getOutputDirectory(ctx: Application): File {
+    val mediaDir = ctx.externalMediaDirs.firstOrNull()?.let {
+        File(it, ctx.resources.getString(R.string.app_name)).apply { mkdirs() }
+    }
+
+    return if (mediaDir != null && mediaDir.exists()) mediaDir else ctx.filesDir
+}
+
+fun getPhotoFile(
+    filenameFormat: String = "yyyy-MM-dd-HH-mm-ss-SSS",
+    outputDirectory: File,
+): File =
+    File(
+        outputDirectory,
+        SimpleDateFormat(filenameFormat, Locale.US).format(System.currentTimeMillis()) + ".jpg"
+    )
+
+fun saveImage(
+    context: Context,
+    file: File,
+    uri: Uri,
+    uriLmb: (Uri) -> Unit
+) {
+    val bytes = context.contentResolver.openInputStream(uri)?.readBytes()!!
+    file.writeBytes(bytes)
+
+    if (file.exists()) {
+        uriLmb(Uri.fromFile(file))
+    }
+}
 
 /**
  * -------------------- Extesion functions

@@ -1,5 +1,7 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.books.favorites
+package com.jccsisc.irepcp.ui.activities.home.screens.books.addbook
 
+import android.Manifest
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -9,17 +11,18 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -28,8 +31,15 @@ import androidx.compose.ui.window.DialogProperties
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants
+import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
-import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.ui.theme.Gray50
+import com.jccsisc.irepcp.ui.theme.GrayBg
+import com.jccsisc.irepcp.ui.theme.PrimaryLight
+import com.jccsisc.irepcp.utils.*
+import com.jccsisc.irepcp.utils.GlobalData.askPermissions
+import com.jccsisc.irepcp.utils.GlobalData.showCameraView
+import java.io.File
 
 /**
  * Project: IREPCP
@@ -39,32 +49,41 @@ import com.jccsisc.irepcp.ui.theme.*
 @Composable
 fun BooksDialog(
     showDialog: (Boolean) -> Unit,
-    onCheckBoxSelected: (selected: Boolean) -> Unit,
-    addBook: (book: Book) -> Unit
+//    onCheckBoxSelected: (selected: Boolean) -> Unit,
+    addBook: (book: Book) -> Unit,
+    navigateToCameraView: () -> Unit
 ) {
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
-    var bitmap = remember { mutableStateOf<Bitmap?>(null) }
 
+    val ctx = LocalContext.current
+    var outputDirectory by remember { mutableStateOf(File(NO_VALUE)) }
+    var shouldShowCamera by remember { mutableStateOf(false) }
+
+    var imageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
+    var bitmap = remember { mutableStateOf<Bitmap?>(null) }
 
     var imageBook by remember { mutableStateOf(Constants.NO_VALUE) }
     var favoriteBook by remember { mutableStateOf(false) }
 
+    var realPath by remember { mutableStateOf(NO_VALUE) }
+
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             imageUri = uri
+//            realPath = getRealpathFromUri(uri)
         }
 
-
-    imageUri?.let {
+ /*   imageUri?.let {
         if (Build.VERSION.SDK_INT < 28) {
-            bitmap.value =
-                MediaStore.Images.Media.getBitmap(IREPApp.INSTANCE.contentResolver, it)
+            bitmap.value = MediaStore.Images.Media.getBitmap(IREPApp.INSTANCE.contentResolver, it)
         } else {
             val source = ImageDecoder.createSource(IREPApp.INSTANCE.contentResolver, it)
             bitmap.value = ImageDecoder.decodeBitmap(source)
         }
-    }
+    }*/
 
+    GlobalData.getUriImageCamera = { imageCamera ->
+        imageUri = imageCamera
+    }
 
     Dialog(
         onDismissRequest = { },
@@ -89,18 +108,22 @@ fun BooksDialog(
                         .width(180.dp)
                         .height(200.dp)
                 ) {
-                    bitmap.value?.asImageBitmap()?.let {
+                    imageUri?.let { uri ->
                         Image(
-                            bitmap = it,
+                            painter = setCoilImagePainter(image = uri.toString(), 200),
                             contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .align(Alignment.Center),
                             contentScale = ContentScale.Crop
                         )
                     }
+
                     IconToggleButton(
                         checked = favoriteBook,
                         onCheckedChange = {
                             favoriteBook = it
-                            onCheckBoxSelected(favoriteBook)
+//                            onCheckBoxSelected(favoriteBook)
                         },
                         modifier = Modifier
                             .align(Alignment.TopEnd)
@@ -132,7 +155,9 @@ fun BooksDialog(
                         )
                     }
                     Spacer(modifier = Modifier.width(10.dp))
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        askPermissions()
+                    }) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_camera),
                             contentDescription = null,
@@ -154,8 +179,14 @@ fun BooksDialog(
                     OutlinedButton(
                         onClick = {
                             showDialog(false)
-                            val book = Book(0, imageBook, false, favorite = false)
-                            addBook(book)
+
+                            val photo = getPhotoFile(outputDirectory = outputDirectory)
+                            imageUri?.let {
+                                saveImage(ctx, photo, it) { uri ->
+                                    val book = Book(0, uri.toString(), false, favorite = favoriteBook)
+                                    addBook(book)
+                                }
+                            }
                         },
                         modifier = Modifier.width(140.dp)
                     ) {
@@ -165,4 +196,29 @@ fun BooksDialog(
             }
         }
     }
+
+    showCameraView = { showCameraView ->
+        shouldShowCamera = showCameraView
+        if (shouldShowCamera) {
+            navigateToCameraView()
+        }
+    }
+
+    outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
+}
+
+/*
+fun getRealpathFromUri(uri: Uri?): String {
+    var result: String = ""
+    var cursor: Cursor
+}
+*/
+
+private fun getPermissionsCamera(): List<String> = if (Build.VERSION.SDK_INT <= 28) {
+    listOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+} else {
+    listOf(Manifest.permission.CAMERA)
 }
