@@ -26,6 +26,9 @@ interface BooksDao {
     @Update
     fun updateBook(book: Book)
 
+    @Query("UPDATE $TBL_BOOKS SET favorite = :favorite WHERE id = :id")
+    fun updateFavoriteBook(id: Int, favorite: Boolean)
+
     @Delete
     fun deleteBook(book: Book)
 }

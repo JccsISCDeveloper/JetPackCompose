@@ -44,7 +44,6 @@ import java.io.File
 @Composable
 fun BooksDialog(
     showDialog: (Boolean) -> Unit,
-//    onCheckBoxSelected: (selected: Boolean) -> Unit,
     addBook: (book: Book) -> Unit,
     navigateToCameraView: () -> Unit
 ) {
@@ -54,27 +53,12 @@ fun BooksDialog(
     var shouldShowCamera by remember { mutableStateOf(false) }
 
     var imageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
-    var bitmap = remember { mutableStateOf<Bitmap?>(null) }
-
-    var imageBook by remember { mutableStateOf(Constants.NO_VALUE) }
     var favoriteBook by remember { mutableStateOf(false) }
-
-    var realPath by remember { mutableStateOf(NO_VALUE) }
 
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             imageUri = uri
-//            realPath = getRealpathFromUri(uri)
         }
-
- /*   imageUri?.let {
-        if (Build.VERSION.SDK_INT < 28) {
-            bitmap.value = MediaStore.Images.Media.getBitmap(IREPApp.INSTANCE.contentResolver, it)
-        } else {
-            val source = ImageDecoder.createSource(IREPApp.INSTANCE.contentResolver, it)
-            bitmap.value = ImageDecoder.decodeBitmap(source)
-        }
-    }*/
 
     GlobalData.getUriImageCamera = { imageCamera ->
         imageUri = imageCamera
@@ -118,7 +102,15 @@ fun BooksDialog(
                         checked = favoriteBook,
                         onCheckedChange = {
                             favoriteBook = it
-//                            onCheckBoxSelected(favoriteBook)
+                            if (favoriteBook) {
+                                showToast(
+                                    IREPApp.INSTANCE.getString(R.string.added_to_your_favorite_books)
+                                )
+                            } else {
+                                showToast(
+                                    IREPApp.INSTANCE.getString(R.string.removed_from_your_favorite_books)
+                                )
+                            }
                         },
                         modifier = Modifier
                             .align(Alignment.TopEnd)
@@ -178,7 +170,7 @@ fun BooksDialog(
                             val photo = getPhotoFile(outputDirectory = outputDirectory)
                             imageUri?.let {
                                 saveImage(ctx, photo, it) { uri, fileName ->
-                                    val book = Book(0, uri.toString(), false, favoriteBook, fileName)
+                                    val book = Book(0, uri.toString(), 0, favoriteBook, fileName)
                                     addBook(book)
                                 }
                             }
@@ -200,13 +192,4 @@ fun BooksDialog(
     }
 
     outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
-}
-
-private fun getPermissionsCamera(): List<String> = if (Build.VERSION.SDK_INT <= 28) {
-    listOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
-} else {
-    listOf(Manifest.permission.CAMERA)
 }

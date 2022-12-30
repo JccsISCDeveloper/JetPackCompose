@@ -15,9 +15,9 @@ import javax.annotation.Nonnull
 @Entity(tableName = TBL_BOOKS)
 data class Book(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") val id: Long = -1,
+    @ColumnInfo(name = "id") val id: Int = -1,
     @ColumnInfo(name = "image") @Nonnull var image: String = "",
-    @ColumnInfo(name = "read") var read: Boolean = false,
+    @ColumnInfo(name = "read") var read: Int = 0,
     @ColumnInfo(name = "favorite") var favorite: Boolean = false,
     @ColumnInfo(name = "image_name") @Nonnull var imageName: String = ""
 )

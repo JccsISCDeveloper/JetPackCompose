@@ -40,7 +40,7 @@ fun BooksDetailScreen(
                 padding = padding,
                 book = viewModel.book,
                 updateImage = { animal -> viewModel.updateImage(animal) },
-                updateRead = { raza -> viewModel.selectedRead(raza) },
+                updateRead = { read -> viewModel.selectedRead(read) },
                 updateBook = { mascota -> viewModel.updateBook(mascota) },
                 navigateBack = navigateBack
             )
@@ -53,7 +53,7 @@ fun DetailMascotaContent(
     padding: PaddingValues,
     book: Book,
     updateImage: (image: String) -> Unit,
-    updateRead: (read: Boolean) -> Unit,
+    updateRead: (read: Int) -> Unit,
     updateBook: (book: Book) -> Unit,
     navigateBack: () -> Unit
 ) {

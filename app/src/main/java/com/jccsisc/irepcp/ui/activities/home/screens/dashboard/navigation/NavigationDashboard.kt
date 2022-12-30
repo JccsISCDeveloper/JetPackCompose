@@ -41,7 +41,7 @@ fun NavigationDashboard(
          * BorromBar
          * */
         composable(HomeScreen.drawerItem.route) {
-            BooksHomeScreen(navigateToDetailMascota = { bookId ->
+            BooksHomeScreen(navigateToDetailBook = { bookId ->
                 principalNavController.navigate("${Screens.DetailBookScreen.route}/${bookId}")
             })
         }
@@ -80,7 +80,7 @@ fun NavGraphBuilder.itemChildDrawerGraph(principalNavController: NavHostControll
         route = BOOKS_GRAPH
     ) {
         composable(BooksHomeScreen.drawerChildItem.route) {
-            BooksHomeScreen(navigateToDetailMascota = { bookId ->
+            BooksHomeScreen(navigateToDetailBook = { bookId ->
                 principalNavController.navigate("${Screens.DetailBookScreen.route}/${bookId}")
             })
         }

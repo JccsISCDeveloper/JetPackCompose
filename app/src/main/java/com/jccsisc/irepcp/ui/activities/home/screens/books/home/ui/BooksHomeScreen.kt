@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -34,6 +33,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.*
@@ -48,7 +48,7 @@ import com.jccsisc.irepcp.utils.showToast
 @Composable
 fun BooksHomeScreen(
     viewModel: BooksViewModel = hiltViewModel(),
-    navigateToDetailMascota: (mascotaId: Long) -> Unit
+    navigateToDetailBook: (booId: Int) -> Unit
 ) {
 
     val books by viewModel.mascotas.collectAsState(initial = emptyList())
@@ -80,10 +80,10 @@ fun BooksHomeScreen(
                     viewModel.deleteBook(book)
                     deleteImage(filename = book.imageName)
                 },
-                onCheckBoxSelected = {
-                    viewModel.selectedFavorite(it)
+                onCheckBoxSelected = {id, favorite ->
+                    viewModel.selectedFavorite(id, favorite)
                 },
-                navigateToDetailBook = navigateToDetailMascota
+                navigateToDetailBook = navigateToDetailBook
             )
         } else {
             ShowLottie(
@@ -100,8 +100,8 @@ fun BooksHomeScreen(
 fun ContentBooks(
     books: List<Book>,
     deleteBook: (book: Book) -> Unit,
-    onCheckBoxSelected: (selected: Boolean) -> Unit,
-    navigateToDetailBook: (bookdId: Long) -> Unit
+    onCheckBoxSelected: (id: Int, selected: Boolean) -> Unit,
+    navigateToDetailBook: (bookdId: Int) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -112,9 +112,9 @@ fun ContentBooks(
                 BookCard(
                     book = book,
                     deleteBook = { deleteBook(book) },
-                    onCheckBoxSelected = {
-                        onCheckBoxSelected(it)
-                        if (it) {
+                    onCheckBoxSelected = {id, favorite ->
+                        onCheckBoxSelected(id, favorite)
+                        if (favorite) {
                             showToast(
                                 IREPApp.INSTANCE.getString(R.string.added_to_your_favorite_books)
                             )
@@ -132,13 +132,16 @@ fun ContentBooks(
     )
 }
 
+private const val STATUS_TO_READ = 0
+private const val STATUS_READING = 1
+private const val STATUS_READ = 2
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BookCard(
     book: Book,
     deleteBook: () -> Unit,
-    onCheckBoxSelected: (selected: Boolean) -> Unit,
-    navigateToDetailBook: (bookId: Long) -> Unit
+    onCheckBoxSelected: (id: Int, selected: Boolean) -> Unit,
+    navigateToDetailBook: (bookId: Int) -> Unit
 ) {
     var favoriteBook by rememberSaveable { mutableStateOf(false) }
 
@@ -219,8 +222,12 @@ fun BookCard(
                     .layoutId("contentLabel")
             ) {
                 Text(
-                    text =
-                    if (book.read) "Leído" else "Por leer",
+                    text = when (book.read) {
+                        STATUS_TO_READ -> stringResource(id = R.string.to_read)
+                        STATUS_READING -> stringResource(id = R.string.reading)
+                        STATUS_READ -> stringResource(id = R.string.read)
+                        else -> { NO_VALUE }
+                    },
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .padding(
@@ -228,7 +235,12 @@ fun BookCard(
                             bottom = dimensionResource(id = R.dimen.padding_6)
                         ),
                     style = MaterialTheme.typography.subtitle2,
-                    color = Color.White
+                    color = when (book.read) {
+                        STATUS_TO_READ -> Color.White
+                        STATUS_READING -> ColorOrangeTapBar
+                        STATUS_READ -> Color.Green
+                        else -> Color.Gray
+                    }
                 )
             }
             DeleteIcon(
@@ -244,7 +256,7 @@ fun BookCard(
                 checked = favoriteBook,
                 onCheckedChange = {
                     favoriteBook = it
-                    onCheckBoxSelected(favoriteBook)
+                    onCheckBoxSelected(book.id, favoriteBook)
                 },
                 modifier = Modifier
                     .size(28.dp)

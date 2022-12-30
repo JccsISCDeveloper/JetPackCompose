@@ -14,5 +14,6 @@ interface BooksRepository {
     fun getBookFromRoom(id: Int): Book
     fun addBookToRoom(book: Book)
     fun updateBookFromRoom(book: Book)
+    fun updateFavoriteFromRoom(id: Int, faborite: Boolean)
     fun deleteBookFromRoom(book: Book)
 }

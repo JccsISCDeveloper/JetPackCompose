@@ -84,7 +84,6 @@ fun DashboardContentScreen(
                 FloatActionBttn(
                     currenRoute = currenRoute,
                     principalNavController = principalNavController,
-                    onCheckBoxSelected = { booksViewModel.selectedFavorite(it) },
                     addBook = { booksViewModel.addBook(it) }
                 )
             }
@@ -157,7 +156,6 @@ private fun HeaderContentScreens(
 fun FloatActionBttn(
     currenRoute: String?,
     principalNavController: NavHostController,
-    onCheckBoxSelected: (selected: Boolean) -> Unit,
     addBook: (book: Book) -> Unit
 ) {
     var showDialogData by rememberSaveable { mutableStateOf(false) }
@@ -172,7 +170,6 @@ fun FloatActionBttn(
             HomeScreen.drawerItem.route, ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route -> {
                 BooksDialog(
                     showDialog = { showDialogData = it },
-//                    onCheckBoxSelected = { onCheckBoxSelected(it) },
                     addBook = { addBook(it) }
                 ) {
                     principalNavController.navigate(Screens.BookCameraScreen.route)

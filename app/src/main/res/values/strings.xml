@@ -13,6 +13,9 @@
     <string name="label_log_in">Log In</string>
 
     <!--Books module-->
+    <string name="to_read">To read</string>
+    <string name="read">Read</string>
+    <string name="reading">Reading…</string>
     <string name="added_to_your_favorite_books">Added to your favorite books</string>
     <string name="removed_from_your_favorite_books">Removed from your favorite books</string>
 
