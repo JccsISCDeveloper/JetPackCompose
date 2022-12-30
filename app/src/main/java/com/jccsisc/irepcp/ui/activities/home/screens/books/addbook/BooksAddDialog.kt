@@ -55,6 +55,8 @@ fun BooksDialog(
     var imageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
     var favoriteBook by remember { mutableStateOf(false) }
 
+     var enabledView by rememberSaveable { mutableStateOf(true) }
+
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             imageUri = uri
@@ -88,6 +90,7 @@ fun BooksDialog(
                         .height(230.dp)
                 ) {
                     imageUri?.let { uri ->
+                        enabledView = false
                         Image(
                             painter = setCoilImagePainter(image = uri.toString(), 200),
                             contentDescription = null,
@@ -114,7 +117,8 @@ fun BooksDialog(
                         },
                         modifier = Modifier
                             .align(Alignment.TopEnd)
-                            .size(40.dp)
+                            .size(40.dp),
+                        enabled = !enabledView
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_fsborite_tgl),
@@ -122,11 +126,13 @@ fun BooksDialog(
                             tint = if (favoriteBook) PrimaryLight2 else Color.Gray
                         )
                     }
-                    Text(
-                        text = "Agrega una imagen",
-                        modifier = Modifier.align(Alignment.Center),
-                        style = MaterialTheme.typography.caption
-                    )
+                    if (enabledView) {
+                        Text(
+                            text = "Agrega una imagen",
+                            modifier = Modifier.align(Alignment.Center),
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
                 }
                 Row(
                     modifier = Modifier
@@ -175,7 +181,8 @@ fun BooksDialog(
                                 }
                             }
                         },
-                        modifier = Modifier.width(140.dp)
+                        modifier = Modifier.width(140.dp),
+                        enabled = !enabledView
                     ) {
                         Text(text = "Agregar")
                     }
