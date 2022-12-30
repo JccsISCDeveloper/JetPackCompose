@@ -88,14 +88,14 @@ fun BooksHomeScreen(
         } else {
             ShowLottie(
                 lottie = R.raw.empty,
-                text = "Agrega un libro",
+                text = stringResource(id = R.string.add_book),
                 showText = true
             )
         }
     }
-
 }
 
+private const val GRID_COUNT = 2
 @Composable
 fun ContentBooks(
     books: List<Book>,
@@ -104,7 +104,7 @@ fun ContentBooks(
     navigateToDetailBook: (bookdId: Int) -> Unit
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(GRID_COUNT),
         modifier = Modifier
             .fillMaxSize(),
         content = {
@@ -156,9 +156,9 @@ fun BookCard(
                 bottom = dimensionResource(id = R.dimen.padding_8)
             )
             .fillMaxWidth()
-            .height(200.dp),
-        shape = RoundedCornerShape(6.dp),
-        elevation = 4.dp,
+            .height(dimensionResource(id = R.dimen.height_200)),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_6)),
+        elevation = dimensionResource(id = R.dimen.elevation_4),
         onClick = { navigateToDetailBook(book.id) }
     ) {
 
@@ -218,7 +218,7 @@ fun BookCard(
                             )
                         )
                     )
-                    .height(60.dp)
+                    .height(dimensionResource(id = R.dimen.height_60))
                     .layoutId("contentLabel")
             ) {
                 Text(
@@ -246,10 +246,10 @@ fun BookCard(
             DeleteIcon(
                 deleteMascota = deleteBook,
                 modifier = Modifier
-                    .size(28.dp)
-                    .clip(RoundedCornerShape(bottomEnd = 8.dp))
-                    .padding(0.dp)
+                    .size(dimensionResource(id = R.dimen.size_28))
+                    .clip(RoundedCornerShape(bottomEnd = dimensionResource(id = R.dimen.rounded_8)))
                     .background(GrayBg)
+                    .padding(dimensionResource(id = R.dimen.padding_0))
                     .layoutId("btnDelete")
             )
             IconToggleButton(
@@ -259,10 +259,10 @@ fun BookCard(
                     onCheckBoxSelected(book.id, favoriteBook)
                 },
                 modifier = Modifier
-                    .size(28.dp)
-                    .clip(RoundedCornerShape(bottomStart = 8.dp))
-                    .padding(0.dp)
+                    .size(dimensionResource(id = R.dimen.size_28))
+                    .clip(RoundedCornerShape(bottomStart = dimensionResource(id = R.dimen.rounded_8)))
                     .background(GrayBg)
+                    .padding(dimensionResource(id = R.dimen.padding_0))
                     .layoutId("btnFavorite")
             ) {
                 Icon(
@@ -286,7 +286,7 @@ fun DeleteIcon(
     ) {
         Icon(
             imageVector = Icons.Filled.Delete,
-            contentDescription = "ic delete",
+            contentDescription = null,
             tint = ColorRedTapBar
         )
     }

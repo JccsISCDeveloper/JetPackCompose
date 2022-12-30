@@ -1,13 +1,9 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.books.addbook
 
-import android.Manifest
-import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -21,12 +17,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.core.constants.Constants
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.Gray50
@@ -41,6 +37,8 @@ import java.io.File
  * FROM: com.jccsisc.irepcp.ui.activities.home.screens.mascotas.tumascota
  * Created by Julio Cesar Camacho Silva on 20/12/22
  */
+private const val ROUTE_GALLERY = "image/*"
+
 @Composable
 fun BooksDialog(
     showDialog: (Boolean) -> Unit,
@@ -55,7 +53,7 @@ fun BooksDialog(
     var imageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
     var favoriteBook by remember { mutableStateOf(false) }
 
-     var enabledView by rememberSaveable { mutableStateOf(true) }
+    var enabledView by rememberSaveable { mutableStateOf(true) }
 
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -73,118 +71,66 @@ fun BooksDialog(
         Card(
             shape = MaterialTheme.shapes.small,
             backgroundColor = Color.White,
-            elevation = 8.dp
+            elevation = dimensionResource(id = R.dimen.elevation_8)
         ) {
             Column(
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_16)),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Agregar libro", style = MaterialTheme.typography.h5)
-                Spacer(modifier = Modifier.height(14.dp))
-                Box(
+                Text(
+                    text = stringResource(id = R.string.add_book),
+                    style = MaterialTheme.typography.h5
+                )
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_14)))
+                Card(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(Gray50)
-                        .width(180.dp)
-                        .height(230.dp)
+                        .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_6)))
+                        .width(dimensionResource(id = R.dimen.width_180))
+                        .height(dimensionResource(id = R.dimen.height_240))
+                        .padding(dimensionResource(id = R.dimen.padding_6)),
+                    backgroundColor = Gray50,
+                    elevation = if (!enabledView) 6.dp else 0.dp
                 ) {
-                    imageUri?.let { uri ->
-                        enabledView = false
-                        Image(
-                            painter = setCoilImagePainter(image = uri.toString(), 200),
-                            contentDescription = null,
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        imageUri?.let { uri ->
+                            enabledView = false
+                            Image(
+                                painter = setCoilImagePainter(image = uri.toString(), 200),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                        FavoriteControl(
+                            enabledView = enabledView,
+                            isFavoriteBook = { favoriteBook = it },
                             modifier = Modifier
-                                .fillMaxSize()
-                                .align(Alignment.Center),
-                            contentScale = ContentScale.Crop
+                                .align(Alignment.TopEnd)
+                                .size(dimensionResource(id = R.dimen.size_40))
                         )
-                    }
-
-                    IconToggleButton(
-                        checked = favoriteBook,
-                        onCheckedChange = {
-                            favoriteBook = it
-                            if (favoriteBook) {
-                                showToast(
-                                    IREPApp.INSTANCE.getString(R.string.added_to_your_favorite_books)
-                                )
-                            } else {
-                                showToast(
-                                    IREPApp.INSTANCE.getString(R.string.removed_from_your_favorite_books)
-                                )
-                            }
-                        },
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .size(40.dp),
-                        enabled = !enabledView
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_fsborite_tgl),
-                            contentDescription = null,
-                            tint = if (favoriteBook) PrimaryLight2 else Color.Gray
-                        )
-                    }
-                    if (enabledView) {
-                        Text(
-                            text = "Agrega una imagen",
-                            modifier = Modifier.align(Alignment.Center),
-                            style = MaterialTheme.typography.caption
-                        )
+                        if (enabledView) {
+                            Text(
+                                text = stringResource(id = R.string.add_an_image),
+                                modifier = Modifier.align(Alignment.Center),
+                                style = MaterialTheme.typography.caption
+                            )
+                        }
                     }
                 }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = dimensionResource(id = R.dimen.padding_6)),
-                    horizontalArrangement = Arrangement.Center
+                ImageControls { launcher.launch(ROUTE_GALLERY) }
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_14)))
+                DialogControls(
+                    enabledView = enabledView,
+                    showDialog = showDialog,
                 ) {
-                    IconButton(onClick = { launcher.launch("image/*") }) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_gallery_b),
-                            contentDescription = null,
-                            modifier = Modifier.size(50.dp)
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(10.dp))
-                    IconButton(onClick = {
-                        askPermissions()
-                    }) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_camera),
-                            contentDescription = null,
-                            modifier = Modifier.size(50.dp)
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(14.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    OutlinedButton(
-                        onClick = { showDialog(false) },
-                        modifier = Modifier.width(140.dp)
-                    ) {
-                        Text(text = "Cancelar")
-                    }
-                    OutlinedButton(
-                        onClick = {
-                            showDialog(false)
-
-                            val photo = getPhotoFile(outputDirectory = outputDirectory)
-                            imageUri?.let {
-                                saveImage(ctx, photo, it) { uri, fileName ->
-                                    val book = Book(0, uri.toString(), 0, favoriteBook, fileName)
-                                    addBook(book)
-                                }
-                            }
-                        },
-                        modifier = Modifier.width(140.dp),
-                        enabled = !enabledView
-                    ) {
-                        Text(text = "Agregar")
+                    val photo = getPhotoFile(outputDirectory = outputDirectory)
+                    imageUri?.let {
+                        saveImage(ctx, photo, it) { uri, fileName ->
+                            val book = Book(0, uri.toString(), 0, favoriteBook, fileName)
+                            addBook(book)
+                        }
                     }
                 }
             }
@@ -199,4 +145,98 @@ fun BooksDialog(
     }
 
     outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
+}
+
+@Composable
+fun FavoriteControl(
+    enabledView: Boolean,
+    isFavoriteBook: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var favoriteBook by remember { mutableStateOf(false) }
+
+    IconToggleButton(
+        checked = favoriteBook,
+        onCheckedChange = {
+            favoriteBook = it
+            isFavoriteBook(favoriteBook)
+            if (favoriteBook) {
+                showToast(
+                    IREPApp.INSTANCE.getString(R.string.added_to_your_favorite_books)
+                )
+            } else {
+                showToast(
+                    IREPApp.INSTANCE.getString(R.string.removed_from_your_favorite_books)
+                )
+            }
+        },
+        modifier = modifier,
+        enabled = !enabledView
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_fsborite_tgl),
+            contentDescription = null,
+            tint = if (favoriteBook) PrimaryLight2 else Color.Gray
+        )
+    }
+}
+
+@Composable
+fun ImageControls(
+    launcher: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = dimensionResource(id = R.dimen.padding_6)),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        IconButton(onClick = launcher) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_gallery_b),
+                contentDescription = null,
+                modifier = Modifier.size(dimensionResource(id = R.dimen.size_50))
+            )
+        }
+        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.width_10)))
+        IconButton(onClick = {
+            askPermissions()
+        }) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_camera),
+                contentDescription = null,
+                modifier = Modifier.size(dimensionResource(id = R.dimen.size_50))
+            )
+        }
+    }
+}
+
+@Composable
+fun DialogControls(
+    enabledView: Boolean,
+    showDialog: (Boolean) -> Unit,
+    onclickSave: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        OutlinedButton(
+            onClick = { showDialog(false) },
+            modifier = Modifier.weight(1f)
+        ) {
+            Text(text = stringResource(id = R.string.cancel))
+        }
+        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.width_20)))
+        OutlinedButton(
+            onClick = {
+                showDialog(false)
+                onclickSave()
+            },
+            modifier = Modifier.weight(1f),
+            enabled = !enabledView
+        ) {
+            Text(text = stringResource(id = R.string.add))
+        }
+    }
 }
