@@ -101,7 +101,7 @@ fun BooksDialog(
                         .clip(RoundedCornerShape(6.dp))
                         .background(Gray50)
                         .width(180.dp)
-                        .height(200.dp)
+                        .height(230.dp)
                 ) {
                     imageUri?.let { uri ->
                         Image(

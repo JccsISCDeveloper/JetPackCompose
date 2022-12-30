@@ -12,6 +12,10 @@
     <string name="label_remember_user">Remember user</string>
     <string name="label_log_in">Log In</string>
 
+    <!--Books module-->
+    <string name="added_to_your_favorite_books">Added to your favorite books</string>
+    <string name="removed_from_your_favorite_books">Removed from your favorite books</string>
+
     <!--Task module-->
     <string name="new_task">New Task</string>
     <string name="modify_task">Modificar tarea</string>

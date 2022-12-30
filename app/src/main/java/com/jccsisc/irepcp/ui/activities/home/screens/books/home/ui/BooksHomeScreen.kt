@@ -2,7 +2,6 @@
 
 package com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -13,6 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +23,8 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -32,13 +34,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.core.di.MySingletonClass
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.deleteImage
-import com.jccsisc.irepcp.utils.getOutputDirectory
-import java.io.File
+import com.jccsisc.irepcp.utils.showToast
 
 /**
  * Project: IREPCP
@@ -61,24 +61,27 @@ fun BooksHomeScreen(
     ) {
         if (books.isNotEmpty()) {
 
-           /* val outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
-            Log.i("files", "${outputDirectory.list()}")
+            /* val outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
+             Log.i("files", "${outputDirectory.list()}")
 
-            books.forEach {
-                val list = outputDirectory.list()?.filter { file ->
-                    file != it.imageName
-                }
-                Log.i("lista", "$list")
-                list?.forEach {
-                    deleteImage(filename = it)
-                }
-            }*/
+             books.forEach {
+                 val list = outputDirectory.list()?.filter { file ->
+                     file != it.imageName
+                 }
+                 Log.i("lista", "$list")
+                 list?.forEach {
+                     deleteImage(filename = it)
+                 }
+             }*/
 
             ContentBooks(
                 books = books,
                 deleteBook = { book ->
                     viewModel.deleteBook(book)
                     deleteImage(filename = book.imageName)
+                },
+                onCheckBoxSelected = {
+                    viewModel.selectedFavorite(it)
                 },
                 navigateToDetailBook = navigateToDetailMascota
             )
@@ -97,6 +100,7 @@ fun BooksHomeScreen(
 fun ContentBooks(
     books: List<Book>,
     deleteBook: (book: Book) -> Unit,
+    onCheckBoxSelected: (selected: Boolean) -> Unit,
     navigateToDetailBook: (bookdId: Long) -> Unit
 ) {
     LazyVerticalGrid(
@@ -108,6 +112,18 @@ fun ContentBooks(
                 BookCard(
                     book = book,
                     deleteBook = { deleteBook(book) },
+                    onCheckBoxSelected = {
+                        onCheckBoxSelected(it)
+                        if (it) {
+                            showToast(
+                                IREPApp.INSTANCE.getString(R.string.added_to_your_favorite_books)
+                            )
+                        } else {
+                            showToast(
+                                IREPApp.INSTANCE.getString(R.string.removed_from_your_favorite_books)
+                            )
+                        }
+                    },
                     navigateToDetailBook = navigateToDetailBook
                 )
             }
@@ -121,8 +137,13 @@ fun ContentBooks(
 fun BookCard(
     book: Book,
     deleteBook: () -> Unit,
+    onCheckBoxSelected: (selected: Boolean) -> Unit,
     navigateToDetailBook: (bookId: Long) -> Unit
 ) {
+    var favoriteBook by rememberSaveable { mutableStateOf(false) }
+
+    favoriteBook = book.favorite
+
     Card(
         modifier = Modifier
             .padding(
@@ -132,7 +153,7 @@ fun BookCard(
                 bottom = dimensionResource(id = R.dimen.padding_8)
             )
             .fillMaxWidth()
-            .height(190.dp),
+            .height(200.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = 4.dp,
         onClick = { navigateToDetailBook(book.id) }
@@ -140,8 +161,9 @@ fun BookCard(
 
         val constraints = ConstraintSet {
             val imgBook = createRefFor("imgBook")
-            val tfRead = createRefFor("tfRead")
+            val contentLabel = createRefFor("contentLabel")
             val btnDelete = createRefFor("btnDelete")
+            val btnFavorite = createRefFor("btnFavorite")
 
             constrain(imgBook) {
                 top.linkTo(parent.top)
@@ -151,13 +173,17 @@ fun BookCard(
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
             }
-            constrain(tfRead) {
+            constrain(contentLabel) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
                 bottom.linkTo(parent.bottom)
                 width = Dimension.fillToConstraints
             }
             constrain(btnDelete) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+            }
+            constrain(btnFavorite) {
                 top.linkTo(parent.top)
                 end.linkTo(parent.end)
             }
@@ -170,7 +196,7 @@ fun BookCard(
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(book.image)
-                    .crossfade(1000)
+                    .crossfade(500)
                     .error(R.drawable.ic_error_image)
                     .build(),
                 contentDescription = null,
@@ -178,8 +204,7 @@ fun BookCard(
                 placeholder = painterResource(id = R.drawable.ic_placeholde_image),
                 contentScale = ContentScale.Crop
             )
-            Text(
-                text = if (book.read) "Lerído" else "Por leer",
+            Box(
                 modifier = Modifier
                     .background(
                         brush = Brush.verticalGradient(
@@ -190,20 +215,50 @@ fun BookCard(
                             )
                         )
                     )
-                    .padding(dimensionResource(id = R.dimen.padding_6))
-                    .layoutId("tfRead"),
-                style = MaterialTheme.typography.caption,
-                color = Color.White
-            )
+                    .height(60.dp)
+                    .layoutId("contentLabel")
+            ) {
+                Text(
+                    text =
+                    if (book.read) "Leído" else "Por leer",
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(
+                            start = dimensionResource(id = R.dimen.padding_6),
+                            bottom = dimensionResource(id = R.dimen.padding_6)
+                        ),
+                    style = MaterialTheme.typography.subtitle2,
+                    color = Color.White
+                )
+            }
             DeleteIcon(
                 deleteMascota = deleteBook,
+                modifier = Modifier
+                    .size(28.dp)
+                    .clip(RoundedCornerShape(bottomEnd = 8.dp))
+                    .padding(0.dp)
+                    .background(GrayBg)
+                    .layoutId("btnDelete")
+            )
+            IconToggleButton(
+                checked = favoriteBook,
+                onCheckedChange = {
+                    favoriteBook = it
+                    onCheckBoxSelected(favoriteBook)
+                },
                 modifier = Modifier
                     .size(28.dp)
                     .clip(RoundedCornerShape(bottomStart = 8.dp))
                     .padding(0.dp)
                     .background(GrayBg)
-                    .layoutId("btnDelete")
-            )
+                    .layoutId("btnFavorite")
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_fsborite_tgl),
+                    contentDescription = null,
+                    tint = if (favoriteBook) PrimaryColor else Color.Gray
+                )
+            }
         }
     }
 }

@@ -11,6 +11,10 @@
     <string name="label_log_in">Iniciar sesión</string>
 
 
+    <!--Books module-->
+    <string name="added_to_your_favorite_books">Se agregó a tus libros favoritos</string>
+    <string name="removed_from_your_favorite_books">Se eliminó de tus libros favoritos</string>
+    
     <!--Task module-->
     <string name="new_task">Nueva tarea</string>
     <string name="modify_task">Modificar tarea</string>
