@@ -12,17 +12,20 @@
 
 
     <!--Books module-->
+    <string name="book">libro</string>
     <string name="cancel">Cancelar</string>
     <string name="add">Agregar</string>
     <string name="add_book">Agregar libro</string>
     <string name="add_an_image">Agrega una imagen</string>
     <string name="to_read">Por leer</string>
     <string name="read">Leído</string>
+    <string name="delete_book">Eliminar libro</string>
     <string name="reading">Leyendo…</string>
     <string name="added_to_your_favorite_books">Se agregó a tus libros favoritos</string>
     <string name="removed_from_your_favorite_books">Se eliminó de tus libros favoritos</string>
 
     <!--Task module-->
+    <string name="task">tarea</string>
     <string name="new_task">Nueva tarea</string>
     <string name="modify_task">Modificar tarea</string>
     <string name="ph_write_your_note">Escribe tu nota</string>
@@ -34,12 +37,12 @@
     <string name="high_priority">Alta</string>
     <string name="add_a_note">Agrega una nota</string>
     <string name="delete_task">Eliminar tarea</string>
-    <string name="are_you_sure_you_want_to_delete_the_task">¿Está seguro que desea eliminar la tarea?</string>
 
     <string name="str_number_of_characteres">%s caracteres</string>
     <string name="str_today">Hoy, %s</string>
     <string name="str_yesterday">Ayer, %s</string>
     <string name="str_yesterday_at">Ayer a las %s</string>
+    <string name="str_are_you_sure_you_want_to_delete">¿Estás seguro de que quieres eliminar %s?</string>
 
     <!--Rick and Morty module-->
     <!--HomeScreen-->

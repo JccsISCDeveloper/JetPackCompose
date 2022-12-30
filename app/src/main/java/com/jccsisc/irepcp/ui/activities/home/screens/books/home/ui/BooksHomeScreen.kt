@@ -6,7 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -37,6 +37,7 @@ import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 import com.jccsisc.irepcp.utils.deleteImage
 import com.jccsisc.irepcp.utils.showToast
 
@@ -52,6 +53,8 @@ fun BooksHomeScreen(
 ) {
 
     val books by viewModel.mascotas.collectAsState(initial = emptyList())
+    var showDialog by remember { mutableStateOf(false) }
+    var book by remember { mutableStateOf(Book()) }
 
     Box(
         modifier = Modifier
@@ -76,9 +79,11 @@ fun BooksHomeScreen(
 
             ContentBooks(
                 books = books,
-                deleteBook = { book ->
-                    viewModel.deleteBook(book)
-                    deleteImage(filename = book.imageName)
+                deleteBook = { deleteBook ->
+                    /*viewModel.deleteBook(book)
+                    deleteImage(filename = book.imageName)*/
+                    book = deleteBook
+                    showDialog = true
                 },
                 onCheckBoxSelected = {id, favorite ->
                     viewModel.selectedFavorite(id, favorite)
@@ -93,9 +98,27 @@ fun BooksHomeScreen(
             )
         }
     }
+
+    GenericDialog(
+        show = showDialog,
+        onDismiss = {},
+        image = R.drawable.ic_warning,
+        title = stringResource(id = R.string.delete_book),
+        message = stringResource(id = R.string.str_are_you_sure_you_want_to_delete, "el libro"),
+        btnTitleNegative = stringResource(id = R.string.no),
+        btnTitlePositive = stringResource(id = R.string.yes),
+        onNegativeClick = { showDialog = false },
+        onPositiveClick = {
+            viewModel.deleteBook(book)
+            deleteImage(filename = book.imageName)
+            showDialog = false
+        }
+    )
 }
 
 private const val GRID_COUNT = 2
+private const val PADDIN_58 = 58
+private const val PADDIN_0 = 0
 @Composable
 fun ContentBooks(
     books: List<Book>,
@@ -103,12 +126,15 @@ fun ContentBooks(
     onCheckBoxSelected: (id: Int, selected: Boolean) -> Unit,
     navigateToDetailBook: (bookdId: Int) -> Unit
 ) {
+    var addPadding by remember { mutableStateOf(0) }
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(GRID_COUNT),
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(bottom = addPadding.dp),
         content = {
-            items(books) { book ->
+            itemsIndexed(books) { index, book ->
                 BookCard(
                     book = book,
                     deleteBook = { deleteBook(book) },
@@ -126,6 +152,11 @@ fun ContentBooks(
                     },
                     navigateToDetailBook = navigateToDetailBook
                 )
+                addPadding = if (index >= books.size -2) {
+                    PADDIN_58
+                } else {
+                    PADDIN_0
+                }
             }
         },
         contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_12))

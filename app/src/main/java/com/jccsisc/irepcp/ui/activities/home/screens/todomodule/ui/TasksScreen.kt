@@ -77,7 +77,7 @@ fun TasksScreen(
             onDismiss = {},
             image = R.drawable.ic_warning,
             title = stringResource(id = R.string.delete_task),
-            message = stringResource(id = R.string.are_you_sure_you_want_to_delete_the_task),
+            message = stringResource(id = R.string.str_are_you_sure_you_want_to_delete, "la tarea"),
             btnTitleNegative = stringResource(id = R.string.no),
             btnTitlePositive = stringResource(id = R.string.yes),
             onNegativeClick = { showDialog = false },
@@ -95,6 +95,8 @@ fun PreviewTasks() {
 //    TasksScreen()
 }
 
+private const val PADDIN_58 = 58
+private const val PADDIN_0 = 0
 @Composable
 private fun TaskList(
     taskOrder: String,
@@ -116,9 +118,9 @@ private fun TaskList(
                     navigateToModifyTask = navigateToModifyTask
                 )
                 addPadding = if (index >= tasks.size -8) {
-                    58
+                    PADDIN_58
                 } else {
-                    0
+                    PADDIN_0
                 }
             }
         }
@@ -158,15 +160,15 @@ fun CardTask(
                 onClick = { navigateToModifyTask(taskModel.id) },
                 onLongClick = { onDeleteTask(taskModel) }
             ),
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_0)),
         backgroundColor = Color.White,
-        elevation = 0.dp
+        elevation = dimensionResource(id = R.dimen.elevation_0)
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
-                    .width(5.dp)
-                    .height(70.dp)
+                    .width(dimensionResource(id = R.dimen.width_5))
+                    .height(dimensionResource(id = R.dimen.height_70))
                     .background(
                         getColorPriority(priority = taskModel.priorityTask)
                     )
@@ -178,18 +180,18 @@ fun CardTask(
             ) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = taskModel.title.ifEmpty { "Sin título" },
+                    text = taskModel.title.ifEmpty { NO_VALUE },
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_4)))
                 Text(
                     text = taskModel.task,
                     fontWeight = if (taskModel.selected) FontWeight.Medium else FontWeight.Normal,
                     color = if (taskModel.selected) Color.Gray else Color.Black,
                     textDecoration = if (taskModel.selected) TextDecoration.LineThrough else TextDecoration.None
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_4)))
                 Text(
                     text = if (taskModel.modificationDate != 0L) {
                         taskModel.modificationDate.lastModifiedTime()
@@ -198,7 +200,7 @@ fun CardTask(
                     },
                     style = MaterialTheme.typography.caption
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.height_4)))
             }
             Checkbox(
                 checked = taskModel.selected,
