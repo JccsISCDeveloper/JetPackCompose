@@ -37,6 +37,8 @@
     <string name="high_priority">Alta</string>
     <string name="add_a_note">Agrega una nota</string>
     <string name="delete_task">Eliminar tarea</string>
+    <string name="select_task_priority">Selecciona la prioridad de la tarea</string>
+    <string name="write_a_note">Escribe una nota</string>
 
     <string name="str_number_of_characteres">%s caracteres</string>
     <string name="str_today">Hoy, %s</string>

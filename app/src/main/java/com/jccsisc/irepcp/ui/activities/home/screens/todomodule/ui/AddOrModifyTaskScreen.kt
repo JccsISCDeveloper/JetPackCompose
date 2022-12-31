@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants
 import com.jccsisc.irepcp.core.constants.Constants.HIGH_PRIORITY
@@ -90,7 +91,7 @@ fun AddOrModifyTaskScreen(
                             navigateBack()
                         } else {
                             showPriorityMenu = true
-                            showToast("Selecciona la prioridad de la tarea")
+                            showToast(IREPApp.INSTANCE.getString(R.string.select_task_priority))
                         }
                     } else {
                         viewModel.updateModelTask(taskModel)
@@ -175,9 +176,9 @@ private fun TopBar(
             }) {
                 Box(
                     modifier = Modifier
-                        .size(35.dp)
+                        .size(dimensionResource(id = R.dimen.size_35))
                         .background(
-                            shape = RoundedCornerShape(6.dp),
+                            shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_6)),
                             color = getColorPriority(priority = priorityTask)
                         )
                 )
@@ -211,7 +212,7 @@ private fun TopBar(
             IconButton(onClick = onSaveClick) {
                 Icon(
                     imageVector = Icons.Outlined.Save,
-                    contentDescription = "ic save",
+                    contentDescription = null,
                     tint = GrayBg
                 )
             }
@@ -223,9 +224,9 @@ private fun TopBar(
 private fun shapePriorityMenu(priority: Int, title: String) {
     Box(
         modifier = Modifier
-            .size(35.dp)
+            .size(dimensionResource(id = R.dimen.size_35))
             .background(
-                shape = RoundedCornerShape(6.dp),
+                shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_6)),
                 color = getColorPriority(priority = priority)
             )
     )
@@ -309,7 +310,7 @@ fun ContentNewTask(
                     if (taskString.isNotEmpty()) {
                         setdateTaskString(taskString)
                     } else {
-                        showToast("Escribe tu nota")
+                        showToast(IREPApp.INSTANCE.getString(R.string.write_a_note))
                     }
                 },
                 modifier = Modifier

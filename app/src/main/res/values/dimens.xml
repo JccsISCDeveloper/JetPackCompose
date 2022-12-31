@@ -30,6 +30,7 @@
     <dimen name="border_2">2dp</dimen>
 
     <dimen name="size_28">28dp</dimen>
+    <dimen name="size_35">35dp</dimen>
     <dimen name="size_40">40dp</dimen>
     <dimen name="size_50">50dp</dimen>
 

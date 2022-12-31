@@ -52,7 +52,7 @@ fun BooksHomeScreen(
     navigateToDetailBook: (booId: Int) -> Unit
 ) {
 
-    val books by viewModel.mascotas.collectAsState(initial = emptyList())
+    val books by viewModel.books.collectAsState(initial = emptyList())
     var showDialog by remember { mutableStateOf(false) }
     var book by remember { mutableStateOf(Book()) }
 
@@ -80,8 +80,6 @@ fun BooksHomeScreen(
             ContentBooks(
                 books = books,
                 deleteBook = { deleteBook ->
-                    /*viewModel.deleteBook(book)
-                    deleteImage(filename = book.imageName)*/
                     book = deleteBook
                     showDialog = true
                 },

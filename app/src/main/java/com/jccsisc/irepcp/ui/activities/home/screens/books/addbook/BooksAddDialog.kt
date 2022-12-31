@@ -38,7 +38,6 @@ import java.io.File
  * Created by Julio Cesar Camacho Silva on 20/12/22
  */
 private const val ROUTE_GALLERY = "image/*"
-
 @Composable
 fun BooksDialog(
     showDialog: (Boolean) -> Unit,

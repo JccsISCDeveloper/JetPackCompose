@@ -19,7 +19,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class BooksViewModel @Inject constructor(private val repo: BooksRepository) : ViewModel() {
-    val mascotas = repo.getBooksFromRoom()
+    val books = repo.getBooksFromRoom()
     var book by mutableStateOf(Book())
 
     fun addBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
