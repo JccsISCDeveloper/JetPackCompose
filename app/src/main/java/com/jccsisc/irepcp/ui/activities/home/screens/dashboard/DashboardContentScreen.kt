@@ -12,17 +12,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jccsisc.irepcp.ui.activities.home.navigation.CurrentRoute
 import com.jccsisc.irepcp.ui.activities.home.navigation.Screens
-import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.ui.TaskViewModel
+import com.jccsisc.irepcp.ui.activities.home.screens.books.addbook.BooksDialog
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.components.MyBottomBar
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.components.MyDrawerLayout
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.components.MyTopAppbar
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.NavigationDashboard
+import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
-import com.jccsisc.irepcp.ui.activities.home.screens.books.addbook.BooksDialog
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
-import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer
+import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.ui.TaskViewModel
 import com.jccsisc.irepcp.ui.theme.PrimaryDarkColor
 import com.jccsisc.irepcp.utils.SetNavbarColor
 import com.jccsisc.irepcp.utils.showToast
@@ -37,8 +35,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun DashboardContentScreen(
     principalNavController: NavHostController,
-    taskViewModel: TaskViewModel = hiltViewModel(),
-    booksViewModel: BooksViewModel = hiltViewModel()
+    taskViewModel: TaskViewModel = hiltViewModel()
 ) {
     SetNavbarColor(color = PrimaryDarkColor, useDarkIcons = false)
     val dashboardNavController = rememberNavController()
@@ -84,7 +81,6 @@ fun DashboardContentScreen(
                 FloatActionBttn(
                     currenRoute = currenRoute,
                     principalNavController = principalNavController,
-                    addBook = { booksViewModel.addBook(it) }
                 )
             }
         },
@@ -156,7 +152,6 @@ private fun HeaderContentScreens(
 fun FloatActionBttn(
     currenRoute: String?,
     principalNavController: NavHostController,
-    addBook: (book: Book) -> Unit
 ) {
     var showDialogData by rememberSaveable { mutableStateOf(false) }
 
@@ -170,7 +165,6 @@ fun FloatActionBttn(
             HomeScreen.drawerItem.route, ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route -> {
                 BooksDialog(
                     showDialog = { showDialogData = it },
-                    addBook = { addBook(it) }
                 ) {
                     principalNavController.navigate(Screens.BookCameraScreen.route)
                 }

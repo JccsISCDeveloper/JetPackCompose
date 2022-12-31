@@ -1,5 +1,6 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.books.addbook
 
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -21,14 +23,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
 import com.jccsisc.irepcp.ui.theme.Gray50
 import com.jccsisc.irepcp.ui.theme.PrimaryLight2
 import com.jccsisc.irepcp.utils.*
 import com.jccsisc.irepcp.utils.GlobalData.askPermissions
+import com.jccsisc.irepcp.utils.GlobalData.getBitmapImageCamera
 import com.jccsisc.irepcp.utils.GlobalData.showCameraView
 import java.io.File
 
@@ -41,12 +45,13 @@ private const val ROUTE_GALLERY = "image/*"
 @Composable
 fun BooksDialog(
     showDialog: (Boolean) -> Unit,
-    addBook: (book: Book) -> Unit,
+    booksViewModel: BooksViewModel = hiltViewModel(),
     navigateToCameraView: () -> Unit
 ) {
 
     val ctx = LocalContext.current
-    var outputDirectory by remember { mutableStateOf(File(NO_VALUE)) }
+//    var outputDirectory by rememberSaveable { mutableStateOf(File(NO_VALUE)) }
+    var outputDirectory by rememberSaveable { mutableStateOf<File?>(null) }
     var shouldShowCamera by remember { mutableStateOf(false) }
 
     var imageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
@@ -54,13 +59,17 @@ fun BooksDialog(
 
     var enabledView by rememberSaveable { mutableStateOf(true) }
 
+    var imageBitmap by rememberSaveable { mutableStateOf<Bitmap?>(null)}
+
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+            imageBitmap = null
             imageUri = uri
         }
 
-    GlobalData.getUriImageCamera = { imageCamera ->
-        imageUri = imageCamera
+    getBitmapImageCamera = {
+        imageUri = null
+        imageBitmap = it
     }
 
     Dialog(
@@ -97,10 +106,13 @@ fun BooksDialog(
                             Image(
                                 painter = setCoilImagePainter(image = uri.toString(), 200),
                                 contentDescription = null,
-                                modifier = Modifier
-                                    .fillMaxSize(),
+                                modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.Crop
                             )
+                        }
+                        imageBitmap?.let {
+                            enabledView = false
+                            Image(bitmap = it.asImageBitmap(), contentDescription = null)
                         }
                         FavoriteControl(
                             enabledView = enabledView,
@@ -124,11 +136,11 @@ fun BooksDialog(
                     enabledView = enabledView,
                     showDialog = showDialog,
                 ) {
-                    val photo = getPhotoFile(outputDirectory = outputDirectory)
-                    imageUri?.let {
-                        saveImage(ctx, photo, it) { uri, fileName ->
+                    val photo = outputDirectory?.let { getPhotoFile(outputDirectory = it) }
+                    if (photo != null) {
+                        saveImage(ctx, photo, imageUri, imageBitmap) { uri, fileName ->
                             val book = Book(0, uri.toString(), 0, favoriteBook, fileName)
-                            addBook(book)
+                            booksViewModel.addBook(book)
                         }
                     }
                 }
@@ -143,7 +155,9 @@ fun BooksDialog(
         }
     }
 
-    outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
+    if (outputDirectory == null) {
+        outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
+    }
 }
 
 @Composable
@@ -159,15 +173,7 @@ fun FavoriteControl(
         onCheckedChange = {
             favoriteBook = it
             isFavoriteBook(favoriteBook)
-            if (favoriteBook) {
-                showToast(
-                    IREPApp.INSTANCE.getString(R.string.added_to_your_favorite_books)
-                )
-            } else {
-                showToast(
-                    IREPApp.INSTANCE.getString(R.string.removed_from_your_favorite_books)
-                )
-            }
+            showMessageIsAddedFavorite(favoriteBook)
         },
         modifier = modifier,
         enabled = !enabledView
@@ -178,6 +184,12 @@ fun FavoriteControl(
             tint = if (favoriteBook) PrimaryLight2 else Color.Gray
         )
     }
+}
+
+private fun showMessageIsAddedFavorite(favorite: Boolean) {
+    val msg = if (favorite)
+        R.string.added_to_your_favorite_books else R.string.removed_from_your_favorite_books
+    showToast(IREPApp.INSTANCE.getString(msg))
 }
 
 @Composable

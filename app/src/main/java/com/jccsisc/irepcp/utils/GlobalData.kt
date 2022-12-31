@@ -1,5 +1,6 @@
 package com.jccsisc.irepcp.utils
 
+import android.graphics.Bitmap
 import android.net.Uri
 
 /**
@@ -12,5 +13,5 @@ object GlobalData {
     lateinit var onLoginClick: () -> Unit
     lateinit var askPermissions: () -> Unit
     lateinit var showCameraView: (Boolean) -> Unit
-    lateinit var getUriImageCamera: (Uri) -> Unit
+    lateinit var getBitmapImageCamera: (Bitmap) -> Unit
 }

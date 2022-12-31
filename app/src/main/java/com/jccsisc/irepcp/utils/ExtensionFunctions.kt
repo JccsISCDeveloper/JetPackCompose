@@ -3,6 +3,8 @@ package com.jccsisc.irepcp.utils
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.graphics.*
+import android.media.Image
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -27,10 +29,12 @@ import coil.size.Size
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Project: IREPCP
@@ -106,15 +110,37 @@ fun getPhotoFile(
 fun saveImage(
     context: Context,
     file: File,
-    uri: Uri,
+    uri: Uri?,
+    bitmap: Bitmap?,
     uriLmb: (Uri, String) -> Unit,
 ) {
-    val bytes = context.contentResolver.openInputStream(uri)?.readBytes()!!
-    file.writeBytes(bytes)
-
+    if (uri != null) {
+        val bytes = context.contentResolver.openInputStream(uri)?.readBytes()!!
+        file.writeBytes(bytes)
+    } else if (bitmap != null) {
+        file.writeBitmap(bitmap = bitmap)
+    }
     if (file.exists()) {
         uriLmb(Uri.fromFile(file), file.name)
     }
+}
+
+private fun File.writeBitmap(
+    bitmap: Bitmap,
+    format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG,
+    quality: Int = 85
+) {
+    outputStream().use { out ->
+        bitmap.compress(format, quality, out)
+        out.flush()
+    }
+}
+
+fun Bitmap.getImageUri(): Uri? {
+    val bytes = ByteArrayOutputStream()
+    this.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+    val paht = getOutputDirectory(IREPApp.INSTANCE)
+    return Uri.parse(paht.absolutePath)
 }
 
 fun deleteImage(
@@ -126,13 +152,6 @@ fun deleteImage(
         file.delete()
         Log.i("file", " $file eliminado...")
     }
-}
-
-fun deleteImagesNotRegisteredInDB(
-    outputDirectory: File = getOutputDirectory(IREPApp.INSTANCE),
-    filename: String
-) {
-
 }
 
 /**

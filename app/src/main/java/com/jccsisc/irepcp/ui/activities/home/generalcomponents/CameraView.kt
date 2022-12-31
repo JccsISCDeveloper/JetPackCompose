@@ -1,12 +1,11 @@
 package com.jccsisc.irepcp.ui.activities.home.generalcomponents
 
 import android.content.Context
-import android.net.Uri
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
+import androidx.camera.core.ImageCapture.OnImageCapturedCallback
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
@@ -36,8 +35,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.theme.GrayBg
-import com.jccsisc.irepcp.utils.getPhotoFile
-import java.io.File
+import java.nio.ByteBuffer
 import java.util.concurrent.Executor
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -49,9 +47,8 @@ import kotlin.coroutines.suspendCoroutine
  */
 @Composable
 fun CameraView(
-    outputDirectory: File,
     executor: Executor,
-    onImageCapturedUri: (Uri) -> Unit,
+    onImageCapturedBitmap: (Bitmap) -> Unit,
     onError: (ImageCaptureException) -> Unit,
     navigateBack: () -> Unit
 ) {
@@ -103,11 +100,9 @@ fun CameraView(
             onClick = {
                 Log.i("permiso", "ON CLICK")
                 takePhoto(
-                    filenameFormat = "yyyy-MM-dd-HH-mm-ss-SSS",
                     imageCapture = imageCapture,
-                    outputDirectory = outputDirectory,
                     executor = executor,
-                    onImageCaptured = onImageCapturedUri,
+                    onImageCapturedBitmap = onImageCapturedBitmap,
                     onError = onError
                 )
             },
@@ -127,30 +122,37 @@ fun CameraView(
 }
 
 private fun takePhoto(
-    filenameFormat: String,
     imageCapture: ImageCapture,
-    outputDirectory: File,
     executor: Executor,
-    onImageCaptured: (Uri) -> Unit,
+    onImageCapturedBitmap: (Bitmap) -> Unit,
     onError: (ImageCaptureException) -> Unit
 ) {
+    imageCapture.takePicture(executor, @ExperimentalGetImage object: OnImageCapturedCallback() {
+        override fun onCaptureSuccess(image: ImageProxy) {
+            //get bitmap from image
+            val bitmap = imageProxyToBitmap(image)
+            super.onCaptureSuccess(image)
+            onImageCapturedBitmap(bitmap)
+            image.close()
+        }
 
-    val photoFile = getPhotoFile(filenameFormat, outputDirectory)
-
-    val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-
-    //TODO quitar este paso de aquí no queremos guardar cada foto que tomen
-    imageCapture.takePicture(outputOptions, executor, object : ImageCapture.OnImageSavedCallback {
         override fun onError(exception: ImageCaptureException) {
-            Log.e("permiso", "Take photo error:", exception)
             onError(exception)
         }
-
-        override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-            val savedUri = Uri.fromFile(photoFile)
-            onImageCaptured(savedUri)
-        }
     })
+}
+
+
+/**
+ *  convert image proxy to bitmap
+ *  @param image
+ */
+private fun imageProxyToBitmap(image: ImageProxy): Bitmap {
+    val planeProxy = image.planes[0]
+    val buffer: ByteBuffer = planeProxy.buffer
+    val bytes = ByteArray(buffer.remaining())
+    buffer.get(bytes)
+    return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 }
 
 private suspend fun Context.getCameraProvider(): ProcessCameraProvider =

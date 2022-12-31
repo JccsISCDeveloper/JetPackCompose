@@ -63,27 +63,13 @@ fun BooksHomeScreen(
         contentAlignment = Alignment.Center
     ) {
         if (books.isNotEmpty()) {
-
-            /* val outputDirectory = getOutputDirectory(IREPApp.INSTANCE)
-             Log.i("files", "${outputDirectory.list()}")
-
-             books.forEach {
-                 val list = outputDirectory.list()?.filter { file ->
-                     file != it.imageName
-                 }
-                 Log.i("lista", "$list")
-                 list?.forEach {
-                     deleteImage(filename = it)
-                 }
-             }*/
-
             ContentBooks(
                 books = books,
                 deleteBook = { deleteBook ->
                     book = deleteBook
                     showDialog = true
                 },
-                onCheckBoxSelected = {id, favorite ->
+                onSelectedFavorite = { id, favorite ->
                     viewModel.selectedFavorite(id, favorite)
                 },
                 navigateToDetailBook = navigateToDetailBook
@@ -117,13 +103,15 @@ fun BooksHomeScreen(
 private const val GRID_COUNT = 2
 private const val PADDIN_58 = 58
 private const val PADDIN_0 = 0
+
 @Composable
 fun ContentBooks(
     books: List<Book>,
     deleteBook: (book: Book) -> Unit,
-    onCheckBoxSelected: (id: Int, selected: Boolean) -> Unit,
+    onSelectedFavorite: (id: Int, selected: Boolean) -> Unit,
     navigateToDetailBook: (bookdId: Int) -> Unit
 ) {
+    //todo mejorar esta accion
     var addPadding by remember { mutableStateOf(0) }
 
     LazyVerticalGrid(
@@ -136,21 +124,13 @@ fun ContentBooks(
                 BookCard(
                     book = book,
                     deleteBook = { deleteBook(book) },
-                    onCheckBoxSelected = {id, favorite ->
-                        onCheckBoxSelected(id, favorite)
-                        if (favorite) {
-                            showToast(
-                                IREPApp.INSTANCE.getString(R.string.added_to_your_favorite_books)
-                            )
-                        } else {
-                            showToast(
-                                IREPApp.INSTANCE.getString(R.string.removed_from_your_favorite_books)
-                            )
-                        }
+                    onSelectedFavorite = { id, favorite ->
+                        onSelectedFavorite(id, favorite)
+                        showMessageIsAddedFavorite(favorite)
                     },
                     navigateToDetailBook = navigateToDetailBook
                 )
-                addPadding = if (index >= books.size -2) {
+                addPadding = if (index >= books.size - 2) {
                     PADDIN_58
                 } else {
                     PADDIN_0
@@ -161,15 +141,22 @@ fun ContentBooks(
     )
 }
 
+private fun showMessageIsAddedFavorite(favorite: Boolean) {
+    val msg = if (favorite)
+        R.string.added_to_your_favorite_books else R.string.removed_from_your_favorite_books
+    showToast(IREPApp.INSTANCE.getString(msg))
+}
+
 private const val STATUS_TO_READ = 0
 private const val STATUS_READING = 1
 private const val STATUS_READ = 2
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BookCard(
     book: Book,
     deleteBook: () -> Unit,
-    onCheckBoxSelected: (id: Int, selected: Boolean) -> Unit,
+    onSelectedFavorite: (id: Int, selected: Boolean) -> Unit,
     navigateToDetailBook: (bookId: Int) -> Unit
 ) {
     var favoriteBook by rememberSaveable { mutableStateOf(false) }
@@ -191,35 +178,7 @@ fun BookCard(
         onClick = { navigateToDetailBook(book.id) }
     ) {
 
-        val constraints = ConstraintSet {
-            val imgBook = createRefFor("imgBook")
-            val contentLabel = createRefFor("contentLabel")
-            val btnDelete = createRefFor("btnDelete")
-            val btnFavorite = createRefFor("btnFavorite")
-
-            constrain(imgBook) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom)
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-            }
-            constrain(contentLabel) {
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom)
-                width = Dimension.fillToConstraints
-            }
-            constrain(btnDelete) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-            }
-            constrain(btnFavorite) {
-                top.linkTo(parent.top)
-                end.linkTo(parent.end)
-            }
-        }
+        val constraints = setConstraint()
 
         ConstraintLayout(
             modifier = Modifier.fillMaxSize(),
@@ -236,42 +195,7 @@ fun BookCard(
                 placeholder = painterResource(id = R.drawable.ic_placeholde_image),
                 contentScale = ContentScale.Crop
             )
-            Box(
-                modifier = Modifier
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                PrimaryDarkColor.copy(alpha = 0.0f),
-                                PrimaryDarkColor.copy(alpha = 0.5f),
-                                PrimaryDarkColor.copy(alpha = 0.7f)
-                            )
-                        )
-                    )
-                    .height(dimensionResource(id = R.dimen.height_60))
-                    .layoutId("contentLabel")
-            ) {
-                Text(
-                    text = when (book.read) {
-                        STATUS_TO_READ -> stringResource(id = R.string.to_read)
-                        STATUS_READING -> stringResource(id = R.string.reading)
-                        STATUS_READ -> stringResource(id = R.string.read)
-                        else -> { NO_VALUE }
-                    },
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(
-                            start = dimensionResource(id = R.dimen.padding_6),
-                            bottom = dimensionResource(id = R.dimen.padding_6)
-                        ),
-                    style = MaterialTheme.typography.subtitle2,
-                    color = when (book.read) {
-                        STATUS_TO_READ -> Color.White
-                        STATUS_READING -> ColorOrangeTapBar
-                        STATUS_READ -> Color.Green
-                        else -> Color.Gray
-                    }
-                )
-            }
+            StatusText(book.read)
             DeleteIcon(
                 deleteMascota = deleteBook,
                 modifier = Modifier
@@ -285,7 +209,7 @@ fun BookCard(
                 checked = favoriteBook,
                 onCheckedChange = {
                     favoriteBook = it
-                    onCheckBoxSelected(book.id, favoriteBook)
+                    onSelectedFavorite(book.id, favoriteBook)
                 },
                 modifier = Modifier
                     .size(dimensionResource(id = R.dimen.size_28))
@@ -303,6 +227,80 @@ fun BookCard(
         }
     }
 }
+
+fun setConstraint() = ConstraintSet {
+    val imgBook = createRefFor("imgBook")
+    val contentLabel = createRefFor("contentLabel")
+    val btnDelete = createRefFor("btnDelete")
+    val btnFavorite = createRefFor("btnFavorite")
+
+    constrain(imgBook) {
+        top.linkTo(parent.top)
+        start.linkTo(parent.start)
+        end.linkTo(parent.end)
+        bottom.linkTo(parent.bottom)
+        width = Dimension.fillToConstraints
+        height = Dimension.fillToConstraints
+    }
+    constrain(contentLabel) {
+        start.linkTo(parent.start)
+        end.linkTo(parent.end)
+        bottom.linkTo(parent.bottom)
+        width = Dimension.fillToConstraints
+    }
+    constrain(btnDelete) {
+        top.linkTo(parent.top)
+        start.linkTo(parent.start)
+    }
+    constrain(btnFavorite) {
+        top.linkTo(parent.top)
+        end.linkTo(parent.end)
+    }
+}
+
+@Composable
+fun StatusText(status: Int) {
+    //todo hacer una funcion para el background desbanecido
+    Box(
+        modifier = Modifier
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        PrimaryDarkColor.copy(alpha = 0.0f),
+                        PrimaryDarkColor.copy(alpha = 0.5f),
+                        PrimaryDarkColor.copy(alpha = 0.7f)
+                    )
+                )
+            )
+            .height(dimensionResource(id = R.dimen.height_60))
+            .layoutId("contentLabel")
+    ) {
+        Text(
+            text = when (status) {
+                STATUS_TO_READ -> stringResource(id = R.string.to_read)
+                STATUS_READING -> stringResource(id = R.string.reading)
+                STATUS_READ -> stringResource(id = R.string.read)
+                else -> {
+                    NO_VALUE
+                }
+            },
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(
+                    start = dimensionResource(id = R.dimen.padding_6),
+                    bottom = dimensionResource(id = R.dimen.padding_6)
+                ),
+            style = MaterialTheme.typography.subtitle2,
+            color = when (status) {
+                STATUS_TO_READ -> Color.White
+                STATUS_READING -> ColorOrangeTapBar
+                STATUS_READ -> Color.Green
+                else -> Color.Gray
+            }
+        )
+    }
+}
+
 
 @Composable
 fun DeleteIcon(
