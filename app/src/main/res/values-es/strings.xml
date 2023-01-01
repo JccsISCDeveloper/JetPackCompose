@@ -14,6 +14,7 @@
     <!--Books module-->
     <string name="book">libro</string>
     <string name="cancel">Cancelar</string>
+    <string name="save">Guardar</string>
     <string name="add">Agregar</string>
     <string name="add_book">Agregar libro</string>
     <string name="add_an_image">Agrega una imagen</string>

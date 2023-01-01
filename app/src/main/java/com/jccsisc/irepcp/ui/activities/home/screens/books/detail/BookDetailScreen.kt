@@ -143,7 +143,7 @@ private fun DetailMascotaContent(
                 },
                 modifier = Modifier.layoutId(BTN_SAVE)
             ) {
-                Text(text = "Guardar")
+                Text(text = stringResource(id = R.string.save))
             }
         }
     }

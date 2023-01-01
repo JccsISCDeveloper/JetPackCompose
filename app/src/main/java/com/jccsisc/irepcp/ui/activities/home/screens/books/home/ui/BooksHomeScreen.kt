@@ -40,6 +40,7 @@ import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.Books
 import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.utils.GlobalData
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 import com.jccsisc.irepcp.utils.deleteImage
 import com.jccsisc.irepcp.utils.showToast
@@ -61,6 +62,8 @@ fun BooksHomeScreen(
     val swipeRefresh = rememberSwipeRefreshState(isRefreshing = isLoading)
     var showDialog by remember { mutableStateOf(false) }
     var book by remember { mutableStateOf(Book()) }
+
+    GlobalData.transparentNavBar(false)
 
 //    SwipeRefresh(
 //        state = swipeRefresh,

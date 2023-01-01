@@ -34,6 +34,7 @@ import com.jccsisc.irepcp.utils.*
 import com.jccsisc.irepcp.utils.GlobalData.askPermissions
 import com.jccsisc.irepcp.utils.GlobalData.getBitmapImageCamera
 import com.jccsisc.irepcp.utils.GlobalData.showCameraView
+import com.jccsisc.irepcp.utils.GlobalData.transparentNavBar
 import java.io.File
 
 /**
@@ -65,7 +66,6 @@ fun BooksDialog(
             imageBitmap = null
             imageUri = uri
         }
-
     getBitmapImageCamera = {
         imageUri = null
         imageBitmap = it
@@ -150,6 +150,7 @@ fun BooksDialog(
     showCameraView = { showCameraView ->
         shouldShowCamera = showCameraView
         if (shouldShowCamera) {
+            transparentNavBar(true)
             navigateToCameraView()
         }
     }

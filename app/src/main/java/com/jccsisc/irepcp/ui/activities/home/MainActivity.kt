@@ -14,14 +14,21 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.activities.home.navigation.AppNavigation
 import com.jccsisc.irepcp.ui.activities.login.ui.login.ui.LoginViewModel
 import com.jccsisc.irepcp.ui.theme.IREPCPTheme
+import com.jccsisc.irepcp.ui.theme.PrimaryColor
+import com.jccsisc.irepcp.utils.GlobalData
 import com.jccsisc.irepcp.utils.GlobalData.askPermissions
 import com.jccsisc.irepcp.utils.GlobalData.showCameraView
+import com.jccsisc.irepcp.utils.GlobalData.transparentNavBar
+import com.jccsisc.irepcp.utils.setColor
+import com.jccsisc.irepcp.utils.setColorNavBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,6 +63,13 @@ class MainActivity : ComponentActivity() {
 
         askPermissions = {
             requestCameraPermission()
+        }
+        transparentNavBar = {
+            if (it) {
+                setColorNavBar(android.graphics.Color.TRANSPARENT)
+            } else {
+                setColorNavBar(setColor(R.color.primaryColor))
+            }
         }
     }
 
