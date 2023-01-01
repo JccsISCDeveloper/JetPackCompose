@@ -50,7 +50,6 @@ fun BooksDialog(
 ) {
 
     val ctx = LocalContext.current
-//    var outputDirectory by rememberSaveable { mutableStateOf(File(NO_VALUE)) }
     var outputDirectory by rememberSaveable { mutableStateOf<File?>(null) }
     var shouldShowCamera by remember { mutableStateOf(false) }
 

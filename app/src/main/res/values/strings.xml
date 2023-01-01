@@ -29,7 +29,7 @@
     <!--Task module-->
     <string name="task">task</string>
     <string name="new_task">New Task</string>
-    <string name="modify_task">Modificar tarea</string>
+    <string name="modify_task">Modify title task</string>
     <string name="ph_write_your_note">Write your note</string>
     <string name="editing">Editing…</string>
     <string name="low_priority">Low</string>

@@ -105,20 +105,17 @@ private const val PADDIN_58 = 58
 private const val PADDIN_0 = 0
 
 @Composable
-fun ContentBooks(
+private fun ContentBooks(
     books: List<Book>,
     deleteBook: (book: Book) -> Unit,
     onSelectedFavorite: (id: Int, selected: Boolean) -> Unit,
     navigateToDetailBook: (bookdId: Int) -> Unit
 ) {
-    //todo mejorar esta accion
-    var addPadding by remember { mutableStateOf(0) }
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(GRID_COUNT),
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = addPadding.dp),
+            .padding(bottom = dimensionResource(id = R.dimen.padding_58)),
         content = {
             itemsIndexed(books) { index, book ->
                 BookCard(
@@ -130,11 +127,6 @@ fun ContentBooks(
                     },
                     navigateToDetailBook = navigateToDetailBook
                 )
-                addPadding = if (index >= books.size - 2) {
-                    PADDIN_58
-                } else {
-                    PADDIN_0
-                }
             }
         },
         contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_12))
@@ -153,7 +145,7 @@ private const val STATUS_READ = 2
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BookCard(
+private fun BookCard(
     book: Book,
     deleteBook: () -> Unit,
     onSelectedFavorite: (id: Int, selected: Boolean) -> Unit,
@@ -191,7 +183,7 @@ fun BookCard(
                     .error(R.drawable.ic_error_image)
                     .build(),
                 contentDescription = null,
-                modifier = Modifier.layoutId("imgBook"),
+                modifier = Modifier.layoutId(IMG_BOOK),
                 placeholder = painterResource(id = R.drawable.ic_placeholde_image),
                 contentScale = ContentScale.Crop
             )
@@ -228,11 +220,15 @@ fun BookCard(
     }
 }
 
-fun setConstraint() = ConstraintSet {
-    val imgBook = createRefFor("imgBook")
-    val contentLabel = createRefFor("contentLabel")
-    val btnDelete = createRefFor("btnDelete")
-    val btnFavorite = createRefFor("btnFavorite")
+private const val IMG_BOOK = "imgBook"
+private const val CONTENT_LABEL = "contentLabel"
+private const val BTN_DELETE = "btnDelete"
+private const val BTN_FAVORITE = "btnFavorite"
+private fun setConstraint() = ConstraintSet {
+    val imgBook = createRefFor(IMG_BOOK)
+    val contentLabel = createRefFor(CONTENT_LABEL)
+    val btnDelete = createRefFor(BTN_DELETE)
+    val btnFavorite = createRefFor(BTN_FAVORITE)
 
     constrain(imgBook) {
         top.linkTo(parent.top)
@@ -259,7 +255,7 @@ fun setConstraint() = ConstraintSet {
 }
 
 @Composable
-fun StatusText(status: Int) {
+private fun StatusText(status: Int) {
     //todo hacer una funcion para el background desbanecido
     Box(
         modifier = Modifier

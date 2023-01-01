@@ -36,9 +36,11 @@ class BooksViewModel @Inject constructor(private val repo: BooksRepository) : Vi
     fun selectedRead(read: Int) {
         book = book.copy(read = read)
     }
-    fun selectedFavorite(id: Int,favorite: Boolean) = viewModelScope.launch(Dispatchers.IO) {
-        this.launch(Dispatchers.Main) {
-            book = book.copy(favorite = favorite)
+    fun selectedFavorite(id: Int,favorite: Boolean, saveDB: Boolean = true) = viewModelScope.launch(Dispatchers.IO) {
+        if (!saveDB) {
+            this.launch(Dispatchers.Main) {
+                book = book.copy(favorite = favorite)
+            }
         }
         repo.updateFavoriteFromRoom(id, favorite)
     }

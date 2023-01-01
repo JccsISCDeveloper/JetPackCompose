@@ -125,24 +125,6 @@ fun saveImage(
     }
 }
 
-private fun File.writeBitmap(
-    bitmap: Bitmap,
-    format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG,
-    quality: Int = 85
-) {
-    outputStream().use { out ->
-        bitmap.compress(format, quality, out)
-        out.flush()
-    }
-}
-
-fun Bitmap.getImageUri(): Uri? {
-    val bytes = ByteArrayOutputStream()
-    this.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-    val paht = getOutputDirectory(IREPApp.INSTANCE)
-    return Uri.parse(paht.absolutePath)
-}
-
 fun deleteImage(
     outputDirectory: File = getOutputDirectory(IREPApp.INSTANCE),
     filename: String
@@ -162,6 +144,25 @@ fun deleteImage(
  * Devuelve la fecha de System.currentTimeMillis() = 9/12/2022 13:44
  * */
 fun Long.timeMillisToFormatDate(): String = DateFormat.getInstance().format(Date(this))
+
+
+private fun File.writeBitmap(
+    bitmap: Bitmap,
+    format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG,
+    quality: Int = 85
+) {
+    outputStream().use { out ->
+        bitmap.compress(format, quality, out)
+        out.flush()
+    }
+}
+
+fun Bitmap.getImageUri(): Uri? {
+    val bytes = ByteArrayOutputStream()
+    this.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+    val paht = getOutputDirectory(IREPApp.INSTANCE)
+    return Uri.parse(paht.absolutePath)
+}
 
 /**
  * Devuelve el tiempo que ha transcurrido

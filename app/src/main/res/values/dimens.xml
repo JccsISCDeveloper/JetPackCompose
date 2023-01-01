@@ -13,6 +13,7 @@
     <dimen name="height_70">70dp</dimen>
     <dimen name="height_200">200dp</dimen>
     <dimen name="height_240">240dp</dimen>
+    <dimen name="height_540">540dp</dimen>
 
     <!--Paddings-->
     <dimen name="padding_0">0dp</dimen>
@@ -26,6 +27,8 @@
     <dimen name="padding_18">18dp</dimen>
     <dimen name="padding_26">26dp</dimen>
     <dimen name="padding_28">28dp</dimen>
+    <dimen name="padding_58">58dp</dimen>
+    <dimen name="padding_68">68dp</dimen>
 
     <dimen name="border_2">2dp</dimen>
 
@@ -37,6 +40,7 @@
     <dimen name="rounded_0">0dp</dimen>
     <dimen name="rounded_6">6dp</dimen>
     <dimen name="rounded_8">8dp</dimen>
+    <dimen name="rounded_36">36dp</dimen>
 
     <dimen name="elevation_0">0dp</dimen>
     <dimen name="elevation_4">4dp</dimen>
