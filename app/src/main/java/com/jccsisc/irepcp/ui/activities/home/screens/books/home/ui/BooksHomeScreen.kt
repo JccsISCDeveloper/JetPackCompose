@@ -31,15 +31,19 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.Books
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 import com.jccsisc.irepcp.utils.deleteImage
 import com.jccsisc.irepcp.utils.showToast
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Project: IREPCP
@@ -53,35 +57,42 @@ fun BooksHomeScreen(
 ) {
 
     val books by viewModel.books.collectAsState(initial = emptyList())
+    val isLoading by viewModel.isLoading.collectAsState()
+    val swipeRefresh = rememberSwipeRefreshState(isRefreshing = isLoading)
     var showDialog by remember { mutableStateOf(false) }
     var book by remember { mutableStateOf(Book()) }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GrayBg),
-        contentAlignment = Alignment.Center
-    ) {
-        if (books.isNotEmpty()) {
-            ContentBooks(
-                books = books,
-                deleteBook = { deleteBook ->
-                    book = deleteBook
-                    showDialog = true
-                },
-                onSelectedFavorite = { id, favorite ->
-                    viewModel.selectedFavorite(id, favorite)
-                },
-                navigateToDetailBook = navigateToDetailBook
-            )
-        } else {
-            ShowLottie(
-                lottie = R.raw.empty,
-                text = stringResource(id = R.string.add_book),
-                showText = true
-            )
+//    SwipeRefresh(
+//        state = swipeRefresh,
+//        onRefresh = { viewModel.getBooks() }
+//    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(GrayBg),
+            contentAlignment = Alignment.Center
+        ) {
+            if (books.isNotEmpty()) {
+                ContentBooks(
+                    books = books,
+                    deleteBook = { deleteBook ->
+                        book = deleteBook
+                        showDialog = true
+                    },
+                    onSelectedFavorite = { id, favorite ->
+                        viewModel.selectedFavorite(id, favorite)
+                    },
+                    navigateToDetailBook = navigateToDetailBook
+                )
+            } else {
+                ShowLottie(
+                    lottie = R.raw.empty,
+                    text = stringResource(id = R.string.add_book),
+                    showText = true
+                )
+            }
         }
-    }
+//    }
 
     GenericDialog(
         show = showDialog,
@@ -296,7 +307,6 @@ private fun StatusText(status: Int) {
         )
     }
 }
-
 
 @Composable
 fun DeleteIcon(

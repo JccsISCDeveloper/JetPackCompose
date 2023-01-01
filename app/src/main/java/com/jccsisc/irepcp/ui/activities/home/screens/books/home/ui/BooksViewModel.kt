@@ -6,9 +6,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.Books
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.BooksRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,8 +23,18 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class BooksViewModel @Inject constructor(private val repo: BooksRepository) : ViewModel() {
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+    //    private var _books: Flow<List<Book>> = MutableStateFlow(mutableListOf())
     val books = repo.getBooksFromRoom()
     var book by mutableStateOf(Book())
+
+    fun getBooks() = viewModelScope.launch(Dispatchers.IO) {
+        _isLoading.value = true
+        repo.getBooksFromRoom()
+        _isLoading.value = false
+    }
 
     fun addBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
         repo.addBookToRoom(book)
@@ -33,17 +47,20 @@ class BooksViewModel @Inject constructor(private val repo: BooksRepository) : Vi
     fun updateImage(image: String) {
         book = book.copy(image = image)
     }
+
     fun selectedRead(read: Int) {
         book = book.copy(read = read)
     }
-    fun selectedFavorite(id: Int,favorite: Boolean, saveDB: Boolean = true) = viewModelScope.launch(Dispatchers.IO) {
-        if (!saveDB) {
-            this.launch(Dispatchers.Main) {
-                book = book.copy(favorite = favorite)
+
+    fun selectedFavorite(id: Int, favorite: Boolean, saveDB: Boolean = true) =
+        viewModelScope.launch(Dispatchers.IO) {
+            if (!saveDB) {
+                this.launch(Dispatchers.Main) {
+                    book = book.copy(favorite = favorite)
+                }
             }
+            repo.updateFavoriteFromRoom(id, favorite)
         }
-        repo.updateFavoriteFromRoom(id, favorite)
-    }
 
     fun updateBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
         repo.updateBookFromRoom(book)
