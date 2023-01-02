@@ -23,8 +23,11 @@
     <string name="read">Read</string>
     <string name="delete_book">Delete book</string>
     <string name="reading">Reading…</string>
+    <string name="you_have_no_books_to_read">You have no books to read</string>
     <string name="added_to_your_favorite_books">Added to your favorite books</string>
     <string name="removed_from_your_favorite_books">Removed from your favorite books</string>
+    <string name="you_have_not_added_to_favorites_yet">You have not added to favorites yet</string>
+    <string name="you_havent_finished_reading_any_books">You haven\'t finished reading any books</string>
 
 
     <!--Task module-->

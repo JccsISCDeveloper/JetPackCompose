@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.gallery
+package com.jccsisc.irepcp.ui.activities.home.screens.books.favorites
 
 import android.content.Intent
 import androidx.compose.foundation.Image
@@ -16,17 +16,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
 import com.jccsisc.irepcp.ui.activities.listaactivity.ListaActivity
-import com.jccsisc.irepcp.ui.theme.Gray300
 
 /**
  * Project: IREPCP
- * FROM: com.jccsisc.irepcp.ui.screens.homegraph.gallery
- * Created by Julio Cesar Camacho Silva on 23/11/22
+ * FROM: com.jccsisc.irepcp.ui.screens.dashboard.tumascota
+ * Created by Julio Cesar Camacho Silva on 29/11/22
  */
 @Composable
-fun GalleryScreen() {
+fun OpenOtherAcitityScreen() {
     val mContext = LocalContext.current
 
     Column(

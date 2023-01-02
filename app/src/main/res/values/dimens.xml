@@ -40,6 +40,7 @@
     <dimen name="rounded_0">0dp</dimen>
     <dimen name="rounded_6">6dp</dimen>
     <dimen name="rounded_8">8dp</dimen>
+    <dimen name="rounded_12">12dp</dimen>
     <dimen name="rounded_36">36dp</dimen>
 
     <dimen name="elevation_0">0dp</dimen>

@@ -73,11 +73,11 @@ private val listBooksOptions = listOf(
 
 sealed class ScreenBooksChildItemDrawer(val drawerChildItem: DrawerChildItem) {
     object BooksHomeScreen : ScreenBooksChildItemDrawer(
-        DrawerChildItem(BOOKS_HOME_SCREEN, "Todos mis libros", R.drawable.ic_all_books)
+        DrawerChildItem(BOOKS_HOME_SCREEN, "Libros", R.drawable.ic_all_books)
     )
 
     object BooksFavoritesScreen : ScreenBooksChildItemDrawer(
-        DrawerChildItem(BOOKS_FAVORITES_SCREEN, "Favoritros", R.drawable.ic_books_favorites)
+        DrawerChildItem(BOOKS_FAVORITES_SCREEN, "Favoritos", R.drawable.ic_books_favorites)
     )
 
     object ToReadScreenBooks : ScreenBooksChildItemDrawer(

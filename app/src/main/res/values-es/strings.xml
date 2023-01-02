@@ -22,8 +22,11 @@
     <string name="read">Leído</string>
     <string name="delete_book">Eliminar libro</string>
     <string name="reading">Leyendo…</string>
+    <string name="you_have_no_books_to_read">No tienes libros por leer</string>
     <string name="added_to_your_favorite_books">Se agregó a tus libros favoritos</string>
     <string name="removed_from_your_favorite_books">Se eliminó de tus libros favoritos</string>
+    <string name="you_have_not_added_to_favorites_yet">Aún no tienes añadidos a favoritos</string>
+    <string name="you_havent_finished_reading_any_books">No has terminado de leer ningún libro</string>
 
     <!--Task module-->
     <string name="task">tarea</string>

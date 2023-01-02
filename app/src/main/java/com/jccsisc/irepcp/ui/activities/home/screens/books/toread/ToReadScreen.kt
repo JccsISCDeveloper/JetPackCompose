@@ -1,139 +1,87 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.books.toread
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
+import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
 import com.jccsisc.irepcp.ui.theme.GrayBg
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
-import kotlinx.coroutines.launch
 
 /**
  * Project: IREPCP
  * FROM: com.jccsisc.irepcp.ui.screens.dashboard.eventos
  * Created by Julio Cesar Camacho Silva on 29/11/22
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ToReadScreen() {
-    val scope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
-    val bsScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
-    )
+fun ToReadScreen(viewModel: BooksViewModel = hiltViewModel()) {
+    val books by viewModel.books.collectAsState(initial = emptyList())
 
-    var showDialogDogs by remember { mutableStateOf(false) }
-    if (showDialogDogs) {
-        AlertDialog(
-            onDismissRequest = { /*TODO*/ },
-            confirmButton = {
-                TextButton(onClick = { }) {
-                    Text(text = "Actualizar")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDialogDogs = false }) {
-                    Text(text = "Cancelar")
-                }
-            },
-            title = { Text(text = "Confirmar") },
-            text = { Text(text = "¿Está seguro de querer actuaizar la información?") })
-    }
+    val toReadBooks = books.filter { book -> book.read == 0}
 
-    BottomSheetScaffold(
-        scaffoldState = bsScaffoldState,
-        sheetContent = { BottomSheet() },
-        sheetPeekHeight = 0.dp,
-        sheetShape = RoundedCornerShape(16.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(GrayBg),
+        contentAlignment = Alignment.Center
     ) {
-        Column(
+        if (toReadBooks.isNotEmpty()) {
+            ContentBooks(books = toReadBooks)
+        } else {
+            ShowLottie(
+                lottie = R.raw.empty,
+                text = stringResource(id = R.string.you_have_no_books_to_read),
+                showText = true
+            )
+        }
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .background(GrayBg)
-                .padding(dimensionResource(id = R.dimen.padding_6))
+                .fillMaxWidth()
+                .padding(10.dp)
+                .clip(
+                    RoundedCornerShape(
+                        topStart = dimensionResource(id = R.dimen.rounded_12),
+                        bottomEnd = dimensionResource(id = R.dimen.rounded_12)
+                    )
+                )
+                .background(Color.Black.copy(alpha = 0.4f))
+                .height(30.dp)
+                .align(Alignment.TopCenter),
+            contentAlignment = Alignment.Center
         ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(dimensionResource(id = R.dimen.padding_6))
-                    .clickable { },
-                elevation = 6.dp,
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(dimensionResource(id = R.dimen.padding_16))
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.dog),
-                        contentDescription = "dog",
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Text(
-                        text = "Cuidados de cachorros en los primeros meses",
-                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_10)),
-                        style = MaterialTheme.typography.h6
-                    )
-                    Text(
-                        text = "En este artículo veremos los cuidados que requieren tus cachorros en los primeros meses de vida.",
-                        style = MaterialTheme.typography.subtitle1
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Box {
-                            Row() {
-                                TextButton(onClick = { showDialogDogs = true }) {
-                                    Text(text = "PERROS")
-                                }
-                                TextButton(onClick = {
-                                    scope.launch {
-                                        if (bsScaffoldState.bottomSheetState.isCollapsed) {
-                                            bsScaffoldState.bottomSheetState.expand()
-                                        } else {
-                                            bsScaffoldState.bottomSheetState.collapse()
-                                        }
-                                    }
-                                }) {
-                                    Text(text = "RAZAS")
-                                }
-                            }
-                        }
-                        Box {
-                            Row() {
-                                IconButton(onClick = { /*TODO*/ }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Favorite,
-                                        contentDescription = "ic favorites"
-                                    )
-                                }
-                                IconButton(onClick = { /*TODO*/ }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Share,
-                                        contentDescription = "ic share"
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            val msg = if (toReadBooks.size == 1) "Libro" else "Libros"
+            Text(
+                text = "${toReadBooks.size} $msg",
+                style = MaterialTheme.typography.subtitle1,
+                color = GrayBg
+            )
         }
     }
 }
@@ -144,99 +92,96 @@ private fun PreviewEvents() {
     ToReadScreen()
 }
 
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun BottomSheet() {
-    var swOfertas by remember { mutableStateOf(false) }
-    var swInternet by remember { mutableStateOf(false) }
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(400.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(PrimaryColor),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(text = "Configuración", style = MaterialTheme.typography.subtitle1)
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp)
-        ) {
+private const val GRID_COUNT = 2
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Recibir ofertas especiales", modifier = Modifier.weight(1f))
-                Switch(
-                    checked = swOfertas,
-                    onCheckedChange = { swOfertas = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = PrimaryColor
-                    )
+@Composable
+private fun ContentBooks(
+    books: List<Book>
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(GRID_COUNT),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = dimensionResource(id = R.dimen.padding_58)),
+        content = {
+            itemsIndexed(books) { index, book ->
+                BookCard(book = book)
+            }
+        },
+        contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_12))
+    )
+}
+
+@Composable
+private fun BookCard(book: Book) {
+    Card(
+        modifier = Modifier
+            .padding(
+                top = dimensionResource(id = R.dimen.padding_8),
+                start = dimensionResource(id = R.dimen.padding_12),
+                end = dimensionResource(id = R.dimen.padding_12),
+                bottom = dimensionResource(id = R.dimen.padding_8)
+            )
+            .fillMaxWidth()
+            .height(dimensionResource(id = R.dimen.height_200)),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_6)),
+        elevation = dimensionResource(id = R.dimen.elevation_4)
+    ) {
+
+        val constraints = setConstraint()
+
+        ConstraintLayout(
+            modifier = Modifier.fillMaxSize(),
+            constraintSet = constraints
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(book.image)
+                    .crossfade(500)
+                    .error(R.drawable.ic_error_image)
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier.layoutId(IMG_BOOK),
+                placeholder = painterResource(id = R.drawable.ic_placeholde_image),
+                contentScale = ContentScale.Crop
+            )
+            IconToggleButton(
+                checked = book.favorite,
+                onCheckedChange = {  },
+                modifier = Modifier
+                    .size(dimensionResource(id = R.dimen.size_28))
+                    .clip(RoundedCornerShape(bottomStart = dimensionResource(id = R.dimen.rounded_8)))
+                    .background(GrayBg)
+                    .padding(dimensionResource(id = R.dimen.padding_0))
+                    .layoutId("btnFavorite"),
+                enabled = false
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_fsborite_tgl),
+                    contentDescription = null,
+                    tint = if (book.favorite) PrimaryColor else Color.Gray
                 )
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Modo sin internet", modifier = Modifier.weight(1f))
-                Switch(
-                    checked = swInternet,
-                    onCheckedChange = { swInternet = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = PrimaryColor
-                    )
-                )
-            }
-            Row(
-                modifier = Modifier.padding(vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Condiciones de uso", modifier = Modifier.weight(1f))
-                CompositionLocalProvider(
-                    LocalMinimumTouchTargetEnforcement provides false
-                ) {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Filled.KeyboardArrowRight,
-                            contentDescription = "Condiciones de uso"
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier.padding(vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Política de privacidad", modifier = Modifier.weight(1f))
-                CompositionLocalProvider(
-                    LocalMinimumTouchTargetEnforcement provides false
-                ) {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Filled.KeyboardArrowRight,
-                            contentDescription = "Política de privacidad"
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier.padding(vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Contrato de licencia", modifier = Modifier.weight(1f))
-                CompositionLocalProvider(
-                    LocalMinimumTouchTargetEnforcement provides false
-                ) {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Filled.KeyboardArrowRight,
-                            contentDescription = "Contrato de licencia"
-                        )
-                    }
-                }
             }
         }
+    }
+}
+
+private const val IMG_BOOK = "imgBook"
+private const val BTN_FAVORITE = "btnFavorite"
+private fun setConstraint() = ConstraintSet {
+    val imgBook = createRefFor(IMG_BOOK)
+    val btnFavorite = createRefFor(BTN_FAVORITE)
+
+    constrain(imgBook) {
+        top.linkTo(parent.top)
+        start.linkTo(parent.start)
+        end.linkTo(parent.end)
+        bottom.linkTo(parent.bottom)
+        width = Dimension.fillToConstraints
+        height = Dimension.fillToConstraints
+    }
+    constrain(btnFavorite) {
+        top.linkTo(parent.top)
+        end.linkTo(parent.end)
     }
 }
