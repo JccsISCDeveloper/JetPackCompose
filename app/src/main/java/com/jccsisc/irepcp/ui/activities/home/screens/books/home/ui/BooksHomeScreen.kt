@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED_EXPRESSION")
-
 package com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui
 
 import androidx.compose.foundation.background
@@ -24,27 +22,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.core.constants.Constants.NO_VALUE
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.repository.Books
 import com.jccsisc.irepcp.ui.theme.*
 import com.jccsisc.irepcp.utils.GlobalData
 import com.jccsisc.irepcp.utils.components.dialogs.GenericDialog
 import com.jccsisc.irepcp.utils.deleteImage
+import com.jccsisc.irepcp.utils.saveImage
 import com.jccsisc.irepcp.utils.showToast
-import kotlinx.coroutines.flow.Flow
 
 /**
  * Project: IREPCP
@@ -57,6 +52,8 @@ fun BooksHomeScreen(
     navigateToDetailBook: (booId: Int) -> Unit
 ) {
 
+    val ctx = LocalContext.current
+
     val books by viewModel.books.collectAsState(initial = emptyList())
     val isLoading by viewModel.isLoading.collectAsState()
     val swipeRefresh = rememberSwipeRefreshState(isRefreshing = isLoading)
@@ -64,6 +61,13 @@ fun BooksHomeScreen(
     var book by remember { mutableStateOf(Book()) }
 
     GlobalData.transparentNavBar(false)
+
+    GlobalData.addBook = { photo, imageUri, imageBitmap, favoriteBook ->
+        saveImage(ctx, photo, imageUri, imageBitmap) { uri, fileName ->
+            book = Book(0, uri.toString(), 0, favoriteBook, fileName)
+            viewModel.addBook(book)
+        }
+    }
 
 //    SwipeRefresh(
 //        state = swipeRefresh,

@@ -2,6 +2,7 @@ package com.jccsisc.irepcp.utils
 
 import android.graphics.Bitmap
 import android.net.Uri
+import java.io.File
 
 /**
  * Project: IREPCP
@@ -14,4 +15,5 @@ object GlobalData {
     lateinit var askPermissions: () -> Unit
     lateinit var showCameraView: (Boolean) -> Unit
     lateinit var getBitmapImageCamera: (Bitmap) -> Unit
+    lateinit var addBook: (photo: File, imageUri: Uri?, imageBitmap: Bitmap?, favoriteBook: Boolean) -> Unit
 }

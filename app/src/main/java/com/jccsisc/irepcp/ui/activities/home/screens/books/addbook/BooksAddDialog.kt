@@ -26,15 +26,18 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.domain.model.Book
 import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
 import com.jccsisc.irepcp.ui.theme.Gray50
 import com.jccsisc.irepcp.ui.theme.PrimaryLight2
-import com.jccsisc.irepcp.utils.*
+import com.jccsisc.irepcp.utils.GlobalData.addBook
 import com.jccsisc.irepcp.utils.GlobalData.askPermissions
 import com.jccsisc.irepcp.utils.GlobalData.getBitmapImageCamera
 import com.jccsisc.irepcp.utils.GlobalData.showCameraView
 import com.jccsisc.irepcp.utils.GlobalData.transparentNavBar
+import com.jccsisc.irepcp.utils.getOutputDirectory
+import com.jccsisc.irepcp.utils.getPhotoFile
+import com.jccsisc.irepcp.utils.setCoilImagePainter
+import com.jccsisc.irepcp.utils.showToast
 import java.io.File
 
 /**
@@ -46,11 +49,9 @@ private const val ROUTE_GALLERY = "image/*"
 @Composable
 fun BooksDialog(
     showDialog: (Boolean) -> Unit,
-    booksViewModel: BooksViewModel = hiltViewModel(),
     navigateToCameraView: () -> Unit
 ) {
 
-    val ctx = LocalContext.current
     var outputDirectory by rememberSaveable { mutableStateOf<File?>(null) }
     var shouldShowCamera by remember { mutableStateOf(false) }
 
@@ -59,7 +60,7 @@ fun BooksDialog(
 
     var enabledView by rememberSaveable { mutableStateOf(true) }
 
-    var imageBitmap by rememberSaveable { mutableStateOf<Bitmap?>(null)}
+    var imageBitmap by rememberSaveable { mutableStateOf<Bitmap?>(null) }
 
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -69,6 +70,14 @@ fun BooksDialog(
     getBitmapImageCamera = {
         imageUri = null
         imageBitmap = it
+    }
+
+    showCameraView = { showCameraView ->
+        shouldShowCamera = showCameraView
+        if (shouldShowCamera) {
+            transparentNavBar(true)
+            navigateToCameraView()
+        }
     }
 
     Dialog(
@@ -137,21 +146,10 @@ fun BooksDialog(
                 ) {
                     val photo = outputDirectory?.let { getPhotoFile(outputDirectory = it) }
                     if (photo != null) {
-                        saveImage(ctx, photo, imageUri, imageBitmap) { uri, fileName ->
-                            val book = Book(0, uri.toString(), 0, favoriteBook, fileName)
-                            booksViewModel.addBook(book)
-                        }
+                        addBook(photo, imageUri, imageBitmap, favoriteBook)
                     }
                 }
             }
-        }
-    }
-
-    showCameraView = { showCameraView ->
-        shouldShowCamera = showCameraView
-        if (shouldShowCamera) {
-            transparentNavBar(true)
-            navigateToCameraView()
         }
     }
 

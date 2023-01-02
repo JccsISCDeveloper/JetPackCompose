@@ -26,15 +26,8 @@ class BooksViewModel @Inject constructor(private val repo: BooksRepository) : Vi
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
-    //    private var _books: Flow<List<Book>> = MutableStateFlow(mutableListOf())
     val books = repo.getBooksFromRoom()
     var book by mutableStateOf(Book())
-
-    fun getBooks() = viewModelScope.launch(Dispatchers.IO) {
-        _isLoading.value = true
-        repo.getBooksFromRoom()
-        _isLoading.value = false
-    }
 
     fun addBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
         repo.addBookToRoom(book)
