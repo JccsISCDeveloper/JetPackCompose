@@ -88,8 +88,8 @@ fun showToast(msg: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(IREPApp.INSTANCE.baseContext, msg, duration).show()
 }
 
-fun setColor(color: Int) = run {
-    ContextCompat.getColor(IREPApp.INSTANCE, color)
+fun setColor(context: Context, color: Int) = run {
+    ContextCompat.getColor(context, color)
 }
 
 fun getOutputDirectory(ctx: Application): File {
@@ -242,7 +242,7 @@ const val BLACK_COLOR_TEXT = 1
 const val BLACK_TEXT_COLOR_NAV_BAR = SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 const val WHITE_TEXT_COLOR_NAV_BAR = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 fun Activity.setColorNavBar(
-    @ColorInt colorStatusBar: Int,
+    colorStatusBar: Int,
     fullScreen: Boolean = false,
     colorTextWhiteBlack: Int = 0
 ) {
@@ -283,24 +283,22 @@ fun Activity.setColorNavBar(
                     try {
                         if (fullScreen) {
                             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            statusBarColor = setColor(colorStatusBar)
+                            statusBarColor = setColor(context, colorStatusBar)
                         } else {
                             when (colorTextWhiteBlack) {
                                 WHITE_COLOR_TEXT -> {
                                     //texto blanco
                                     clearFlags(FLAG_FULLSCREEN)
                                     addFlags(FLAG_FORCE_NOT_FULLSCREEN)
-                                    statusBarColor = setColor(colorStatusBar)
+                                    statusBarColor = setColor(context, colorStatusBar)
                                     decorView.systemUiVisibility = WHITE_TEXT_COLOR_NAV_BAR
-                                    decorView.systemUiVisibility = SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                                 }
                                 BLACK_COLOR_TEXT -> {
                                     //texto negro
                                     clearFlags(FLAG_FULLSCREEN)
                                     addFlags(FLAG_FORCE_NOT_FULLSCREEN)
-                                    statusBarColor = setColor(colorStatusBar)
+                                    statusBarColor = setColor(context, colorStatusBar)
                                     decorView.systemUiVisibility = BLACK_TEXT_COLOR_NAV_BAR
-                                    decorView.systemUiVisibility = SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                                 }
                             }
                         }

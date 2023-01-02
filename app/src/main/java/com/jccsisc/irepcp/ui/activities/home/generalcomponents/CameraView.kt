@@ -35,6 +35,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.jccsisc.irepcp.R
 import com.jccsisc.irepcp.ui.theme.GrayBg
+import com.jccsisc.irepcp.utils.GlobalData
 import java.nio.ByteBuffer
 import java.util.concurrent.Executor
 import kotlin.coroutines.resume
@@ -82,9 +83,15 @@ fun CameraView(
     Box(contentAlignment = Alignment.BottomCenter, modifier = Modifier.fillMaxSize()) {
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
         IconButton(
-            onClick = navigateBack,
+            onClick = {
+                navigateBack()
+                GlobalData.transparentNavBar(false)
+            },
             modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.padding_12))
+                .padding(
+                    top = dimensionResource(id = R.dimen.padding_26),
+                    start = dimensionResource(id = R.dimen.padding_12)
+                )
                 .align(Alignment.TopStart)
                 .clip(CircleShape)
                 .background(GrayBg.copy(alpha = 0.4f))
@@ -102,7 +109,10 @@ fun CameraView(
                 takePhoto(
                     imageCapture = imageCapture,
                     executor = executor,
-                    onImageCapturedBitmap = onImageCapturedBitmap,
+                    onImageCapturedBitmap = {
+                        onImageCapturedBitmap(it)
+                        GlobalData.transparentNavBar(false)
+                    },
                     onError = onError
                 )
             },
@@ -127,7 +137,7 @@ private fun takePhoto(
     onImageCapturedBitmap: (Bitmap) -> Unit,
     onError: (ImageCaptureException) -> Unit
 ) {
-    imageCapture.takePicture(executor, @ExperimentalGetImage object: OnImageCapturedCallback() {
+    imageCapture.takePicture(executor, @ExperimentalGetImage object : OnImageCapturedCallback() {
         override fun onCaptureSuccess(image: ImageProxy) {
             //get bitmap from image
             val bitmap = imageProxyToBitmap(image)

@@ -16,17 +16,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.IREPApp
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
 import com.jccsisc.irepcp.ui.theme.Gray50
 import com.jccsisc.irepcp.ui.theme.PrimaryLight2
 import com.jccsisc.irepcp.utils.GlobalData.addBook

@@ -60,8 +60,6 @@ fun BooksHomeScreen(
     var showDialog by remember { mutableStateOf(false) }
     var book by remember { mutableStateOf(Book()) }
 
-    GlobalData.transparentNavBar(false)
-
     GlobalData.addBook = { photo, imageUri, imageBitmap, favoriteBook ->
         saveImage(ctx, photo, imageUri, imageBitmap) { uri, fileName ->
             book = Book(0, uri.toString(), 0, favoriteBook, fileName)

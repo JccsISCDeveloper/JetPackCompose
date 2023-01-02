@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
             if (it) {
                 setColorNavBar(android.graphics.Color.TRANSPARENT)
             } else {
-                setColorNavBar(setColor(R.color.primaryColor))
+                setColorNavBar(R.color.primaryColor)
             }
         }
     }
