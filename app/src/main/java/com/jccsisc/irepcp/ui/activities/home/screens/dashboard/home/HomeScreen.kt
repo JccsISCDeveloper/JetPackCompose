@@ -2,12 +2,17 @@ package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
+import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.ui.theme.PrimaryLight2
 import kotlinx.coroutines.launch
 
 /**
@@ -20,13 +25,13 @@ import kotlinx.coroutines.launch
 fun HomeScreen() {
     val tabs = listOf(
         TabItem.ItemDescription,
-        TabItem.ItemBenefits,
-        TabItem.ItemRecipes
+        TabItem.ItemModules,
+        TabItem.ItemComponents
     )
 
     val pagerState = rememberPagerState()
 
-    Column() {
+    Column {
         Tabs(tabs, pagerState)
         TabsContent(tabs, pagerState)
     }
@@ -41,7 +46,9 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
         selectedTabIndex = pagerState.currentPage,
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
-                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                height = dimensionResource(id = R.dimen.height_4),
+                color = PrimaryLight2
             )
         }
     ) {
@@ -56,7 +63,8 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
                 icon = {
                     Image(
                         painter = painterResource(id = tabItem.icon),
-                        contentDescription = ""
+                        contentDescription = "",
+                        modifier = Modifier.size(20.dp)
                     )
                 },
                 text = { Text(text = tabItem.title, style = MaterialTheme.typography.overline) })
@@ -68,8 +76,8 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
 @Composable
 fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
     HorizontalPager(state = pagerState, count = tabs.size) { page ->
-        var title = tabs[page].title
-        Text(text = "Información")
+        val title = tabs[page].title
+//        Text(text = "Información -> $title")
         tabs[page].screen()
     }
 }

@@ -11,6 +11,6 @@ import com.jccsisc.irepcp.R
 typealias MiFuncion = @Composable () -> Unit
 sealed class TabItem(var icon: Int, var title: String, var screen: MiFuncion) {
     object ItemDescription: TabItem(R.drawable.ic_description, "Descripcion", { DescripcionScreen() })
-    object ItemBenefits: TabItem(R.drawable.ic_benefits, "Beneficios", { BeneficiosScreen() })
-    object ItemRecipes: TabItem(R.drawable.ic_recipes, "Recetas", { RecetasScreen() })
+    object ItemModules: TabItem(R.drawable.ic_modules, "Modulos", { ModulesScreen() })
+    object ItemComponents: TabItem(R.drawable.ic_components, "Componentes", { ComponentsScreen() })
 }
