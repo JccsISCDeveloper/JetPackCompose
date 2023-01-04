@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.jccsisc.irepcp.ui.activities.home.navigation.CurrentRoute
 import com.jccsisc.irepcp.ui.activities.home.navigation.navigateToAnyRoute
+import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.isTheseRoute
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.theme.PrimaryColor
 
@@ -31,8 +32,8 @@ fun MyBottomBar(navController: NavHostController, navItems: List<ScreensDashboar
     ) {
         BottomNavigation(
             modifier = Modifier
-                .background(PrimaryColor)
-                .padding(0.dp, 0.dp, 60.dp, 0.dp)
+                .padding(0.dp, 0.dp, if (isTheseRoute(currenRoute)) 60.dp else 0.dp, 0.dp),
+            elevation = 0.dp
         ) {
             navItems.forEach { screen ->
                 BottomNavigationItem(

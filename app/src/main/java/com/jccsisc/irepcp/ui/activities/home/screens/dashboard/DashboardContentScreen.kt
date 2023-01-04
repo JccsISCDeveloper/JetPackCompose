@@ -103,7 +103,6 @@ fun DashboardContentScreen(
 
 @Composable
 fun isTheseRoute(currenRoute: String?) = currenRoute == TasksScreen.drawerItem.route ||
-        currenRoute == HomeScreen.drawerItem.route ||
         currenRoute == ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route
 
 /**
@@ -162,7 +161,7 @@ fun FloatActionBttn(
                 principalNavController.navigate("${Screens.AddOrModifyTaskScreen.route}/${-1L}")
                 showDialogData = false
             }
-            HomeScreen.drawerItem.route, ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route -> {
+            ScreenBooksChildItemDrawer.BooksHomeScreen.drawerChildItem.route -> {
                 BooksDialog(
                     showDialog = { showDialogData = it },
                 ) {
