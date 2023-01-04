@@ -11,6 +11,10 @@
     <string name="label_log_in">Iniciar sesión</string>
 
 
+    <!--HomeScreen-->
+    <string name="content">Contenido:</string>
+    <string name="this_app_is_made_with_jetpack_compose">Esta aplicación está hecha con Jetpack Compose</string>
+
     <!--Books module-->
     <string name="book">libro</string>
     <string name="cancel">Cancelar</string>

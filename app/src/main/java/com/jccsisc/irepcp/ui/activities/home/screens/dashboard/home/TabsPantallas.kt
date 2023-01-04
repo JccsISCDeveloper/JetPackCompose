@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -43,7 +44,7 @@ fun DescripcionScreen() {
         ) {
             item {
                 Text(
-                    text = "Esta aplicación está hecha con Jetpack Compose",
+                    text = stringResource(id = R.string.this_app_is_made_with_jetpack_compose),
                     modifier = Modifier.padding(
                         top = dimensionResource(id = R.dimen.padding_10),
                         bottom = dimensionResource(id = R.dimen.padding_10)),
@@ -53,7 +54,7 @@ fun DescripcionScreen() {
             }
             item {
                 Text(
-                    text = "Contenido:",
+                    text = stringResource(id = R.string.content),
                     modifier = Modifier.padding(
                         top = dimensionResource(id = R.dimen.padding_6),
                         bottom = dimensionResource(id = R.dimen.padding_6)
@@ -103,10 +104,11 @@ private val listDescription = listOf(
     HomeModel(6, "Coil: ", "Si, para cargar imagenes."),
     HomeModel(7, "Camera x: ", "Si"),
     HomeModel(8, "Extension functions: ", "Si"),
-    HomeModel(9, "Biometric: ", "Si, para iniciar sesión utilizando la huella dactilar."),
-    HomeModel(10, "Otros: ",
+    HomeModel(9, "Multilenguaje: ", "Si, Inglés/Español"),
+    HomeModel(10, "Biometric: ", "Si, para iniciar sesión utilizando la huella dactilar."),
+    HomeModel(11, "Otros: ",
         "-Control del color barra notificaciones, transparencia en caso de abrir la camara.\n" +
-            "-Abrir galería para seleccionar una foto."
+            "-Abrir galería para seleccionar una foto.\n"
     )
 )
 

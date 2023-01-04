@@ -12,6 +12,11 @@
     <string name="label_remember_user">Remember user</string>
     <string name="label_log_in">Log In</string>
 
+
+    <!--HomeScreen-->
+    <string name="content">Content:</string>
+    <string name="this_app_is_made_with_jetpack_compose">This app is a made with Jetpack Compose</string>
+
     <!--Books module-->
     <string name="book">book</string>
     <string name="save">Save</string>
