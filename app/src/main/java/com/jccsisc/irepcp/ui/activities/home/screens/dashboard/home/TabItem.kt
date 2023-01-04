@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.detailsfavorites
+package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.home
 
 import androidx.compose.runtime.Composable
 import com.jccsisc.irepcp.R
@@ -10,7 +10,7 @@ import com.jccsisc.irepcp.R
  */
 typealias MiFuncion = @Composable () -> Unit
 sealed class TabItem(var icon: Int, var title: String, var screen: MiFuncion) {
-    object ItemDescription: TabItem(R.drawable.ic_description, "Descripcion", { DescripcionScreen()})
-    object ItemBenefits: TabItem(R.drawable.ic_benefits, "Beneficios", { BeneficiosScreen()})
+    object ItemDescription: TabItem(R.drawable.ic_description, "Descripcion", { DescripcionScreen() })
+    object ItemBenefits: TabItem(R.drawable.ic_benefits, "Beneficios", { BeneficiosScreen() })
     object ItemRecipes: TabItem(R.drawable.ic_recipes, "Recetas", { RecetasScreen() })
 }

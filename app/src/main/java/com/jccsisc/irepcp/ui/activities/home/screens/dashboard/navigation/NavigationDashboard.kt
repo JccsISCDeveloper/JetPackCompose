@@ -20,6 +20,7 @@ import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.consumoapis.Consu
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.detailsfavorites.DetailsFavoritesScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.favorites.FavoritesScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.gallery.GalleryScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.home.HomeScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer.*
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.ui.TasksScreen
@@ -40,11 +41,7 @@ fun NavigationDashboard(
         /**
          * BorromBar
          * */
-        composable(HomeScreen.drawerItem.route) {
-            BooksHomeScreen(navigateToDetailBook = { bookId ->
-                principalNavController.navigate("${Screens.DetailBookScreen.route}/${bookId}")
-            })
-        }
+        composable(HomeScreen.drawerItem.route) { HomeScreen() }
         composable(FavoritesScreen.drawerItem.route) { FavoritesScreen(navController) }
         composable("${DetailsFavoritesScreen.drawerItem.route}/{$PRODUCT}") { backStackEntry ->
             val producto = backStackEntry.arguments?.getString(PRODUCT)

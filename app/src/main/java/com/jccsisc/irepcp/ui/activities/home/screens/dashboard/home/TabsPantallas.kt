@@ -1,7 +1,6 @@
-package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.detailsfavorites
+package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
