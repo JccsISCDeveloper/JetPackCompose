@@ -108,7 +108,9 @@ private val listDescription = listOf(
     HomeModel(10, "Biometric: ", "Si, para iniciar sesión utilizando la huella dactilar."),
     HomeModel(11, "Otros: ",
         "-Control del color barra notificaciones, transparencia en caso de abrir la camara.\n" +
-            "-Abrir galería para seleccionar una foto.\n"
+            "-Abrir galería para seleccionar una foto.\n" +
+                "-Uso de animasiones en los composables.\n" +
+                "-Creación de recursos: Strings, dimens, colors, fuentes."
     )
 )
 

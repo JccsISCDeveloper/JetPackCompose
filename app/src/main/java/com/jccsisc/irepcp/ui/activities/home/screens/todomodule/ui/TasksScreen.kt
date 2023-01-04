@@ -164,11 +164,14 @@ fun CardTask(
         backgroundColor = Color.White,
         elevation = dimensionResource(id = R.dimen.elevation_0)
     ) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Box(
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min), verticalAlignment = Alignment.CenterVertically) {
+            Divider(
                 modifier = Modifier
+                    .fillMaxHeight()
                     .width(dimensionResource(id = R.dimen.width_5))
-                    .height(dimensionResource(id = R.dimen.height_70))
                     .background(
                         getColorPriority(priority = taskModel.priorityTask)
                     )
