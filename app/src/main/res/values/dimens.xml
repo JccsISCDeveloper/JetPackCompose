@@ -27,10 +27,12 @@
     <dimen name="padding_14">14dp</dimen>
     <dimen name="padding_16">16dp</dimen>
     <dimen name="padding_18">18dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
     <dimen name="padding_26">26dp</dimen>
     <dimen name="padding_28">28dp</dimen>
     <dimen name="padding_58">58dp</dimen>
     <dimen name="padding_68">68dp</dimen>
+    <dimen name="padding_72">72dp</dimen>
 
     <dimen name="border_2">2dp</dimen>
 

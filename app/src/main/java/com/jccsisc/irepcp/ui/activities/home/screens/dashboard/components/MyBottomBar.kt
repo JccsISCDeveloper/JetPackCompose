@@ -1,6 +1,5 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
@@ -14,7 +13,6 @@ import com.jccsisc.irepcp.ui.activities.home.navigation.CurrentRoute
 import com.jccsisc.irepcp.ui.activities.home.navigation.navigateToAnyRoute
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.isTheseRoute
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
-import com.jccsisc.irepcp.ui.theme.PrimaryColor
 
 /**
  * Project: IREPCP
