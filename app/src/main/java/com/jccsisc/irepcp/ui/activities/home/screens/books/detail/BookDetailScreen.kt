@@ -2,6 +2,10 @@ package com.jccsisc.irepcp.ui.activities.home.screens.books.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.calculatePan
+import androidx.compose.foundation.gestures.calculateZoom
+import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -12,6 +16,8 @@ import com.jccsisc.irepcp.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.dimensionResource
@@ -91,8 +97,27 @@ private fun DetailMascotaContent(
     ) {
         val constraints = setConstraint()
 
+        var scale by remember { mutableStateOf(1f) }
+        var offsetX by remember { mutableStateOf(0f) }
+        var offsetY by remember { mutableStateOf(0f) }
+
         ConstraintLayout(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .pointerInput(Unit) {
+                    forEachGesture {
+                        awaitPointerEventScope {
+                            awaitFirstDown()
+                            do {
+                                val event = awaitPointerEvent()
+                                scale *= event.calculateZoom()
+                                val offset = event.calculatePan()
+                                offsetX += offset.x
+                                offsetY += offset.y
+                            } while (event.changes.any{ it.pressed })
+                        }
+                    }
+                }
+                .fillMaxSize(),
             constraintSet = constraints
         ) {
             Card(
@@ -105,7 +130,14 @@ private fun DetailMascotaContent(
                 Image(
                     painter = setCoilImagePainter(image = book.image),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .graphicsLayer(
+                            scaleX = scale,
+                            scaleY = scale,
+                            translationX = offsetX,
+                            translationY = offsetY
+                        ),
                     contentScale = ContentScale.Crop
                 )
             }

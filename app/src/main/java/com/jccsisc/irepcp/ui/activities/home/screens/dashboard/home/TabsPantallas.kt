@@ -115,7 +115,8 @@ private val listDescription = listOf(
         descripction = "-Control del color barra notificaciones, transparencia en caso de abrir la camara.\n" +
                 "-Abrir galería para seleccionar una foto.\n" +
                 "-Uso de animasiones en los composables.\n" +
-                "-Creación de recursos: Strings, dimens, colors, fuentes."
+                "-Creación de recursos: Strings, dimens, colors, fuentes.\n" +
+                "-Zoom en la imagen del detalle del libro."
     )
 )
 
@@ -259,7 +260,6 @@ private fun CardModules(
                     )
                 }
             }
-
             Text(
                 text = model.title,
                 modifier = Modifier
@@ -367,9 +367,61 @@ fun ComponentsScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
             .background(GrayBg)
+            .padding(bottom = dimensionResource(id = R.dimen.padding_58))
     ) {
-        Text(text = "Puede preparar deliiciosos licuados con ella para lalalshaaaala...")
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = dimensionResource(id = R.dimen.padding_10)),
+            contentPadding = PaddingValues(vertical = 5.dp, horizontal = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            items(listComponents) { model ->
+                CardComponents(model = model)
+            }
+        }
+    }
+}
+
+private val listComponents = listOf(
+    HomeModel(id = 1, title = "TopBar", image = R.drawable.img_tapbar),
+    HomeModel(id = 2, title = "Drawer", image = R.drawable.img_drawer),
+    HomeModel(id = 3, title = "BottomBar", image = R.drawable.img_bottom_bar),
+    HomeModel(id = 4, title = "TapBar", image = R.drawable.img_tapbar),
+    HomeModel(id = 5, title = "Dialogs", image = R.drawable.img_dialog),
+    HomeModel(id = 6, title = "AlertDialog", image = R.drawable.img_alert_dialog),
+    HomeModel(id = 7, title = "SnackBar", image = R.drawable.ic_error_image),
+    HomeModel(id = 8, title = "ViewPager", image = R.drawable.img_view_pager),
+)
+
+@Composable
+private fun CardComponents(model: HomeModel) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = dimensionResource(id = R.dimen.elevation_6),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_12))
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = model.image),
+                contentDescription = null,
+                modifier = Modifier.size(100.dp)
+            )
+            Spacer(modifier = Modifier.size(20.dp))
+            Text(
+                text = model.title,
+                modifier = Modifier.padding(end = dimensionResource(id = R.dimen.padding_6)),
+                style = TextStyle(
+                    fontFamily = RubikDistressed,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 38.sp,
+                    color = Color.Black.copy(alpha = 0.8f)
+                )
+            )
+        }
     }
 }
