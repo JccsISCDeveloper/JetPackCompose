@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.model.response
+package com.jccsisc.irepcp.ui.activities.login.screens.login.data.remote.model.response
 
 /**
  * Project: IREPCP

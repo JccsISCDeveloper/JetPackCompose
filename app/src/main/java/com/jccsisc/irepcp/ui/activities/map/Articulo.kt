@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.listaactivity
+package com.jccsisc.irepcp.ui.activities.map
 
 /**
  * Project: IREPCP

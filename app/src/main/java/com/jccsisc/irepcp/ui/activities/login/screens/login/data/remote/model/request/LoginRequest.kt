@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.model.request
+package com.jccsisc.irepcp.ui.activities.login.screens.login.data.remote.model.request
 
 import com.google.gson.annotations.SerializedName
 

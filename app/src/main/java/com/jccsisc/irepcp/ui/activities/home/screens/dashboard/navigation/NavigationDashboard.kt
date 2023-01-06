@@ -19,7 +19,7 @@ import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.canvas.CanvasScre
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.consumoapis.ConsumoApisScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.detailsfavorites.DetailsFavoritesScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.favorites.FavoritesScreen
-import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.gallery.GalleryScreen
+import com.jccsisc.irepcp.ui.activities.map.screens.map.MapScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.home.HomeScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreenBooksChildItemDrawer.*
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard.*
@@ -48,7 +48,7 @@ fun NavigationDashboard(
             requireNotNull(producto)
             DetailsFavoritesScreen(producto)
         }
-        composable(GalleryScreen.drawerItem.route) { GalleryScreen() }
+        composable(MapsScreen.drawerItem.route) { MapScreen() }
 
         /**
          * Drawer

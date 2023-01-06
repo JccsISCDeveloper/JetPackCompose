@@ -1,18 +1,20 @@
 package com.jccsisc.irepcp.ui.activities.home.screens.dashboard.components
 
+import android.content.Intent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.jccsisc.irepcp.ui.activities.home.navigation.CurrentRoute
 import com.jccsisc.irepcp.ui.activities.home.navigation.navigateToAnyRoute
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.isTheseRoute
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
+import com.jccsisc.irepcp.ui.activities.map.MapActivity
 
 /**
  * Project: IREPCP
@@ -20,8 +22,12 @@ import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.Screen
  * Created by Julio Cesar Camacho Silva on 23/11/22
  */
 @Composable
-fun MyBottomBar(navController: NavHostController, navItems: List<ScreensDashboard>) {
-    val currenRoute = CurrentRoute(navController)
+fun MyBottomBar(
+    currenRoute: String,
+    navController: NavHostController,
+    navItems: List<ScreensDashboard>
+) {
+    val mContext = LocalContext.current
 
     BottomAppBar(
         cutoutShape = MaterialTheme.shapes.small.copy(
@@ -37,10 +43,15 @@ fun MyBottomBar(navController: NavHostController, navItems: List<ScreensDashboar
                 BottomNavigationItem(
                     selected = currenRoute == screen.drawerItem.route,
                     onClick = {
-                        navigateToAnyRoute(
-                            navController = navController,
-                            route = screen.drawerItem.route,
-                            action = {})
+                        if (screen.drawerItem.route == ScreensDashboard.MapsScreen.drawerItem.route) {
+                            mContext.startActivity(Intent(mContext, MapActivity::class.java))
+                        } else {
+                            navigateToAnyRoute(
+                                navController = navController,
+                                route = screen.drawerItem.route,
+                                action = {}
+                            )
+                        }
                     },
                     icon = {
                         screen.drawerItem.icon?.let { painterResource(id = it) }?.let {

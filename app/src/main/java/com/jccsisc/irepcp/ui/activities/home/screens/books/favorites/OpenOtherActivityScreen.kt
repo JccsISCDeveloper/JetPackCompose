@@ -16,10 +16,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.jccsisc.irepcp.R
-import com.jccsisc.irepcp.ui.activities.home.screens.books.home.ui.BooksViewModel
-import com.jccsisc.irepcp.ui.activities.listaactivity.ListaActivity
+import com.jccsisc.irepcp.ui.activities.map.MapActivity
 
 /**
  * Project: IREPCP
@@ -64,7 +62,7 @@ fun OpenOtherAcitityScreen() {
                 mContext.startActivity(
                     Intent(
                         mContext,
-                        ListaActivity::class.java
+                        MapActivity::class.java
                     )
                 )
             }) {

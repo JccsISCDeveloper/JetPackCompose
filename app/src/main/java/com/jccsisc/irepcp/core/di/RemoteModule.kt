@@ -2,14 +2,13 @@ package com.jccsisc.irepcp.core.di
 
 import com.jccsisc.irepcp.core.constants.ConstantsApi.BASE_URL_RICK_AND_MORTY
 import com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.data.remote.RickAndMortyApi
-import com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.LoginClient
+import com.jccsisc.irepcp.ui.activities.login.screens.login.data.remote.LoginClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 /**

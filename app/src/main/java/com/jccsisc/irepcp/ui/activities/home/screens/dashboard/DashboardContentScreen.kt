@@ -46,7 +46,7 @@ fun DashboardContentScreen(
 
     val singletonProviderToTaskVM = taskViewModel.mySingletonClass
 
-    val itemsbottomBar = listOf(HomeScreen, FavoritesScreen, GalleryScreen)
+    val itemsbottomBar = listOf(HomeScreen, FavoritesScreen, MapsScreen)
     val itemsDrawer = listOf(
         HomeScreen,
         FavoritesScreen,
@@ -71,10 +71,13 @@ fun DashboardContentScreen(
             )
         },
         bottomBar = {
-            MyBottomBar(
-                navController = dashboardNavController,
-                navItems = itemsbottomBar
-            )
+            if (currenRoute != null) {
+                MyBottomBar(
+                    currenRoute = currenRoute,
+                    navController = dashboardNavController,
+                    navItems = itemsbottomBar
+                )
+            }
         },
         floatingActionButton = {
             if (isTheseRoute(currenRoute)) {

@@ -6,10 +6,9 @@ import com.jccsisc.irepcp.core.constants.Constants.CANVAS_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.CONSUMO_APIS_HEADER
 import com.jccsisc.irepcp.core.constants.Constants.CONTENT_DASHBOARD_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.DETAILS_FAVORITES_SCREEN
-import com.jccsisc.irepcp.core.constants.Constants.DETAIL_MASCOTA_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.TO_READ_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.FAVORITES_SCREEN
-import com.jccsisc.irepcp.core.constants.Constants.GALLERY_SCREEN
+import com.jccsisc.irepcp.core.constants.Constants.MAPS_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.HOME_SCREEN
 import com.jccsisc.irepcp.core.constants.Constants.BOOKS_HEADER
 import com.jccsisc.irepcp.core.constants.Constants.BOOKS_HOME_SCREEN
@@ -39,8 +38,8 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
     object FavoritesScreen :
         ScreensDashboard(DrawerItem(FAVORITES_SCREEN, "Favoritos", R.drawable.ic_favorites))
 
-    object GalleryScreen :
-        ScreensDashboard(DrawerItem(GALLERY_SCREEN, "Gallery", R.drawable.ic_gallery))
+    object MapsScreen :
+        ScreensDashboard(DrawerItem(MAPS_SCREEN, "Map", R.drawable.ic_location))
 
     /**
      * Drawer

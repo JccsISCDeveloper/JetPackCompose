@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.listaactivity
+package com.jccsisc.irepcp.ui.activities.map
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,14 +11,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,9 +35,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jccsisc.irepcp.R
+import com.jccsisc.irepcp.ui.activities.map.screens.map.MapScreen
 import com.jccsisc.irepcp.ui.theme.*
+import com.jccsisc.irepcp.utils.GlobalData.transparentNavBar
+import com.jccsisc.irepcp.utils.setColorNavBar
 
-class ListaActivity : ComponentActivity() {
+class MapActivity : ComponentActivity() {
 
     /*val datos = listOf(
         "Razas",
@@ -67,11 +73,6 @@ class ListaActivity : ComponentActivity() {
             R.drawable.reproduccion,
             "Reproducción",
             "Artículos especializados sobre el tema de reproducción."
-        ),
-        Articulo(
-            R.drawable.noticias,
-            "Noticias",
-            "Novedades y curiosidades del mundo de las mascotas."
         )
     )
 
@@ -84,8 +85,18 @@ class ListaActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = GrayBg
                 ) {
-                    ListaScreen(listaAarticulos)
+//                    ListaScreen(listaAarticulos)
+                    transparentNavBar(true)
+                    MapScreen()
                 }
+            }
+        }
+
+        transparentNavBar = {
+            if (it) {
+                setColorNavBar(android.graphics.Color.TRANSPARENT)
+            } else {
+                setColorNavBar(R.color.primaryColor)
             }
         }
     }
@@ -116,11 +127,6 @@ private fun DefaultPreview2() {
             R.drawable.reproduccion,
             "Reproducción",
             "Artículos especializados sobre el tema de reproducción"
-        ),
-        Articulo(
-            R.drawable.noticias,
-            "Noticias",
-            "Novedades y curiosidades del mundo de las mascotas"
         )
     )
     ListaScreen(listaAarticulos)

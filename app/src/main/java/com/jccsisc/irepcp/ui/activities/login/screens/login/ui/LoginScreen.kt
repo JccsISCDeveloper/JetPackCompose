@@ -1,4 +1,4 @@
-package com.jccsisc.irepcp.ui.activities.login.ui.login.ui
+package com.jccsisc.irepcp.ui.activities.login.screens.login.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -37,7 +37,7 @@ import com.jccsisc.irepcp.core.constants.Constants.SPACER_20
 import com.jccsisc.irepcp.core.enums.StatusEnum
 import com.jccsisc.irepcp.ui.activities.home.MainActivity
 import com.jccsisc.irepcp.ui.activities.home.generalcomponents.ShowLottie
-import com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.model.request.LoginRequest
+import com.jccsisc.irepcp.ui.activities.login.screens.login.data.remote.model.request.LoginRequest
 import com.jccsisc.irepcp.ui.theme.Gray300
 import com.jccsisc.irepcp.ui.theme.Gray50
 import com.jccsisc.irepcp.ui.theme.PrimaryColor

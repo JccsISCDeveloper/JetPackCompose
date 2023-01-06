@@ -1,7 +1,7 @@
-package com.jccsisc.irepcp.ui.activities.login.ui.login.data
+package com.jccsisc.irepcp.ui.activities.login.screens.login.data
 
-import com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.LoginService
-import com.jccsisc.irepcp.ui.activities.login.ui.login.data.remote.model.request.LoginRequest
+import com.jccsisc.irepcp.ui.activities.login.screens.login.data.remote.LoginService
+import com.jccsisc.irepcp.ui.activities.login.screens.login.data.remote.model.request.LoginRequest
 import javax.inject.Inject
 
 /**

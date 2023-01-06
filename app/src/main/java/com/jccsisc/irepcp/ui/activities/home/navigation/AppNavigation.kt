@@ -12,10 +12,12 @@ import com.jccsisc.irepcp.core.constants.Constants.ROOT_GRAPH
 import com.jccsisc.irepcp.core.constants.Constants.TASK_ID
 import com.jccsisc.irepcp.ui.activities.home.screens.books.addbook.BookCameraScreen
 import com.jccsisc.irepcp.ui.activities.home.screens.books.detail.BooksDetailScreen
+import com.jccsisc.irepcp.ui.activities.map.screens.map.MapScreen
+import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.ScreensDashboard
 import com.jccsisc.irepcp.ui.activities.home.screens.dashboard.navigation.dashboardContentGraph
 import com.jccsisc.irepcp.ui.activities.home.screens.rickandmorty.rickAndMortyGraph
 import com.jccsisc.irepcp.ui.activities.home.screens.todomodule.ui.AddOrModifyTaskScreen
-import com.jccsisc.irepcp.ui.activities.login.ui.login.ui.LoginViewModel
+import com.jccsisc.irepcp.ui.activities.login.screens.login.ui.LoginViewModel
 
 /**
  * Project: IREPCP
@@ -69,5 +71,9 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
                 navController.popBackStack()
             }
         }
+        /**
+         * Maps
+         * */
+        composable(ScreensDashboard.MapsScreen.drawerItem.route) { MapScreen() }
     }
 }
