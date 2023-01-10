@@ -39,7 +39,7 @@ sealed class ScreensDashboard(val drawerItem: DrawerItem) {
         ScreensDashboard(DrawerItem(FAVORITES_SCREEN, "Favoritos", R.drawable.ic_favorites))
 
     object MapsScreen :
-        ScreensDashboard(DrawerItem(MAPS_SCREEN, "Map", R.drawable.ic_location))
+        ScreensDashboard(DrawerItem(MAPS_SCREEN, "Map", R.drawable.ic_location_black))
 
     /**
      * Drawer

@@ -117,15 +117,17 @@ dependencies {
     implementation "androidx.camera:camera-view:1.0.0-alpha27"
 
     //permission handling in compose
-    implementation "com.google.accompanist:accompanist-permissions:0.24.9-beta"
+    //implementation "com.google.accompanist:accompanist-permissions:0.24.9-beta"
+    implementation 'com.google.accompanist:accompanist-permissions:0.24.13-rc'
 
     //Biometric
     implementation "androidx.biometric:biometric:1.2.0-alpha05"
     implementation "androidx.appcompat:appcompat:1.5.1"
 
     //GoogleMap
-    implementation "com.google.maps.android:maps-compose:1.0.0"
+    implementation 'com.google.maps.android:maps-compose:2.8.0'
     implementation "com.google.android.gms:play-services-maps:18.1.0"
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
 }
 // Allow references to generated code

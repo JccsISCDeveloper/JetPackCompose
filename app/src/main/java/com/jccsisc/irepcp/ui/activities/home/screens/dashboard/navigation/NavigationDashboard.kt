@@ -48,7 +48,7 @@ fun NavigationDashboard(
             requireNotNull(producto)
             DetailsFavoritesScreen(producto)
         }
-        composable(MapsScreen.drawerItem.route) { MapScreen() }
+        composable(MapsScreen.drawerItem.route) { MapScreen("") }
 
         /**
          * Drawer

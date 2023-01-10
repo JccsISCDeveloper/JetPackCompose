@@ -25,7 +25,10 @@ import com.jccsisc.irepcp.ui.activities.login.screens.login.ui.LoginViewModel
  * Created by Julio Cesar Camacho Silva on 14/11/22
  */
 @Composable
-fun AppNavigation(loginViewModel: LoginViewModel) {
+fun AppNavigation(
+    loginViewModel: LoginViewModel,
+    permission: String
+) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -74,6 +77,8 @@ fun AppNavigation(loginViewModel: LoginViewModel) {
         /**
          * Maps
          * */
-        composable(ScreensDashboard.MapsScreen.drawerItem.route) { MapScreen() }
+        composable(ScreensDashboard.MapsScreen.drawerItem.route) {
+            MapScreen(permission)
+        }
     }
 }

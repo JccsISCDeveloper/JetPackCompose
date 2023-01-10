@@ -52,7 +52,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    AppNavigation(loginViewModel)
+                    AppNavigation(
+                        loginViewModel = loginViewModel,
+                        permission = Manifest.permission.ACCESS_FINE_LOCATION
+                    )
                 }
             }
         }
@@ -71,17 +74,11 @@ class MainActivity : ComponentActivity() {
 
     private fun requestCameraPermission() {
         when {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
                 Log.i("permiso", "previamente aceptado")
                 showCameraView(true)
             }
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                Manifest.permission.CAMERA
-            ) -> {
+            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) -> {
                 Log.i(
                     "permiso",
                     "Muestra dialog explicando porque debe aceptar los permisos de la camara"
