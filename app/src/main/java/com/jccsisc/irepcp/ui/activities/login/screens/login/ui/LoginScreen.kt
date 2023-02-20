@@ -99,7 +99,8 @@ fun LoginScreen(
         }
 //        GoToDashboard(loginViewModel, onNavigationToDashboard)
     }
-    onLoginClick()
+    //todo para inicio automatico
+    //onLoginClick()
 }
 
 

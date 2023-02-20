@@ -51,6 +51,17 @@ fun FavoritesScreen(navController: NavHostController) {
             )
         }
 
+        item {
+            Text(
+                text = "Esta vista no es funcional, solo se creó para utilizar LazyColumn con LazyRow",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Gray
+                )
+            )
+        }
+
 //        items(listaProductos) { producto ->
 //            CardProducto(producto = producto)
 //        }

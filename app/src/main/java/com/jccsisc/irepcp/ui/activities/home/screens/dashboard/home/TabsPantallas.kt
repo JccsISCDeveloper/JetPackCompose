@@ -105,18 +105,24 @@ private val listDescription = listOf(
     HomeModel(id = 7, title = "Camera x: ", descripction = "Si"),
     HomeModel(id = 8, title = "Extension functions: ", descripction = "Si"),
     HomeModel(id = 9, title = "Multilenguaje: ", descripction = "Si, Inglés/Español"),
+    HomeModel(id = 10, title = "Inyección de dependencias: ", descripction = "Dagger Hilt"),
     HomeModel(
-        id = 10,
+        id = 11,
         title = "Biometric: ",
         descripction = "Si, para iniciar sesión utilizando la huella dactilar."
     ),
     HomeModel(
-        11, title = "Otros: ",
+        12, title = "Otros: ",
         descripction = "-Control del color barra notificaciones, transparencia en caso de abrir la camara.\n" +
                 "-Abrir galería para seleccionar una foto.\n" +
                 "-Uso de animasiones en los composables.\n" +
                 "-Creación de recursos: Strings, dimens, colors, fuentes.\n" +
                 "-Zoom en la imagen del detalle del libro."
+    ),
+    HomeModel(
+        13, title = "Modulos funcionales: ",
+        descripction = "Modulo Libros, completamente funcional, CRUD.\nModulo Tareas, completamente funcional. CRUD." +
+                "\nModulo Apis: Por el momento solo se hizo el consumo de una api."
     )
 )
 
